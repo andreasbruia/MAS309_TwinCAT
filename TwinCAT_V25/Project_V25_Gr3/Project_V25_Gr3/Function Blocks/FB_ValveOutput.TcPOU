@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ValveOutput" Id="{c830ce7b-10fd-4d59-bd4c-3cd27677650e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ValveOutput
+VAR_INPUT
+	bEnable : BOOL; 
+	bDeadBandCompOn : BOOL;
+	stValveDeadBand : ST_ValveDeadBand; 
+	fNormalizedInput : LREAL; 
+END_VAR
+VAR_OUTPUT
+	bEnableValveOutput : BOOL; 
+	nOutput : INT; 
+END_VAR
+VAR
+	nOffset 	: INT := 16383; // KVIFOR
+	nMaxValue	: INT := 20000;
+	nMinValue 	: INT :=  12766;
+	nTempOutput : INT := 16383;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//To måter er satt opp, kan endres i Engineer_HMI. En er satte parametere, den andre er parametere fra struct
+IF bDeadBandCompOn THEN
+	IF fNormalizedInput > 0.0 THEN
+		nTempOutput := LREAL_TO_INT(ABS(fNormalizedInput*(stValveDeadBand.fPosMax - stValveDeadBand.fPosMin) + stValveDeadBand.fPosMin));
+	ELSIF fNormalizedInput < 0.0 THEN 
+		nTempOutput := LREAL_TO_INT(ABS(fNormalizedInput*(stValveDeadBand.fNegMax - stValveDeadBand.fNegMin) - stValveDeadBand.fNegMin));	
+	ELSE 
+		nTempOutput := nOffset;	//Offset ses som 0 (nøytral), fordi signalet går fra 0 til 32767.												
+	END_IF
+
+ELSE 
+	IF fNormalizedInput > 0.0  THEN
+		//Gjør om inputen mellom 0 og 1 til en output mellom 16383 (nøytral) og 32767(max)
+		nTempOutput := LREAL_TO_INT(ABS(fNormalizedInput*(32767.0 - 16383.0) + 16383.0)); //ABS må til fordi output er en positiv verdi mellom 0 og 32767
+	ELSIF fNormalizedInput < 0.0  THEN
+		//Gjør om inputen mellom 0 og -1 til en output mellom 0 (min) og 16383 (nøytral)
+		nTempOutput := LREAL_TO_INT(ABS(fNormalizedInput*(0 - 16383.0) - 16383.0));
+	ELSE
+		nTempOutput := nOffset; //Her settes også verdien til nøytral om det ikke er noen input
+	END_IF	
+	
+END_IF
+
+//Om den er enabled blir verdien sendt ut
+IF bEnable THEN
+	nOutput := LIMIT(nMinValue, nTempOutput, nMaxValue);
+	bEnableValveOutput := TRUE;
+//Eller så sender den ut nøytral verdi
+ELSE 
+	nOutput := nOffset;
+	bEnableValveOutput := FALSE;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="E_Status" Id="{0c686cb3-741a-488b-8477-2674e41d95ac}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'to_string'}
+TYPE E_Status :
+(
+	Off,
+	Fault,
+	Ready,
+	//Starting,
+	Running,
+	//Stopping,
+	Checking
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

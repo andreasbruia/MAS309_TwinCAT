@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="G_IO" Id="{2437699e-6b47-4df9-8f46-632e8cfc061f}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	// Digital Inputs
+	bEmgOk 			     AT %I* : BOOL; 
+	bStartButton 	     AT %I* : BOOL;
+	bStopButton 	     AT %I* : BOOL; 
+	bOffSwitch		     AT %I* : BOOL;  
+	bManualSwitch	     AT %I* : BOOL; 
+	bAutoSwitch		 AT %I* : BOOL; 
+	bWinchEnable 		 AT %I* : BOOL; 
+	bDisplacementEnable  AT %I* : BOOL;
+	
+	// Analog Intputs
+	fJoyXraw 			 AT %I* : INT; 
+	fJoyYraw			 AT %I* : INT; 
+	fJoyZraw 			 AT %I* : INT; 
+	fPDCVMonitor		 AT %I* : INT; 
+	nMoogMonitor		 AT %I* : INT; 
+	fYoke				 AT %I* : INT; 
+	fPressureWinchA 	 AT %I* : INT; 
+	fPressureWinchB 	 AT %I* : INT; 
+	fPressureSupply 	 AT %I* : INT; 
+	fPressureReturn 	 AT %I* : INT; 
+	nWinchEncoderValue	 AT %I* : UDINT; 
+	
+	// Digital Outputs
+	bOpenBrakes 		 AT %Q* : BOOL; 
+	bEnablePCDV 		 AT %Q* : BOOL; 
+	bWinchValveEnable 	 AT %Q* : BOOL; 
+	
+	// Analog Outputs
+	fWinchPDCVOut 		 AT %Q* : INT := 10000; 
+	fWinchValveOut 		 AT %Q* : INT := 16383; 
+	
+	// New Test
+	bTestNew AT %I* : BOOL;
+	nTestNew AT %I* : INT;
+	OutTestNew AT %Q* : BOOL;
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Yoke_Input_Scaling" Id="{f2a70c25-57f1-440e-bbb9-1cf149bd7ad5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Yoke_Input_Scaling
+VAR_INPUT
+	bEnable : BOOL;
+	nRawInput : INT; 
+	stYokeInputScaling : ST_YokeInputScaling; 
+END_VAR
+VAR_OUTPUT
+	fNormalizedOutput : LREAL;
+END_VAR
+VAR
+	fRawInput : LREAL; 
+	fTempInput : LREAL;
+	fTempOutput : LREAL; 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Skalerer input fra Yoke mellom -1 og 1
+
+fRawInput := INT_TO_LREAL(nRawInput);
+
+//Lagrer nullpunktet i en midlertidig variabel
+fTempOutput := nRawInput - stYokeInputScaling.fNeutralInputValue;
+
+//Om inputen overgår dødbåndet i pos retning
+IF fTempInput > stYokeInputScaling.fNeutralDeadband THEN
+	//Tar input og deler på området fra nøytral til max
+	fTempOutput := fTempInput/(stYokeInputScaling.fMaxInputValue - stYokeInputScaling.fNeutralInputValue);
+	//Om inputen overgår dødbåndet i neg retning
+ELSIF fTempInput < - stYokeInputScaling.fNeutralDeadband THEN 
+	//Tar input og deler på området fra nøytral til min
+	fTempOutput := fTempInput/(stYokeInputScaling.fNeutralInputValue - stYokeInputScaling.fMinInputValue);
+ELSE
+	fTempOutput := 0.0; 
+END_IF
+
+//Sender bar eut verdi om den er enabled (skrudd på)
+IF bEnable THEN
+	fNormalizedOutput := LIMIT(stYokeInputScaling.fMinOutputValue, fTempOutput, stYokeInputScaling.fMaxOutputValue); //setter på limit for å forsikre verdien havner mellom -1 og 1
+	
+ELSE 
+	fNormalizedOutput := 0.0;
+END_IF
+	]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

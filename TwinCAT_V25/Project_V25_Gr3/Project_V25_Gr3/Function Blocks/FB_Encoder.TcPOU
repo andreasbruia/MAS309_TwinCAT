@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Encoder" Id="{8787a237-dc0d-4eb7-a839-7cc670f29511}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Encoder
+VAR_INPUT
+nRawInput : UDINT; 
+nEncoderOffset : LREAL; 
+END_VAR
+VAR_OUTPUT
+	fPosition : LREAL; 
+	fPositionError : LREAL; 
+END_VAR
+VAR PERSISTENT // Beholder verdien sin selv om porgrammet restarter, lik som bare faen 
+	nRounds : DINT; 
+    nRawLast : DINT; 
+END_VAR
+VAR
+	nInput : DINT;
+	nTempInputDiff : DINT; 
+	nMaxValue30bit : DINT := 1073741823; 
+	nTreshold30bit : DINT := nMaxValue30bit/2;
+	nCount : DINT;
+	fScale16bit : LREAL := 360.0/65535; 
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Konverterer iput-verdi fra enkoder til DINT: 
+nInput := UDINT_TO_DINT(nRawInput); 
+
+// Definerer en runde på enkoder
+nTempInputDiff := nInput - nRawLast; // Differanse ikke-konvertert og konvertert 
+
+IF (nTempInputDiff > nTreshold30bit) THEN 
+	nRounds := nRounds - 1;
+END_IF
+
+IF  (nTempInputDiff < -nTreshold30bit) THEN
+	nRounds := nRounds + 1; 
+END_IF
+
+// Teller antall runder: 
+
+nCount := nInput + nRounds*nMaxValue30bit; 
+
+// Position output: 
+
+fPosition := DINT_TO_LREAL(nCount)*fScale16bit;
+
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

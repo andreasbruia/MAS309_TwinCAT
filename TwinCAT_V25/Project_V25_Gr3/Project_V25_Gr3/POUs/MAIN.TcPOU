@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MAIN" Id="{9887cebd-237e-4240-936d-90a74e8a49bb}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	bFunction_Blocks_enable				: BOOL := TRUE;
+	fb_StateMachine_Mode_Selection	 	: FB_StateMachine_Mode_Selection;
+	fb_Motion_Control					: FB_Motion_Control;
+	fb_Joystick_input_Scaling			: FB_JoystickInputScaling;
+	fb_Joystick							: FB_Joystick;
+	fb_Outputs							: FB_Outputs;
+	fb_ValveOutput						: FB_ValveOutput;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bFunction_Blocks_enable THEN
+	fb_StateMachine_Mode_Selection();
+	fb_Motion_Control();
+	fb_Joystick_input_Scaling();
+	fb_Joystick();
+	fb_Outputs();
+	fb_ValveOutput();
+END_IF
+
+fb_Motion_Control.eStatus := fb_StateMachine_Mode_Selection.eStatus;
+fb_Outputs.eStatus := fb_StateMachine_Mode_Selection.eStatus;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

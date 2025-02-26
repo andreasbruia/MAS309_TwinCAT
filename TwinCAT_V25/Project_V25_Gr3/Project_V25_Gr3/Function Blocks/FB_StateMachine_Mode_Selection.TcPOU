@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_StateMachine_Mode_Selection" Id="{7752503d-768c-4c8d-8e78-ef4eecfc3639}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StateMachine_Mode_Selection
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+eStatus : E_Status := E_Status.Checking; //Er dette til for å definere utgangen, kunne vi brukt structen (Enumen) direkte i koden?
+END_VAR
+VAR
+	
+	bStatusOk : BOOL; // Control variable 
+	bFault : BOOL := FALSE;
+	//bRunning : BOOL := TRUE; ikke nødvendig
+END_VAR	
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[	// State Machine for mode selection - Off, Fault, Ready, Running and Checking 
+	
+	// Variable bStatusOk, used troughout the function: 
+IF G_IO.bEmgOk AND NOT(G_IO.bStopButton) AND NOT(G_IO.bOffSwitch) AND NOT(bFault) THEN 
+	bStatusOk := TRUE;
+ELSE 
+	bStatusOk := FALSE;
+END_IF
+
+CASE eStatus OF
+	E_Status.Checking: // Checking state (initially here)
+	  IF bFault THEN
+         eStatus := E_Status.Fault; 
+	  END_IF
+	  
+	  IF bStatusOk THEN 
+		  eStatus := E_Status.Ready;
+	  END_IF
+	  
+	  IF NOT bStatusOk THEN
+		 eStatus := E_Status.Off;
+	  END_IF
+	  
+	 E_Status.Off:
+	   IF bStatusOk THEN
+			eStatus := E_Status.Checking;
+	END_IF
+		
+	IF bFault THEN
+			eStatus := E_Status.Fault;
+	END_IF
+		
+	  E_Status.Fault:
+		  IF NOT bFault THEN
+			  eStatus := E_Status.Checking;
+		  END_IF
+		  
+	E_Status.Ready:
+	  IF G_IO.bStartButton AND bStatusOk THEN 
+		  eStatus := E_Status.Running;
+	  END_IF
+	  
+	  IF NOT(bStatusOk) OR bFault THEN
+		  eStatus := E_Status.Checking;
+	  END_IF
+	  
+	E_Status.Running: 
+	
+	 IF NOT(bStatusOk) OR bFault THEN 
+		 eStatus := E_Status.Checking;
+	 END_IF
+	 
+	 ELSE 
+		 eStatus := E_Status.Checking;
+  END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ST_YokeInputScaling" Id="{432fbd83-dbc2-4316-9706-7614246cf1d5}">
+    <Declaration><![CDATA[TYPE ST_YokeInputScaling :
+STRUCT
+	fMaxInputValue			: LREAL;	// tunable max input value
+	fMinInputValue 			: LREAL;	// tunable min input value
+	fNeutralInputValue  	: LREAL;	// tunable neutral input value
+	fNeutralDeadband		: LREAL;	// tunable dead_band value
+	fMaxOutputValue  		: LREAL;	// normalized max output value
+	fMinOutputValue  		: LREAL;	// normalized min output value
+	fNeutralOutputValue  	: LREAL;	// normalized neutral output value
+END_STRUCT
+END_TYPE
+ ]]></Declaration>
+  </DUT>
+</TcPlcObject>

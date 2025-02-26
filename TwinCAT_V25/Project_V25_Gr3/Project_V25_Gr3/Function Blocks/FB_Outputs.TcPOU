@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Outputs" Id="{c3b6ff0e-0108-484e-aa5d-46cb83b00d7a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Outputs
+VAR_INPUT
+	eStatus 			: E_Status;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	bEnableWinch 		: BOOL;
+	bEnableDisplacement	: BOOL;
+	bEnableMotion		: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF eStatus = E_Status.Running THEN
+	G_IO.bEnablePCDV := TRUE;
+	G_IO.bWinchValveEnable := TRUE;
+ELSE
+	G_IO.bEnablePCDV := FALSE;	
+	G_IO.bWinchValveEnable := FALSE;
+END_IF
+
+bEnableMotion := G_IO.bWinchEnable;
+
+///////////////////// Winch //////////////////////////////
+IF (eStatus = E_Status.Running) AND bEnableMotion THEN 
+	G_IO.bOpenBrakes := TRUE;
+	bEnableWinch := TRUE;
+ELSE
+	G_IO.bOpenBrakes := FALSE;
+	bEnableWinch := FALSE;
+END_IF
+
+///////////////////// Displacement //////////////////////////////
+IF (eStatus = E_Status.Running) AND G_IO.bDisplacementEnable THEN 
+	bEnableDisplacement := TRUE;
+ELSE
+	bEnableDisplacement := FALSE;
+END_IF
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
