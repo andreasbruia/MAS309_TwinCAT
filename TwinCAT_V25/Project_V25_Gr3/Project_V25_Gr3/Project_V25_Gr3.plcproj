@@ -53,9 +53,6 @@
     <Compile Include="Function Blocks\FB_Outputs.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB_PressureInputScaling.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Function Blocks\FB_StateMachine_Mode_Selection.TcPOU">
       <SubType>Code</SubType>
     </Compile>
