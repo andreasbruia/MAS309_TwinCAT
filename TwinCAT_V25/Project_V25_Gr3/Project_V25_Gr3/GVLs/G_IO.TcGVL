@@ -3,7 +3,7 @@
   <GVL Name="G_IO" Id="{2437699e-6b47-4df9-8f46-632e8cfc061f}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
-	// Digital Inputs
+	// Digitale inputs
 	bEmgOk 			     AT %I* : BOOL; 
 	bStartButton 	     AT %I* : BOOL;
 	bStopButton 	     AT %I* : BOOL; 
@@ -13,7 +13,7 @@ VAR_GLOBAL
 	bWinchEnable 		 AT %I* : BOOL; 
 	bDisplacementEnable  AT %I* : BOOL;
 	
-	// Analog Intputs
+	// Analoge Intputs
 	fJoyXraw 			 AT %I* : INT; 
 	fJoyYraw			 AT %I* : INT; 
 	fJoyZraw 			 AT %I* : INT; 
@@ -26,12 +26,12 @@ VAR_GLOBAL
 	fPressureReturn 	 AT %I* : INT; 
 	nWinchEncoderValue	 AT %I* : UDINT; 
 	
-	// Digital Outputs
+	// Digitale Outputs
 	bOpenBrakes 		 AT %Q* : BOOL; 
 	bEnablePCDV 		 AT %Q* : BOOL; 
 	bWinchValveEnable 	 AT %Q* : BOOL; 
 	
-	// Analog Outputs
+	// Analoge Outputs
 	fWinchPDCVOut 		 AT %Q* : INT := 10000; 
 	fWinchValveOut 		 AT %Q* : INT := 16383; 
 	

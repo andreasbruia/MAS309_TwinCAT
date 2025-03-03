@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Inputs" Id="{6a583cfe-140e-4485-b87b-9b85c9186e72}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Inputs 
+VAR_INPUT
+	fbJoystickWinch : FB_JoystickInputScaling; 
+	fbJoystickRot : FB_JoystickInputScaling; 
+	fbYokeInputScaling : FB_Yoke_Input_Scaling;
+	fbWinchPosition : FB_Encoder;
+	fbPressureSupply : FB_PressureInputScaling; 
+	fbPressureReturn : FB_PressureInputScaling;
+	fbPressureWinch_A_Input : FB_PressureInputScaling;
+	fbPressureWInch_B_Input : FB_PressureInputScaling; 
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbJoystickWinch(
+	bEnable := G_IO.bAutoSwitch OR G_IO.bManualSwitch,
+	nRawInput := G_IO.fJoyYraw, 
+	stJoystickInputScaling := G_Parameters.stParam.stJoystickInputScalingY, 
+	fNormalizedOutput => G_Sensors.fJoystickNormalizedY
+);
+
+fbJoystickRot(
+	bEnable := G_IO.bManualSwitch, 
+	nRawInput := G_IO.fJoyZraw,
+	stJoystickInputScaling := G_Parameters.stParam.stJoystickInputScalingZ,
+    fNormalizedOutput => G_Sensors.fJoystickNormalizedZ
+);
+
+fbYokeInputScaling(
+	bEnable := G_IO.bManualSwitch,
+	nRawInput := G_IO.fYoke, 
+	stYokeInputScaling := G_Parameters.stParam.stYokeInputScaling,
+	fNormalizedOutput => G_Sensors.fYokeNormalizedFeedback
+);
+
+fbWinchPosition(
+nRawInput := G_IO.nWinchEncoderValue,
+fEncoderOffset := G_Parameters.stParam.fWinchEncoderOffset,
+fPosition => G_Sensors.fWinchEncoderPosition
+);
+
+fbPressureSupply(
+	nRawInput := G_IO.fPressureSupply,
+	stPressureInputScaling := G_Parameters.stParam.stPressureSensorScaling400bar,
+	fOutput => G_Sensors.fPressureSupply
+);
+
+fbPressureReturn(
+	nRawInput := G_IO.fPressureReturn,
+	stPressureInputScaling := G_Parameters.stParam.stPressureSensorScaling40bar,
+	fOutput => G_Sensors.fPressureReturn
+	);
+	
+fbPressureWinch_A_Input(
+	nRawInput := G_IO.fPressureWinchA, 
+	stPressureInputScaling := G_Parameters.stParam.stPressureSensorScaling400bar, 
+	fOutput => G_Sensors.fPressureWinchA
+	);
+	
+fbPressureWinch_B_Input(
+nRawInput := G_IO.fPressureWinchB,
+stPressureInputScaling := G_Parameters.stParam.stPressureSensorScaling400bar, 
+fOutput => G_Sensors.fPressureWinchB
+);
+
+// Trykkfall over motor: 
+
+G_Sensors.fDeltaPMotor := (G_Sensors.fPressureWinchB - G_Sensors.fPressureWinchA); 
+	
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

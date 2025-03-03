@@ -10,6 +10,14 @@ VAR
 	fb_Joystick							: FB_Joystick;
 	fb_Outputs							: FB_Outputs;
 	fb_ValveOutput						: FB_ValveOutput;
+	fb_Encoder							: FB_Encoder; 
+	fb_Inputs						    : FB_Inputs;
+	fb_PressureInputScaling 			: FB_PressureInputScaling;
+	fb_DisplacementControl				: FB_DisplacementControl;
+	fb_DisplacementValveOutput 			: FB_DisplacementValveOutput;
+	fb_Yoke_Input_Scaling 				: FB_Yoke_Input_Scaling;
+	
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -20,6 +28,14 @@ END_VAR
 	fb_Joystick();
 	fb_Outputs();
 	fb_ValveOutput();
+	fb_Encoder();
+	fb_Inputs();
+	fb_PressureInputScaling();
+	fb_DisplacementControl();
+	fb_DisplacementValveOutput();
+	fb_Yoke_Input_Scaling();
+	
+	
 END_IF
 
 fb_Motion_Control.eStatus := fb_StateMachine_Mode_Selection.eStatus;

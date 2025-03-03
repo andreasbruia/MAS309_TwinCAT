@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_DisplacementValveOutput" Id="{0e603809-9d55-44e6-959a-3ac6d6a6b808}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_DisplacementValveOutput
+VAR_INPUT
+	bEnable : BOOL; 
+	bDeadbandCompOn : BOOL; 
+	stValveDeadBand : ST_ValveDeadBand; 
+	fNormalizedInput : LREAL; 
+END_VAR
+VAR_OUTPUT
+	bEnableValveOutput : BOOL; 
+	nOutput : INT; 
+END_VAR
+VAR
+	nOffset : INT; 
+	nMaxValue : INT := 0; 
+	nMinValue : INT := 10000;
+	nTempOutput : INT := -10000; 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bDeadbandCompOn THEN 
+	IF fNormalizedInput > 0.0 THEN
+		nTempOutput := LREAL_TO_INT(fNormalizedInput*(stValveDeadBand.fPosMax - stValveDeadBand.fPosMin) + stValveDeadBand.fPosMin);
+	ELSIF fNormalizedInput < 0.0 THEN
+		nTempOutput := LREAL_TO_INT(fNormalizedInput*(stValveDeadBand.fNegMax - stValveDeadBand.fNegMax) - stValveDeadBand.fNegMin); 
+	ELSE
+		nTempOutput := 0; 
+	END_IF
+	
+ELSE 
+	IF fNormalizedInput > 0.0 THEN 
+		nTempOutput := LREAL_TO_INT(fNormalizedInput*10000.0); // Hvorfor dette? 
+	ELSIF fNormalizedInput < 0.0 THEN
+		nTempOutput := LREAL_TO_INT(fNormalizedInput*(10000.0)); // Denne skal vel være negativ
+	ELSE
+		nTempOutput := 0; 
+	END_IF
+END_IF
+
+IF bEnable THEN
+	nOutput := LIMIT(nMinValue, nTempOutput, nMaxValue); 
+	bEnableValveOutput := TRUE; 
+ELSE
+	nOutput := 0;
+	bEnableValveOutput := FALSE; 
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

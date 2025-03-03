@@ -1,51 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_Encoder" Id="{8787a237-dc0d-4eb7-a839-7cc670f29511}" SpecialFunc="None">
+  <POU Name="FB_Encoder" Id="{135b6917-e0f2-4f75-ba76-a6bf43c9c297}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Encoder
 VAR_INPUT
-nRawInput : UDINT; 
-nEncoderOffset : LREAL; 
+	nRawInput : UDINT;
+	fEncoderOffset : LREAL; 
 END_VAR
 VAR_OUTPUT
-	fPosition : LREAL; 
-	fPositionError : LREAL; 
+	fPosition 		: LREAL;
+	fPositionError 	: LREAL;
 END_VAR
-VAR PERSISTENT // Beholder verdien sin selv om porgrammet restarter, lik som bare faen 
-	nRounds : DINT; 
-    nRawLast : DINT; 
-END_VAR
+VAR PERSISTENT // Variabler som huskes selv om programmet stoppes, verdiene blir lagret 
+	nRounds			: DINT;
+	nRawLast 		: DINT;
+END_VAR	
 VAR
-	nInput : DINT;
-	nTempInputDiff : DINT; 
-	nMaxValue30bit : DINT := 1073741823; 
-	nTreshold30bit : DINT := nMaxValue30bit/2;
-	nCount : DINT;
-	fScale16bit : LREAL := 360.0/65535; 
-	
+	nInput 		: DINT;
+	nTempInputDiff	: DINT;
+	nCount 			: DINT;
+	nMaxValue30bit 	: DINT :=  1073741823; // 2^30 - 1	
+	nThreshold30bit	: DINT := nMaxValue30bit/2;
+	fScale16bit		: LREAL := 360.0/65535.0; // 360deg/(2^16 - 1)
+	fTempPosition   : LREAL;
+	fScaleDegtoMeter : LREAL := 0.075 * PI / 180 ; //Dette ksulle visst bli endret senere?
+	fPosRef 		 : LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Konverterer iput-verdi fra enkoder til DINT: 
-nInput := UDINT_TO_DINT(nRawInput); 
+      <ST><![CDATA[// Konverterer til DINT 
+nInput := UDINT_TO_DINT(nRawInput); // Slik at vi også kan definere negative verdier på enkoder
 
-// Definerer en runde på enkoder
-nTempInputDiff := nInput - nRawLast; // Differanse ikke-konvertert og konvertert 
-
-IF (nTempInputDiff > nTreshold30bit) THEN 
+// Definerer 1 runde på enkoder
+nTempInputDiff := nInput - nRawLast; // Endringen siden sist input
+IF (nTempInputDiff > nThreshold30bit) THEN
 	nRounds := nRounds - 1;
 END_IF
 
-IF  (nTempInputDiff < -nTreshold30bit) THEN
-	nRounds := nRounds + 1; 
+IF (nTempInputDiff < -nThreshold30bit) THEN
+	nRounds := nRounds + 1;
 END_IF
 
-// Teller antall runder: 
+// Teller runder på enkoder
+nCount := nInput + nRounds*nMaxValue30bit;
 
-nCount := nInput + nRounds*nMaxValue30bit; 
+// Posisjonsoutput
 
-// Position output: 
+fPosition := (DINT_TO_LREAL(nCount)*fScale16bit - fEncoderOffset); 
 
-fPosition := DINT_TO_LREAL(nCount)*fScale16bit;
 
 
 

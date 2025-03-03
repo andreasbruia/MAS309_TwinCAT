@@ -57,14 +57,14 @@
 		</System>
 		<Plc>
 			<Project GUID="{7DEF9D13-0B94-4C95-A765-AE6239C77AE2}" Name="Project_V25_Gr3" PrjFilePath="Project_V25_Gr3\Project_V25_Gr3.plcproj" TmcFilePath="Project_V25_Gr3\Project_V25_Gr3.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" CopyTmcToTarget="true" CopyTpyToTarget="false" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{99A8D37E-8075-77E0-F6E1-7F268ECF8C56}" TmcPath="Project_V25_Gr3\Project_V25_Gr3.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{A0FBC1FA-326B-5BDE-CECB-5A0814C45D14}" TmcPath="Project_V25_Gr3\Project_V25_Gr3.tmc">
 					<Name>Project_V25_Gr3 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
 						<Var>
 							<Name>G_IO.bOpenBrakes</Name>
-							<Comment><![CDATA[ Digital Outputs]]></Comment>
+							<Comment><![CDATA[ Digitale Outputs]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -77,7 +77,7 @@
 						</Var>
 						<Var>
 							<Name>G_IO.fWinchPDCVOut</Name>
-							<Comment><![CDATA[ Analog Outputs]]></Comment>
+							<Comment><![CDATA[ Analoge Outputs]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
@@ -93,7 +93,7 @@
 						<Name>PlcTask Inputs</Name>
 						<Var>
 							<Name>G_IO.bEmgOk</Name>
-							<Comment><![CDATA[ Digital Inputs]]></Comment>
+							<Comment><![CDATA[ Digitale inputs]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -126,7 +126,7 @@
 						</Var>
 						<Var>
 							<Name>G_IO.fJoyXraw</Name>
-							<Comment><![CDATA[ Analog Intputs]]></Comment>
+							<Comment><![CDATA[ Analoge Intputs]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>

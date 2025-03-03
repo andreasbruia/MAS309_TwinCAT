@@ -4,13 +4,23 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Outputs
 VAR_INPUT
 	eStatus 			: E_Status;
+	
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	bEnableWinch 		: BOOL;
-	bEnableDisplacement	: BOOL;
-	bEnableMotion		: BOOL;
+	fbWinchValveOutput 				: FB_ValveOutput;
+	fbDisplacementValveOutput 		: FB_DisplacementValveOutput;	
+	
+	fDisplacementControlSignal		: LREAL;
+	fDisplacementNormalizedInput 	: LREAL := 1.0;
+
+	bEnableWinch 					: BOOL;
+	bEnableDisplacement				: BOOL;
+	bEnableMotion					: BOOL;
+	fWinchValveInput 				: LREAL;
+	bEnableValveOutputWinch 		: BOOL; 
+	bEnableValveOutputDisp	 		: BOOL; 
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -39,6 +49,43 @@ IF (eStatus = E_Status.Running) AND G_IO.bDisplacementEnable THEN
 ELSE
 	bEnableDisplacement := FALSE;
 END_IF
+
+fWinchValveInput := G_Sensors.fJoystickNormalizedY; // Kanksje ikke nødvendig bare bruke Global verdi i stedet?
+
+// Legge inn endstop override her
+
+fbWinchValveOutput(
+	bEnable := eStatus = E_Status.Running,
+	bDeadBandCompOn := G_Parameters.stParam.bWinchDeadBandCompOn,
+	stValveDeadBand := G_Parameters.stParam.stWinchValveDeadBand,
+	fNormalizedInput := fWinchValveInput,
+	bEnableValveOutput => bEnableValveOutputWinch,
+	nOutput => G_IO.fWinchValveOut
+	);
+
+
+// Når displacement ikke er enabled blir den satt til 1 (helt åpen) definert oppe i variabler
+IF bEnableDisplacement THEN
+	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ; //Koblrt displacement til Z på joystick
+ELSE
+	fDisplacementControlSignal := fDisplacementNormalizedInput;
+END_IF
+
+fbDisplacementValveOutput(
+	bEnable := eStatus = E_Status.Running,
+	bDeadbandCompOn := G_Parameters.stParam.bDisplacementDeadBandCompOn,
+	stValveDeadBand := G_Parameters.stParam.stDisplacementValveDeadBand,
+	fNormalizedInput := fDisplacementControlSignal,
+	bEnableValveOutput => bEnableValveOutputDisp,
+	nOutput => G_IO.fWinchPDCVOut
+	);
+	
+
+
+
+
+
+
 
 ]]></ST>
     </Implementation>
