@@ -19,8 +19,15 @@ VAR
 	bEnableDisplacement				: BOOL;
 	bEnableMotion					: BOOL;
 	fWinchValveInput 				: LREAL;
+	fWinchValveNormalizedInput  	: LREAL;
 	bEnableValveOutputWinch 		: BOOL; 
-	bEnableValveOutputDisp	 		: BOOL; 
+	bEnableValveOutputDisp	 		: BOOL;
+	
+	//Endpos
+	
+	fWinchEndUp_encoder				:LREAL := 8972.8578622110326;
+	fWinchEndDown_encoder			:LREAL := 10900.949416342413;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -53,12 +60,25 @@ END_IF
 fWinchValveInput := G_Sensors.fJoystickNormalizedY; // Kanksje ikke nødvendig bare bruke Global verdi i stedet?
 
 // Legge inn endstop override her
+IF G_Sensors.fWinchEncoderPosition > fWinchEndDown_encoder AND NOT (HMI.bEndStopOverride) THEN
+	HMI.bEndStopUpActive := FALSE;
+	HMI.bEndStopDownActive := TRUE;
+	fWinchValveNormalizedInput := LIMIT(0.0, fWinchValveInput, 1.0);
+ELSIF G_Sensors.fWinchEncoderPosition < fWinchEndUp_encoder AND NOT (HMI.bEndStopOverride) THEN
+	HMI.bEndStopUpActive := TRUE;
+	HMI.bEndStopDownActive := FALSE;
+	fWinchValveNormalizedInput := LIMIT(-1.0, fWinchValveInput, 0.0);
+ELSE
+	HMI.bEndStopUpActive := FALSE;
+	HMI.bEndStopDownActive := FALSE;
+	fWinchValveNormalizedInput := fWinchValveInput;
+END_IF
 
 fbWinchValveOutput(
-	bEnable := eStatus = E_Status.Running,
+	bEnable := bEnableWinch,
 	bDeadBandCompOn := G_Parameters.stParam.bWinchDeadBandCompOn,
 	stValveDeadBand := G_Parameters.stParam.stWinchValveDeadBand,
-	fNormalizedInput := fWinchValveInput,
+	fNormalizedInput := fWinchValveNormalizedInput,
 	bEnableValveOutput => bEnableValveOutputWinch,
 	nOutput => G_IO.fWinchValveOut
 	);
@@ -72,7 +92,7 @@ ELSE
 END_IF
 
 fbDisplacementValveOutput(
-	bEnable := eStatus = E_Status.Running,
+	bEnable := bEnableDisplacement,
 	bDeadbandCompOn := G_Parameters.stParam.bDisplacementDeadBandCompOn,
 	stValveDeadBand := G_Parameters.stParam.stDisplacementValveDeadBand,
 	fNormalizedInput := fDisplacementControlSignal,
