@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_PressureInputScaling" Id="{d3fa253e-3589-4311-953b-d497d43a3b4b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PressureInputScaling
+VAR_INPUT
+	nRawInput 					: INT;
+	stPressureInputScaling    	: ST_PressureInputScaling;
+END_VAR
+VAR_OUTPUT
+	fOutput 				: LREAL;
+END_VAR
+VAR
+	fRawInput 					: LREAL;
+	fNormalizedInput			: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fRawInput := INT_TO_LREAL(nRawInput);
+
+fNormalizedInput := (fRawInput - stPressureInputScaling.fMinInputValue) / (stPressureInputScaling.fMaxInputValue - stPressureInputScaling.fMinInputValue);
+
+fOutput := LIMIT(stPressureInputScaling.fMinOutputValue, stPressureInputScaling.fMinOutputValue + fNormalizedInput*(stPressureInputScaling.fMaxOutputValue - stPressureInputScaling.fMinOutputValue), stPressureInputScaling.fMaxOutputValue);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

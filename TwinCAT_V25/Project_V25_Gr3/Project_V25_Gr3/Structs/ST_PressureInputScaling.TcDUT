@@ -3,7 +3,7 @@
   <DUT Name="ST_PressureInputScaling" Id="{1701137f-c4b2-4ef2-b379-08d42d80a31e}">
     <Declaration><![CDATA[TYPE ST_PressureInputScaling :
 STRUCT
-	fMaxInputValue 			: LREAL;	// tunable max input value 
+	fMaxInputValue 			: LREAL := 32767.0;	// tunable max input value //// denne verdien ble satt for å unngå å dele på 0, hvorfor må vi skrive det her men ikke i blueprint prosjekt
 	fMinInputValue			: LREAL;	// tunable min input value  
 	fMaxOutputValue  		: LREAL;	// max sensor output value
 	fMinOutputValue  		: LREAL;	// min sensor output value	
