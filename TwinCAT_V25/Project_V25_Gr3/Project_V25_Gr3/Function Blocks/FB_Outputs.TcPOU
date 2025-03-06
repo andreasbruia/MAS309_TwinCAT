@@ -3,30 +3,32 @@
   <POU Name="FB_Outputs" Id="{c3b6ff0e-0108-484e-aa5d-46cb83b00d7a}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Outputs
 VAR_INPUT
-	eStatus 			: E_Status;
+	eStatus 							: E_Status;
 	
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	fbWinchValveOutput 				: FB_ValveOutput;
-	fbDisplacementValveOutput 		: FB_DisplacementValveOutput;	
+	fbWinchValveOutput 					: FB_ValveOutput;
+	fbDisplacementControl				: FB_DisplacementControl;
+	fbDisplacementValveOutput 			: FB_DisplacementValveOutput;
 	
-	fDisplacementControlSignal		: LREAL;
-	fDisplacementNormalizedInput 	: LREAL := 1.0;
+	fDisplacementControlSignal			: LREAL;
+	fDisplacementNormalizedInput 		: LREAL := 1.0;
+	fDisplacementControlSignal_target	:LREAL;
 
-	bEnableWinch 					: BOOL;
-	bEnableDisplacement				: BOOL;
-	bEnableMotion					: BOOL;
-	fWinchValveInput 				: LREAL;
-	fWinchValveNormalizedInput  	: LREAL;
-	bEnableValveOutputWinch 		: BOOL; 
-	bEnableValveOutputDisp	 		: BOOL;
+	bEnableWinch 						: BOOL;
+	bEnableDisplacement					: BOOL;
+	bEnableMotion						: BOOL;
+	fWinchValveInput 					: LREAL;
+	fWinchValveNormalizedInput  		: LREAL;
+	bEnableValveOutputWinch 			: BOOL; 
+	bEnableValveOutputDisp	 			: BOOL;
 	
 	//Endpos
 	
-	fWinchEndUp_encoder				:LREAL := 8972.8578622110326;
-	fWinchEndDown_encoder			:LREAL := 11091.658503089951;
+	fWinchEndUp_encoder					: LREAL := 8972.8578622110326;
+	fWinchEndDown_encoder				: LREAL := 11091.658503089951;
 	
 END_VAR
 ]]></Declaration>
@@ -83,10 +85,19 @@ fbWinchValveOutput(
 	nOutput => G_IO.fWinchValveOut
 	);
 
+fbDisplacementControl(
+	bEnable := HMI.bDisplacement_target_active AND eStatus = E_Status.Running,
+	fProportionalGain := HMI.fProportionalgain,
+	fDisplacementNormalizedInput := HMI.fDisplacement_target,
+	fYokeNormalizedFeedback := G_Sensors.fYokeNormalizedFeedback,
+	fNormalizedOutput => fDisplacementControlSignal_target
+	);
 
 // Når displacement ikke er enabled blir den satt til 1 (helt åpen) definert oppe i variabler
 IF bEnableDisplacement THEN
 	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ; //Kobler displacement til Z på joystick
+ELSIF HMI.bDisplacement_target_active THEN
+	fDisplacementControlSignal := fDisplacementControlSignal_target;
 ELSE
 	fDisplacementControlSignal := fDisplacementNormalizedInput;
 END_IF

@@ -6,6 +6,16 @@
         <o xml:space="preserve" t="GlobalTextListObject">
           <l n="TextList" t="ArrayList" cet="TextListRow">
             <o>
+              <v n="TextID">"736"</v>
+              <v n="TextDefault">"%2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"336"</v>
+              <v n="TextDefault">"%f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"422"</v>
               <v n="TextDefault">"Bottom"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -26,13 +36,28 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"928"</v>
+              <v n="TextDefault">"PGain"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"999"</v>
               <v n="TextDefault">"Set displacement"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"560"</v>
+              <v n="TextDefault">"Set target displacement"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"222"</v>
               <v n="TextDefault">"Set your displacement  bDeadBandCompOn"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"899"</v>
+              <v n="TextDefault">"Target"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

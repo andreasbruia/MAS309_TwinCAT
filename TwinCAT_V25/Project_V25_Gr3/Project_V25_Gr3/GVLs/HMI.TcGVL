@@ -6,9 +6,12 @@ VAR_GLOBAL
 	//Endstop
 	bEndStopUpActive 				: BOOL;
 	bEndStopDownActive 				: BOOL;
-	bEndStopOverride : BOOL; 
+	bEndStopOverride 				: BOOL; 
 	
-	
+	//Displacementcontrol
+	bDisplacement_target_active		:BOOL;
+	fProportionalgain				:LREAL := 1.0;
+	fDisplacement_target			:LREAL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
