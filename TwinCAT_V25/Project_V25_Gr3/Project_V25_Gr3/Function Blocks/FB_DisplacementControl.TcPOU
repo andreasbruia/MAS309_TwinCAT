@@ -16,7 +16,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF bEnable THEN
-	fNormalizedOutput := LIMIT(-1, ((fDisplacementNormalizedInput - fYokeNormalizedFeedback)*fProportionalGain), 1); // Input - målt verdi = error, multipliseres med P-gain i P controller
+	fNormalizedOutput := LIMIT(0, ((fDisplacementNormalizedInput - fYokeNormalizedFeedback)*fProportionalGain), 1); // Input - målt verdi = error, multipliseres med P-gain i P controller
 	
 ELSE 
 	fNormalizedOutput := 0.0; // Ingen output uten aktivering

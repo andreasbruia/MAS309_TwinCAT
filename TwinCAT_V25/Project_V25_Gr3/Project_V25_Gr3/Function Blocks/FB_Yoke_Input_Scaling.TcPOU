@@ -22,7 +22,7 @@ END_VAR
 fRawInput := INT_TO_LREAL(nRawInput);
 
 //Lagrer nullpunktet i en midlertidig variabel
-fTempOutput := nRawInput - stYokeInputScaling.fNeutralInputValue;
+fTempInput := nRawInput - stYokeInputScaling.fNeutralInputValue;
 
 //Om inputen overgår dødbåndet i pos retning
 IF fTempInput > stYokeInputScaling.fNeutralDeadband THEN
@@ -36,7 +36,7 @@ ELSE
 	fTempOutput := 0.0; 
 END_IF
 
-//Sender bar eut verdi om den er enabled (skrudd på)
+//Sender bare ut verdi om den er enabled (skrudd på)
 IF bEnable THEN
 	fNormalizedOutput := LIMIT(stYokeInputScaling.fMinOutputValue, fTempOutput, stYokeInputScaling.fMaxOutputValue); //setter på limit for å forsikre verdien havner mellom -1 og 1
 	

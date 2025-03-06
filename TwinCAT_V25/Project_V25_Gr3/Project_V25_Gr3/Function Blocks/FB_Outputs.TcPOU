@@ -26,7 +26,7 @@ VAR
 	//Endpos
 	
 	fWinchEndUp_encoder				:LREAL := 8972.8578622110326;
-	fWinchEndDown_encoder			:LREAL := 10900.949416342413;
+	fWinchEndDown_encoder			:LREAL := 11091.658503089951;
 	
 END_VAR
 ]]></Declaration>
@@ -86,13 +86,14 @@ fbWinchValveOutput(
 
 // Når displacement ikke er enabled blir den satt til 1 (helt åpen) definert oppe i variabler
 IF bEnableDisplacement THEN
-	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ; //Koblrt displacement til Z på joystick
+	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ; //Kobler displacement til Z på joystick
 ELSE
 	fDisplacementControlSignal := fDisplacementNormalizedInput;
 END_IF
 
+
 fbDisplacementValveOutput(
-	bEnable := bEnableDisplacement,
+	bEnable := eStatus = E_Status.Running,
 	bDeadbandCompOn := G_Parameters.stParam.bDisplacementDeadBandCompOn,
 	stValveDeadBand := G_Parameters.stParam.stDisplacementValveDeadBand,
 	fNormalizedInput := fDisplacementControlSignal,

@@ -13,10 +13,10 @@ VAR_OUTPUT
 	nOutput : INT; 
 END_VAR
 VAR
-	nOffset : INT; 
-	nMaxValue : INT := 0; 
-	nMinValue : INT := 10000;
-	nTempOutput : INT := -10000; 
+	nOffset : INT := 0; 
+	nMaxValue : INT := 10000; 
+	nMinValue : INT := -10000;
+	nTempOutput : INT; 
 END_VAR
 ]]></Declaration>
     <Implementation>

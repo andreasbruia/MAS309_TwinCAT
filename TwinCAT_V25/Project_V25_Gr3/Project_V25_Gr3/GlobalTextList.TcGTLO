@@ -11,6 +11,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"151"</v>
+              <v n="TextDefault">"Displacement mode"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"616"</v>
               <v n="TextDefault">"EndStop Override"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -18,6 +23,16 @@
             <o>
               <v n="TextID">"49"</v>
               <v n="TextDefault">"Endstop Override"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"999"</v>
+              <v n="TextDefault">"Set displacement"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"222"</v>
+              <v n="TextDefault">"Set your displacement  bDeadBandCompOn"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
