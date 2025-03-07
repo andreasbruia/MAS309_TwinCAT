@@ -3,20 +3,33 @@
   <POU Name="FB_DisplacementControl" Id="{06b81b3f-2d47-4af7-b8ab-6b28ad67bc37}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_DisplacementControl 
 VAR_INPUT
-	bEnable : BOOL; 
-	fProportionalGain : LREAL; 
-	fDisplacementNormalizedInput : LREAL; 
-	fYokeNormalizedFeedback : LREAL; 
+	bEnable 						: BOOL; 
+	fProportionalGain 				: LREAL; 
+	fDisplacementNormalizedInput 	: LREAL; 
+	fYokeNormalizedFeedback 		: LREAL; 
 END_VAR
 VAR_OUTPUT
-	fNormalizedOutput : LREAL; 
+	fNormalizedOutput 				: LREAL; 
 END_VAR
 VAR
+	fYoke_error						: LREAL;
+	fProportinalGain_output			: LREAL;
+	fIntegralGain_output			: LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF bEnable THEN
-	fNormalizedOutput := LIMIT(-1, ((fDisplacementNormalizedInput - fYokeNormalizedFeedback)*fProportionalGain), 1); // Input - målt verdi = error, multipliseres med P-gain i P controller
+	//Closed loop error
+	fYoke_error := fDisplacementNormalizedInput - fYokeNormalizedFeedback;
+	
+	//Error times PGain
+	fProportinalGain_output := LIMIT(-1, (fYoke_error*fProportionalGain), 1); // Input - målt verdi = error, multipliseres med P-gain i P controller
+	
+	//Error times IGain
+	fIntegralGain_output := 0;
+	
+	//Normalized Outputsignal
+	fNormalizedOutput := fProportinalGain_output + fIntegralGain_output;
 	
 ELSE 
 	fNormalizedOutput := 0.0; // Ingen output uten aktivering
