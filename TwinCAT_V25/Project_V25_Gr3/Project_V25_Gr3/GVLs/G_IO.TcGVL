@@ -9,7 +9,7 @@ VAR_GLOBAL
 	bStopButton 	     AT %I* : BOOL; 
 	bOffSwitch		     AT %I* : BOOL;  
 	bManualSwitch	     AT %I* : BOOL; 
-	bAutoSwitch		 AT %I* : BOOL; 
+	bAutoSwitch		 	 AT %I* : BOOL; 
 	bWinchEnable 		 AT %I* : BOOL; 
 	bDisplacementEnable  AT %I* : BOOL;
 	

@@ -62,17 +62,17 @@ END_IF
 fWinchValveInput := G_Sensors.fJoystickNormalizedY; // Kanksje ikke nødvendig bare bruke Global verdi i stedet?
 
 // Legge inn endstop override her
-IF G_Sensors.fWinchEncoderPosition > fWinchEndDown_encoder AND NOT (HMI.bEndStopOverride) THEN
-	HMI.bEndStopUpActive := FALSE;
-	HMI.bEndStopDownActive := TRUE;
+IF G_Sensors.fWinchEncoderPosition > fWinchEndDown_encoder AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	G_Engineer_HMI.bEndStopUpActive := FALSE;
+	G_Engineer_HMI.bEndStopDownActive := TRUE;
 	fWinchValveNormalizedInput := LIMIT(0.0, fWinchValveInput, 1.0);
-ELSIF G_Sensors.fWinchEncoderPosition < fWinchEndUp_encoder AND NOT (HMI.bEndStopOverride) THEN
-	HMI.bEndStopUpActive := TRUE;
-	HMI.bEndStopDownActive := FALSE;
+ELSIF G_Sensors.fWinchEncoderPosition < fWinchEndUp_encoder AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	G_Engineer_HMI.bEndStopUpActive := TRUE;
+	G_Engineer_HMI.bEndStopDownActive := FALSE;
 	fWinchValveNormalizedInput := LIMIT(-1.0, fWinchValveInput, 0.0);
 ELSE
-	HMI.bEndStopUpActive := FALSE;
-	HMI.bEndStopDownActive := FALSE;
+	G_Engineer_HMI.bEndStopUpActive := FALSE;
+	G_Engineer_HMI.bEndStopDownActive := FALSE;
 	fWinchValveNormalizedInput := fWinchValveInput;
 END_IF
 
@@ -86,9 +86,8 @@ fbWinchValveOutput(
 	);
 
 fbDisplacementControl(
-	bEnable := HMI.bDisplacement_target_active AND eStatus = E_Status.Running,
-	fProportionalGain := HMI.fProportionalgain,
-	fDisplacementNormalizedInput := HMI.fDisplacement_target,
+	bEnable := G_Engineer_HMI.bDisplacement_target_active AND eStatus = E_Status.Running,
+	fDisplacementNormalizedInput := G_Engineer_HMI.fDisplacement_target,
 	fYokeNormalizedFeedback := G_Sensors.fYokeNormalizedFeedback,
 	fNormalizedOutput => fDisplacementControlSignal_target
 	);
@@ -96,7 +95,7 @@ fbDisplacementControl(
 // Når displacement ikke er enabled blir den satt til 1 (helt åpen) definert oppe i variabler
 IF bEnableDisplacement THEN
 	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ; //Kobler displacement til Z på joystick
-ELSIF HMI.bDisplacement_target_active THEN
+ELSIF G_Engineer_HMI.bDisplacement_target_active THEN
 	fDisplacementControlSignal := fDisplacementControlSignal_target;
 ELSE
 	fDisplacementControlSignal := fDisplacementNormalizedInput;

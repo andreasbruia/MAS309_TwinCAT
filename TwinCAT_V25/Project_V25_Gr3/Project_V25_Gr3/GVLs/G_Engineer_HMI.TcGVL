@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="G_Engineer_HMI" Id="{26f8b220-c366-427c-968e-e98e5cf6b52c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	//Endstop
+	bEndStopUpActive 				: BOOL;
+	bEndStopDownActive 				: BOOL;
+	bEndStopOverride 				: BOOL; 
+	
+	//Displacementcontrol 
+	bDisplacement_target_active		: BOOL;
+	fDisplacement_target			: LREAL;
+	
+	// PID Gains for displacementcontrol
+	fProportionalgain_dis			: LREAL;
+	fIntegralgain_dis				: LREAL;
+	fDerivativegain_dis				: LREAL;
+	bPenable_dis					: BOOL := TRUE; //Ønsker P ledd på fra start
+	bIenable_dis					: BOOL;
+	bDenable_dis					: BOOL;
+	
+	bPenable_dis_write				: BOOL ;
+	bIenable_dis_write				: BOOL;
+	bDenable_dis_write				: BOOL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

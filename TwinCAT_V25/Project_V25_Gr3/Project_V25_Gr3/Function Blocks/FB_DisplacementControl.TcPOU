@@ -4,32 +4,78 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_DisplacementControl 
 VAR_INPUT
 	bEnable 						: BOOL; 
-	fProportionalGain 				: LREAL; 
+	
 	fDisplacementNormalizedInput 	: LREAL; 
 	fYokeNormalizedFeedback 		: LREAL; 
 END_VAR
 VAR_OUTPUT
 	fNormalizedOutput 				: LREAL; 
 END_VAR
+
+VAR PERSISTENT
+	fProportionalGain 				: LREAL;
+	fIntegralGain					: LREAL;
+	fDerivateGain					: LREAL;
+END_VAR
+
 VAR
+	fbPID_controller				:FB_PID_controller;	
 	fYoke_error						: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
-END_VAR
+	fDerivateGain_output			: LREAL;
+END_VAR	
+
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF bEnable THEN
 	//Closed loop error
 	fYoke_error := fDisplacementNormalizedInput - fYokeNormalizedFeedback;
 	
-	//Error times PGain
-	fProportinalGain_output := LIMIT(-1, (fYoke_error*fProportionalGain), 1); // Input - målt verdi = error, multipliseres med P-gain i P controller
+	//Write to PGain
+	IF NOT(G_Engineer_HMI.bPenable_dis_write) THEN
+	G_Engineer_HMI.fProportionalgain_dis := fProportionalGain; //Update to the persistent variable
+	ELSE
+	fProportionalGain := G_Engineer_HMI.fProportionalgain_dis; //Connect the gain to the global HMI
+	END_IF
 	
+	//Write to IGain
+	IF NOT(G_Engineer_HMI.bIenable_dis_write) THEN
+	G_Engineer_HMI.fIntegralgain_dis := fIntegralGain; //Update to the persistent variable
+	ELSE
+	fIntegralGain := G_Engineer_HMI.fIntegralgain_dis; //Connect the gain to the global HMI
+	END_IF
+	
+	//Write to DGain
+	IF NOT(G_Engineer_HMI.bDenable_dis_write) THEN
+	G_Engineer_HMI.fDerivativegain_dis := fDerivateGain; //Update to the persistent variable
+	ELSE
+	fDerivateGain := G_Engineer_HMI.fDerivativegain_dis; //Connect the gain to the global HMI
+	END_IF
+	
+	fbPID_controller(
+		ssMethodType := BOOL_TO_SINT(bEnable),
+		error := fYoke_error,
+		P_enable := G_Engineer_HMI.bPenable_dis,
+		I_enable := G_Engineer_HMI.bIenable_dis,
+		D_enable := G_Engineer_HMI.bDenable_dis,
+		K_p := fProportionalGain,
+		K_i := fIntegralGain,
+		K_d := fDerivateGain,
+		P_output => fProportinalGain_output,
+		I_output => fIntegralGain_output,
+		D_output => fDerivateGain_output
+		);
+	
+	//Error times PGain
+	fProportinalGain_output := LIMIT(-1, fProportinalGain_output, 1);
 	//Error times IGain
-	fIntegralGain_output := 0;
+	fIntegralGain_output := LIMIT(-1, fIntegralGain_output, 1);
+	//Error times DGain
+	fDerivateGain_output := LIMIT(-1, fDerivateGain_output, 1);
 	
 	//Normalized Outputsignal
-	fNormalizedOutput := fProportinalGain_output + fIntegralGain_output;
+	fNormalizedOutput := fProportinalGain_output + fIntegralGain_output + fDerivateGain_output;
 	
 ELSE 
 	fNormalizedOutput := 0.0; // Ingen output uten aktivering
