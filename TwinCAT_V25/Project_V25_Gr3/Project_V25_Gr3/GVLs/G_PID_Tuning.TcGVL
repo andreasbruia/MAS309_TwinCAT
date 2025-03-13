@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="G_PID_Tuning" Id="{7fbd9705-39ed-44a0-84dd-8314cc0a51b0}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	//Displacement control
+	fYoke_error 			: LREAL;
+	fProportinalGain_output : LREAL;
+	fIntegralGain_output	: LREAL;
+	fDerivateGain_output 	: LREAL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
