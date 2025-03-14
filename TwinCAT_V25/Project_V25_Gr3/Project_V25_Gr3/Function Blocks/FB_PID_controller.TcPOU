@@ -3,14 +3,15 @@
   <POU Name="FB_PID_controller" Id="{043fcf32-d988-4eaa-bed1-efdb0e9e1e3c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_PID_controller
 VAR_INPUT
-	ssMethodType: SINT;
-	error: LREAL;
-	P_enable: BOOL;
-	I_enable: BOOL;
-	D_enable: BOOL;
-	K_p: LREAL;
-	K_i: LREAL;
-	K_d: LREAL;
+	ssMethodType			: SINT;
+	error					: LREAL;
+	Int_error_threshold 	: LREAL;
+	P_enable				: BOOL;
+	I_enable				: BOOL;
+	D_enable				: BOOL;
+	K_p						: LREAL;
+	K_i						: LREAL;
+	K_d						: LREAL;
 END_VAR
 VAR_OUTPUT
 	P_output: LREAL;
@@ -103,7 +104,13 @@ CASE ssMethodType OF
 
         (* Update for DiscreteIntegrator: '<S1>/Discrete-Time Integrator' incorporates:
          *  Product: '<S1>/Product1' *)
-        c_DiscreteTimeIntegrator_DS := ((K_i * error) * 0.01) + c_DiscreteTimeIntegrator_DS;
+       
+		IF ABS(error) < Int_error_threshold THEN
+			c_DiscreteTimeIntegrator_DS := 0.0;
+		ELSE
+			c_DiscreteTimeIntegrator_DS := ((K_i * error) * 0.01) + c_DiscreteTimeIntegrator_DS;
+		END_IF
+		 
         (* Update for UnitDelay: '<S2>/UD'
          *
          * Block description for '<S2>/UD':

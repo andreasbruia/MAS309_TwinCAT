@@ -57,6 +57,7 @@ END_VAR
 	fbPID_controller(
 		ssMethodType := BOOL_TO_SINT(bEnable),
 		error := fYoke_error,
+		Int_error_threshold := G_PID_Tuning.Int_error_threshold,
 		P_enable := G_Engineer_HMI.bPenable_dis,
 		I_enable := G_Engineer_HMI.bIenable_dis,
 		D_enable := G_Engineer_HMI.bDenable_dis,

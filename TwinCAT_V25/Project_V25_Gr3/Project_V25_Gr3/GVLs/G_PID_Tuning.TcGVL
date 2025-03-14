@@ -8,6 +8,7 @@ VAR_GLOBAL
 	fProportinalGain_output : LREAL;
 	fIntegralGain_output	: LREAL;
 	fDerivateGain_output 	: LREAL;
+	Int_error_threshold		: LREAL := 0.0001;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
