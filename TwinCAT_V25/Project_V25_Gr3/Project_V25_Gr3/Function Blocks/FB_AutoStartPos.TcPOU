@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_AutoStartPos" Id="{bc9cc522-7b04-40cd-ac55-3a13b0903ef0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AutoStartPos
+VAR_INPUT
+	bEnable 						: BOOL; 
+	fPosition						: LREAL;
+	fStartPosition					: LREAL;
+	
+	eStatus 						: BOOL; //E_Status;
+END_VAR
+VAR_OUTPUT
+	bStartPosOK						: BOOL;
+	fWinchValveNormalizedInput 		: LREAL;
+	bOpenBreak						: BOOL;
+END_VAR
+
+VAR PERSISTENT
+	fProportionalGain 				: LREAL;
+	fIntegralGain					: LREAL;
+	fDerivateGain					: LREAL;
+END_VAR
+
+VAR
+	fbPID_controller				: FB_PID_controller;
+	fPosition_error					: LREAL;
+	fProportinalGain_output			: LREAL;
+	fIntegralGain_output			: LREAL;
+	fDerivateGain_output			: LREAL;
+	bEnableValveOutputWinch			: BOOL;	
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bEnable  THEN
+	
+IF eStatus THEN
+	bOpenBreak	:= TRUE;
+ELSE
+	bOpenBreak := FALSE;
+END_IF
+
+fPosition_error := fPosition - fStartPosition;
+
+//Definere gains på bedre måte
+fProportionalGain := 2.1;
+fIntegralGain := 0.0;
+fDerivateGain := 0.0;
+
+fbPID_controller(
+		ssMethodType := BOOL_TO_SINT(bEnable),
+		error := fPosition_error,
+		Int_error_threshold := G_PID_Tuning.Int_error_threshold,
+		P_enable := TRUE,
+		I_enable := FALSE,
+		D_enable := FALSE,
+		K_p := fProportionalGain,
+		K_i := fIntegralGain,
+		K_d := fDerivateGain,
+		P_output => fProportinalGain_output,
+		I_output => fIntegralGain_output,
+		D_output => fDerivateGain_output
+		);
+		
+	fWinchValveNormalizedInput := LIMIT(-1, -1*fProportinalGain_output + fIntegralGain_output + fDerivateGain_output, 1);
+		
+	
+	IF ABS(fPosition_error) < 0.01 THEN
+		bStartPosOK := TRUE;
+	END_IF
+		
+ELSE
+	bStartPosOK := FALSE;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

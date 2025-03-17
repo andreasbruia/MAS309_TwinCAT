@@ -16,6 +16,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"877"</v>
+              <v n="TextDefault">"Auto Start Position"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"422"</v>
               <v n="TextDefault">"Bottom"</v>
               <l n="LanguageTexts" t="ArrayList" />

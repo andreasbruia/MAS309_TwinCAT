@@ -23,6 +23,11 @@ VAR_GLOBAL
 	bPenable_dis_write				: BOOL ;
 	bIenable_dis_write				: BOOL;
 	bDenable_dis_write				: BOOL;
+	
+	// Auto Start Pos
+	bAutoStartPosEnable				: BOOL;
+	fAutoStartPos_target			: LREAL := 0.5;
+	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

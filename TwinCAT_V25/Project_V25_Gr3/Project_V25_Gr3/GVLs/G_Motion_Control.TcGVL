@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="G_Motion_Control" Id="{730fe87e-cb38-4f98-b4e9-e8ddae689ecb}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+//AutoStartPos
+fWinchValveNormalizedInput 			: LREAL;	
+bOpenBreak							: BOOL;
+
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

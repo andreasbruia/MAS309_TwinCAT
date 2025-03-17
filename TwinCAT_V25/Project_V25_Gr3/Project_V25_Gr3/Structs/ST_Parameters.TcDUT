@@ -17,9 +17,9 @@ STRUCT
 	fWinchEncoderOffset 			: LREAL := 12814.994735637447; // Encoder value at zero (Cylinder out / second layaer)
 	stYokeInputScaling 				: ST_YokeInputScaling := (fMaxInputValue := 25000.0, fMinInputValue := 6150.0, fNeutralInputValue := 15470, fNeutralDeadband := 0.0, fMaxOutputValue := 1.0, fMinOutputValue := -1.0, fNeutralOutputValue := 0.0);
 	fWinchDrumRadius 				: LREAL := 0.075;
-	fWinchEndStopPos 				: LREAL := 2.16;
-	fWinchEndStopNeg 				: LREAL := 1.0;
-	fPayloadMass 					: LREAL := 78.0;
+	fWinchEndStopPos 				: LREAL := 8972.8578622110326;
+	fWinchEndStopNeg 				: LREAL := 10971.235523002975;
+	fPayloadMass 					: LREAL := 15.0;
 	
 	
 END_STRUCT

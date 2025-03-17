@@ -4,7 +4,6 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Outputs
 VAR_INPUT
 	eStatus 							: E_Status;
-	
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -27,8 +26,8 @@ VAR
 	
 	//Endpos
 	
-	fWinchEndUp_encoder					: LREAL := 8972.8578622110326;
-	fWinchEndDown_encoder				: LREAL := 11091.658503089951;
+	fWinchEndUp_encoder					: LREAL := G_Parameters.stParam.fWinchEndStopPos;
+	fWinchEndDown_encoder				: LREAL := G_Parameters.stParam.fWinchEndStopNeg;
 	
 END_VAR
 ]]></Declaration>
@@ -41,7 +40,19 @@ ELSE
 	G_IO.bWinchValveEnable := FALSE;
 END_IF
 
+//Manual Controls in use if auto not enabled
+IF G_IO.bManualSwitch THEN
 bEnableMotion := G_IO.bWinchEnable;
+fWinchValveInput := G_Sensors.fJoystickNormalizedY;
+//Vurdere å ha en else med fWinchValveInput = 0.0???
+END_IF
+
+/////////////////////AutoStartPos/////////////////////
+IF G_IO.bAutoSwitch THEN
+	bEnableMotion := G_Motion_Control.bOpenBreak;
+	fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput;
+END_IF
+	
 
 ///////////////////// Winch //////////////////////////////
 IF (eStatus = E_Status.Running) AND bEnableMotion THEN 
@@ -59,7 +70,8 @@ ELSE
 	bEnableDisplacement := FALSE;
 END_IF
 
-fWinchValveInput := G_Sensors.fJoystickNormalizedY; // Kanksje ikke nødvendig bare bruke Global verdi i stedet?
+
+
 
 // Legge inn endstop override her
 IF G_Sensors.fWinchEncoderPosition > fWinchEndDown_encoder AND NOT (G_Engineer_HMI.bEndStopOverride) THEN

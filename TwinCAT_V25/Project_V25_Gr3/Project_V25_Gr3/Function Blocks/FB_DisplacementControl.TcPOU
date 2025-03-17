@@ -19,7 +19,7 @@ VAR PERSISTENT
 END_VAR
 
 VAR
-	fbPID_controller				:FB_PID_controller;	
+	fbPID_controller				: FB_PID_controller;	
 	fYoke_error						: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
@@ -70,17 +70,18 @@ END_VAR
 		);
 	
 	//Error times PGain
-	fProportinalGain_output := LIMIT(-1, fProportinalGain_output, 1);
+	fProportinalGain_output := fProportinalGain_output;
 	G_PID_Tuning.fProportinalGain_output := fProportinalGain_output;
 	//Error times IGain
-	fIntegralGain_output := LIMIT(-1, fIntegralGain_output, 1);
+	fIntegralGain_output := fIntegralGain_output;
 	G_PID_Tuning.fIntegralGain_output := fIntegralGain_output;
 	//Error times DGain
-	fDerivateGain_output := LIMIT(-1, fDerivateGain_output, 1);
+	fDerivateGain_output := fDerivateGain_output;
 	G_PID_Tuning.fDerivateGain_output := fDerivateGain_output;
 	
 	//Normalized Outputsignal
-	fNormalizedOutput := fProportinalGain_output + fIntegralGain_output + fDerivateGain_output;
+	fNormalizedOutput := LIMIT(-1,fProportinalGain_output + fIntegralGain_output + fDerivateGain_output,1);
+	G_PID_Tuning.PID_output := fNormalizedOutput;
 	
 ELSE 
 	fNormalizedOutput := 0.0; // Ingen output uten aktivering

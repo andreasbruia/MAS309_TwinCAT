@@ -16,7 +16,7 @@ VAR
 //	fb_DisplacementControl				: FB_DisplacementControl;
 //	fb_DisplacementValveOutput 			: FB_DisplacementValveOutput;
 //	fb_Yoke_Input_Scaling 				: FB_Yoke_Input_Scaling;
-	
+	fb_EncoderScaling					: FB_EncoderScaling;
 	
 END_VAR
 ]]></Declaration>
@@ -34,11 +34,14 @@ END_VAR
 //	fb_DisplacementValveOutput();
 //	fb_Yoke_Input_Scaling();
 	fb_Outputs();
-
+	fb_EncoderScaling();
 END_IF
 
+
+
 fb_Motion_Control.eStatus := fb_StateMachine_Mode_Selection.eStatus;
-fb_Outputs.eStatus := fb_StateMachine_Mode_Selection.eStatus;]]></ST>
+fb_Outputs.eStatus := fb_StateMachine_Mode_Selection.eStatus;
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

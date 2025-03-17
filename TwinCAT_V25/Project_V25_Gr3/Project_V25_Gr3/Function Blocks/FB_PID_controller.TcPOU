@@ -105,11 +105,13 @@ CASE ssMethodType OF
         (* Update for DiscreteIntegrator: '<S1>/Discrete-Time Integrator' incorporates:
          *  Product: '<S1>/Product1' *)
        
-		IF ABS(error) < Int_error_threshold THEN
+		 //Anti windup med threshold verdi. Problem: Fører til oscillering
+		(*IF ABS(error) < Int_error_threshold THEN
 			c_DiscreteTimeIntegrator_DS := 0.0;
 		ELSE
 			c_DiscreteTimeIntegrator_DS := ((K_i * error) * 0.01) + c_DiscreteTimeIntegrator_DS;
-		END_IF
+		END_IF*)
+		 c_DiscreteTimeIntegrator_DS := ((K_i * error) * 0.01) + c_DiscreteTimeIntegrator_DS;
 		 
         (* Update for UnitDelay: '<S2>/UD'
          *

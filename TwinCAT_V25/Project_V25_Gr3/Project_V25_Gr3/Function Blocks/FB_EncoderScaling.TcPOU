@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_EncoderScaling" Id="{b6eda743-5c23-4143-a842-eca943707efa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EncoderScaling
+VAR_INPUT
+	fPosition							: LREAL;
+END_VAR
+VAR_OUTPUT
+	fNormalizedPosition					: LREAL;
+END_VAR
+VAR
+	
+	fWinchEndUp_encoder					: LREAL := G_Parameters.stParam.fWinchEndStopPos;
+	fWinchEndDown_encoder				: LREAL := G_Parameters.stParam.fWinchEndStopNeg;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+fNormalizedPosition := LIMIT(0,( fPosition - fWinchEndDown_encoder) / (fWinchEndUp_encoder - fWinchEndDown_encoder), 1);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
