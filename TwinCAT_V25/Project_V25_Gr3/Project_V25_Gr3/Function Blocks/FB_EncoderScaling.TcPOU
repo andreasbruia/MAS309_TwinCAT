@@ -16,7 +16,8 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[
-fNormalizedPosition := LIMIT(0,( fPosition - fWinchEndDown_encoder) / (fWinchEndUp_encoder - fWinchEndDown_encoder), 1);]]></ST>
+fNormalizedPosition := LIMIT(0,( fPosition - fWinchEndDown_encoder) / (fWinchEndUp_encoder - fWinchEndDown_encoder), 1);
+G_Sensors.fWinchEncoderPositionNormalized := fNormalizedPosition;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

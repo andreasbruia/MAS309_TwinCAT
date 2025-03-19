@@ -48,11 +48,20 @@ fWinchValveInput := G_Sensors.fJoystickNormalizedY;
 END_IF
 
 /////////////////////AutoStartPos/////////////////////
-IF G_IO.bAutoSwitch THEN
+IF G_IO.bAutoSwitch  AND G_Engineer_HMI.bAutoStartPosEnable THEN
 	bEnableMotion := G_Motion_Control.bOpenBreak;
 	fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput;
 END_IF
-	
+
+/////////////////////AutoSineMotion/////////////////////
+IF G_IO.bAutoSwitch AND G_Engineer_HMI.bAutoSineMotionEnable THEN
+	bEnableMotion := G_Motion_Control.bOpenBreak;
+	fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput_sine;
+END_IF
+
+IF G_IO.bAutoSwitch AND NOT G_Engineer_HMI.bAutoStartPosEnable THEN
+    fWinchValveInput := 0.0;
+END_IF
 
 ///////////////////// Winch //////////////////////////////
 IF (eStatus = E_Status.Running) AND bEnableMotion THEN 
@@ -96,6 +105,9 @@ fbWinchValveOutput(
 	bEnableValveOutput => bEnableValveOutputWinch,
 	nOutput => G_IO.fWinchValveOut
 	);
+	
+	//Gjør output til ventilen global
+	G_Sensors.fWinchValveOutNormalized := fWinchValveNormalizedInput;
 
 fbDisplacementControl(
 	bEnable := G_Engineer_HMI.bDisplacement_target_active AND eStatus = E_Status.Running,

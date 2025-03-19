@@ -3,7 +3,7 @@
   <DUT Name="ST_Parameters" Id="{a43a257d-4d38-4d6a-971b-afd17eab7788}">
     <Declaration><![CDATA[ TYPE ST_Parameters : // Blir gjort globale i GVL
 STRUCT
-	fCyclicTime 					: LREAL := 0.001; // [s]
+	fCyclicTime 					: LREAL := 0.01; // [s]
 	fMaxWinchVelocityLimit 			: LREAL := 0.025; // [m/s]
 	bWinchDeadBandCompOn 			: BOOL := FALSE;
 	bDisplacementDeadBandCompOn 	: BOOL := FALSE;

@@ -7,7 +7,13 @@ VAR_GLOBAL
 fWinchValveNormalizedInput 			: LREAL;	
 bOpenBreak							: BOOL;
 
+//AutoSineMotion
+fWinchValveNormalizedInput_sine 	: LREAL;
+fSineReferenceSignal				:LREAL;
 
+// Position Errors
+fPosition_error_SineMotion 					: LREAL; 
+fPosition_error_StartPos					: LREAL; 
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

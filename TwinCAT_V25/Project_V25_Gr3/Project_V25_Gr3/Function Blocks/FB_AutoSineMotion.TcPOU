@@ -1,18 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_AutoStartPos" Id="{bc9cc522-7b04-40cd-ac55-3a13b0903ef0}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_AutoStartPos
-VAR_INPUT
-	bEnable 						: BOOL; 
-	fPosition						: LREAL;
-	fStartPosition					: LREAL;
-	
-	eStatus 						: BOOL; //E_Status;
-END_VAR
-VAR_OUTPUT
+  <POU Name="FB_AutoSineMotion" Id="{7aa33ba2-6f61-4e54-a151-28e681b8e51e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AutoSineMotion
+VAR_INPUT 
+	fPosition : LREAL; 
 	bStartPosOK						: BOOL;
-	fWinchValveNormalizedInput 		: LREAL;
-	bOpenBreak						: BOOL;
+	bAutoEnable : BOOL; 
+	// eStatus : BOOL;
+    fSineReferenceSignal                  : LREAL; 
 END_VAR
 
 VAR PERSISTENT
@@ -21,28 +16,31 @@ VAR PERSISTENT
 	fDerivateGain					: LREAL;
 END_VAR
 
+VAR_OUTPUT
+	fWinchValveNormalizedInput 		: LREAL;
+END_VAR
 VAR
-	fbPID_controller				: FB_PID_controller;
+	bEnable : BOOL; // Forblir TRUE bnår og etter bStartPosOk er TRUE?
+    fbPID_controller				: FB_PID_controller;
 	fPosition_error					: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
 	fDerivateGain_output			: LREAL;
-	bEnableValveOutputWinch			: BOOL;	
-	
+	bEnableValveOutputWinch			: BOOL;	 
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF eStatus THEN
-	bOpenBreak	:= TRUE;
-ELSE
-	bOpenBreak := FALSE;
-END_IF
-
-IF bEnable  THEN
-
-fPosition_error := fPosition - fStartPosition;
-
-G_Motion_Control.fPosition_error_StartPos := fPosition_error; 
+      <ST><![CDATA[IF bStartPosOK AND bAutoEnable THEN
+	bEnable := TRUE; 
+	
+	fPosition_error := fPosition - fSineReferenceSignal;
+	
+	G_Motion_Control.fPosition_error_SineMotion := fPosition_error;
+	
+	//Definere gains på en peak måte
+//fProportionalGain := 2.1;
+//fIntegralGain := 0.0;
+//fDerivateGain := 0.0;
 
 // Write to HMI
 //PGain:
@@ -59,12 +57,13 @@ ELSE
 	fIntegralGain := G_Engineer_HMI.fIntegrationalgain_MOOG;
 END_IF
 
+
 fbPID_controller(
 		ssMethodType := BOOL_TO_SINT(bEnable),
 		error := fPosition_error,
 		Int_error_threshold := G_PID_Tuning.Int_error_threshold,
-		P_enable := TRUE,
-		I_enable := FALSE,
+		P_enable := G_Engineer_HMI.bPenable_MOOG,
+		I_enable := G_Engineer_HMI.bIenable_MOOG,
 		D_enable := FALSE,
 		K_p := fProportionalGain,
 		K_i := fIntegralGain,
@@ -74,7 +73,7 @@ fbPID_controller(
 		D_output => fDerivateGain_output
 		);
 		
-			//Error times PGain
+		//Error times PGain
 	fProportinalGain_output := fProportinalGain_output;
 	G_PID_Tuning.fProportinalGain_output := fProportinalGain_output;
 	//Error times IGain
@@ -89,14 +88,14 @@ fbPID_controller(
 		fWinchValveNormalizedInput := LIMIT(-1, -1*(fProportinalGain_output + fIntegralGain_output + fDerivateGain_output), 1);
 		G_PID_Tuning.PID_output := fWinchValveNormalizedInput;
 		
-	
-	IF ABS(fPosition_error) < 0.05 THEN
-		bStartPosOK := TRUE;
-	END_IF
-		
-ELSE
-	bStartPosOK := FALSE;
-END_IF]]></ST>
+ELSIF NOT (bAutoEnable) THEN;
+	bEnable := FALSE;
+	fWinchValveNormalizedInput := 0.0;
+
+END_IF
+
+
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

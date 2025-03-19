@@ -71,7 +71,7 @@ fOutput => G_Sensors.fPressureWinchB
 
 // Trykkfall over motor: 
 
-G_Sensors.fDeltaPMotor := (G_Sensors.fPressureWinchB - G_Sensors.fPressureWinchA); 
+G_Sensors.fDeltaPMotor := (G_Sensors.fPressureWinchA - G_Sensors.fPressureWinchB); 
 	
 ]]></ST>
     </Implementation>

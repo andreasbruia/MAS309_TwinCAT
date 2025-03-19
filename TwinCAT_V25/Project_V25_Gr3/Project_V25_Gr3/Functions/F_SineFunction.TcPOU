@@ -17,7 +17,8 @@ END_VAR
       <ST><![CDATA[fAmp := 0.2;
 fFreq := 0.1;
 
-fSineSignal := fAmp * SIN(2.0 * PI * fFreq * fTime);]]></ST>
+fSineSignal := fAmp * SIN(2.0 * PI * fFreq * fTime) + 0.5;
+G_Motion_Control.fSineReferenceSignal := fSineSignal;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

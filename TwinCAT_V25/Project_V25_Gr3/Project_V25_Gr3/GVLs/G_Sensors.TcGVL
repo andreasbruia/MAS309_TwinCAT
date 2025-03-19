@@ -3,17 +3,21 @@
   <GVL Name="G_Sensors" Id="{4ff3b0b3-7afb-45b2-8b55-d797c734f296}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
-	fJoystickNormalizedY 		: LREAL; 
-	fJoystickNormalizedX 		: LREAL; 
-	fJoystickNormalizedZ 		: LREAL; 
-	fYokeNormalizedFeedback 	: LREAL; 
-	fPressureWinchA 	 		: LREAL; 
-	fPressureWinchB 	 		: LREAL; 
-	fPressureSupply 	 		: LREAL; 
-	fPressureReturn 	 		: LREAL; 
-	fWinchEncoderPosition 		: LREAL;
-	fPayLoadPosition 			: LREAL;
-	fDeltaPMotor 				: LREAL;
+	fJoystickNormalizedY 					: LREAL; 
+	fJoystickNormalizedX 					: LREAL; 
+	fJoystickNormalizedZ 					: LREAL; 
+	fYokeNormalizedFeedback 				: LREAL; 
+	fPressureWinchA 	 					: LREAL; 
+	fPressureWinchB 	 					: LREAL; 
+	fPressureSupply 	 					: LREAL; 
+	fPressureReturn 	 					: LREAL; 
+	fWinchEncoderPosition 					: LREAL;
+	fWinchEncoderPositionNormalized 		: LREAL;
+	fPayLoadPosition 						: LREAL;
+	fDeltaPMotor 							: LREAL;
+	
+	//Egentlig en Output/ NEIUNEI
+	fWinchValveOutNormalized				: LREAL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

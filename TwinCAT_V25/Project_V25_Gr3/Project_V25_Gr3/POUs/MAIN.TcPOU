@@ -16,7 +16,7 @@ VAR
 //	fb_DisplacementControl				: FB_DisplacementControl;
 //	fb_DisplacementValveOutput 			: FB_DisplacementValveOutput;
 //	fb_Yoke_Input_Scaling 				: FB_Yoke_Input_Scaling;
-	fb_EncoderScaling					: FB_EncoderScaling;
+//	fb_EncoderScaling					: FB_EncoderScaling;
 	
 END_VAR
 ]]></Declaration>
@@ -34,7 +34,7 @@ END_VAR
 //	fb_DisplacementValveOutput();
 //	fb_Yoke_Input_Scaling();
 	fb_Outputs();
-	fb_EncoderScaling();
+//	fb_EncoderScaling();
 END_IF
 
 

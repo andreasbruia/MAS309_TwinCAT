@@ -28,6 +28,21 @@ VAR_GLOBAL
 	bAutoStartPosEnable				: BOOL;
 	fAutoStartPos_target			: LREAL := 0.5;
 	
+	// Auto Sine Motion
+	
+	bAutoSineMotionEnable : BOOL; 
+	
+	
+	// PID MOOG Valve 
+	
+	fProportionalgain_MOOG			: LREAL;
+	bPenable_MOOG					: BOOL := TRUE; //Ønsker P ledd på fra start
+	bPenable_MOOG_write				: BOOL;
+	
+	fIntegrationalgain_MOOG 		: LREAL; 
+	bIenable_MOOG 					: BOOL;
+	bIenable_MOOG_write				: BOOL; 
+	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
