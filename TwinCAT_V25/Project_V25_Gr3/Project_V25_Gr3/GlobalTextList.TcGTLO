@@ -16,6 +16,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"190"</v>
+              <v n="TextDefault">"Amplitude    Frequency"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"506"</v>
               <v n="TextDefault">"Auto Sine Motion"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -48,6 +53,11 @@
             <o>
               <v n="TextID">"49"</v>
               <v n="TextDefault">"Endstop Override"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"101"</v>
+              <v n="TextDefault">"Error"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -101,8 +111,18 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"820"</v>
+              <v n="TextDefault">"Wave parameters"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"499"</v>
               <v n="TextDefault">"Write to gain"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"921"</v>
+              <v n="TextDefault">"Yoke Feedback"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
           </l>

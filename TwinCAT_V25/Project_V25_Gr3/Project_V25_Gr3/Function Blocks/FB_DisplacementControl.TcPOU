@@ -71,17 +71,17 @@ END_VAR
 	
 	//Error times PGain
 	fProportinalGain_output := fProportinalGain_output;
-	G_PID_Tuning.fProportinalGain_output := fProportinalGain_output;
+	G_PID_Tuning.fProportinalGain_output_dis := fProportinalGain_output;
 	//Error times IGain
 	fIntegralGain_output := fIntegralGain_output;
-	G_PID_Tuning.fIntegralGain_output := fIntegralGain_output;
+	G_PID_Tuning.fIntegralGain_output_dis := fIntegralGain_output;
 	//Error times DGain
 	fDerivateGain_output := fDerivateGain_output;
-	G_PID_Tuning.fDerivateGain_output := fDerivateGain_output;
+	G_PID_Tuning.fDerivateGain_output_dis := fDerivateGain_output;
 	
 	//Normalized Outputsignal
 	fNormalizedOutput := LIMIT(-1,fProportinalGain_output + fIntegralGain_output + fDerivateGain_output,1);
-	G_PID_Tuning.PID_output := fNormalizedOutput;
+	G_PID_Tuning.PID_output_dis := fNormalizedOutput;
 	
 ELSE 
 	fNormalizedOutput := 0.0; // Ingen output uten aktivering

@@ -4,12 +4,19 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
 	//Displacement control
-	fYoke_error 			: LREAL;
-	fProportinalGain_output : LREAL;
-	fIntegralGain_output	: LREAL;
-	fDerivateGain_output 	: LREAL;
-	PID_output				: LREAL;
-	Int_error_threshold		: LREAL := 0.0001;
+	fYoke_error 						: LREAL;
+	fProportinalGain_output_dis 		: LREAL;
+	fIntegralGain_output_dis			: LREAL;
+	fDerivateGain_output_dis 			: LREAL;
+	PID_output_dis						: LREAL;
+	Int_error_threshold					: LREAL := 0.0001;
+	
+	//MOOG valve
+	fProportinalGain_output_MOOG 		: LREAL;
+	fIntegralGain_output_MOOG			: LREAL;
+	fDerivateGain_output_MOOG 			: LREAL;
+	PID_output_MOOG						: LREAL;
+	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

@@ -9,15 +9,10 @@ VAR_OUTPUT
 	fSineSignal 			: LREAL;
 END_VAR
 VAR
-	fAmp					: LREAL;
-	fFreq					: LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fAmp := 0.2;
-fFreq := 0.1;
-
-fSineSignal := fAmp * SIN(2.0 * PI * fFreq * fTime) + 0.5;
+      <ST><![CDATA[fSineSignal := G_Engineer_HMI.fAmp * SIN(2.0 * PI * G_Engineer_HMI.fFreq * fTime) + 0.5;
 G_Motion_Control.fSineReferenceSignal := fSineSignal;]]></ST>
     </Implementation>
   </POU>

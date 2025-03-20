@@ -37,10 +37,6 @@ END_VAR
 	
 	G_Motion_Control.fPosition_error_SineMotion := fPosition_error;
 	
-	//Definere gains på en peak måte
-//fProportionalGain := 2.1;
-//fIntegralGain := 0.0;
-//fDerivateGain := 0.0;
 
 // Write to HMI
 //PGain:
@@ -75,21 +71,22 @@ fbPID_controller(
 		
 		//Error times PGain
 	fProportinalGain_output := fProportinalGain_output;
-	G_PID_Tuning.fProportinalGain_output := fProportinalGain_output;
+	G_PID_Tuning.fProportinalGain_output_MOOG := fProportinalGain_output;
 	//Error times IGain
 	fIntegralGain_output := fIntegralGain_output;
-	G_PID_Tuning.fIntegralGain_output := fIntegralGain_output;
+	G_PID_Tuning.fIntegralGain_output_MOOG:= fIntegralGain_output;
 	//Error times DGain
 	fDerivateGain_output := fDerivateGain_output;
-	G_PID_Tuning.fDerivateGain_output := fDerivateGain_output;
+	G_PID_Tuning.fDerivateGain_output_MOOG := fDerivateGain_output;
 	
 	//Normalized Outputsignal
 		
 		fWinchValveNormalizedInput := LIMIT(-1, -1*(fProportinalGain_output + fIntegralGain_output + fDerivateGain_output), 1);
-		G_PID_Tuning.PID_output := fWinchValveNormalizedInput;
+		G_PID_Tuning.PID_output_MOOG := fWinchValveNormalizedInput;
 		
 ELSIF NOT (bAutoEnable) THEN;
 	bEnable := FALSE;
+	G_Engineer_HMI.bAutoSineMotionEnable := FALSE;
 	fWinchValveNormalizedInput := 0.0;
 
 END_IF

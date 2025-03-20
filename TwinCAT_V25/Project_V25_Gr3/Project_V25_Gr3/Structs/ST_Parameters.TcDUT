@@ -19,7 +19,7 @@ STRUCT
 	fWinchDrumRadius 				: LREAL := 0.075;
 	fWinchEndStopPos 				: LREAL := 8972.8578622110326;
 	fWinchEndStopNeg 				: LREAL := 10971.235523002975;
-	fPayloadMass 					: LREAL := 15.0;
+	fPayloadMass 					: LREAL := 78.0;
 	
 	
 END_STRUCT

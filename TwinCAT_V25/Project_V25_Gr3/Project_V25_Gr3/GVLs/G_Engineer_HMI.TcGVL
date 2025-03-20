@@ -10,7 +10,7 @@ VAR_GLOBAL
 	
 	//Displacementcontrol 
 	bDisplacement_target_active		: BOOL;
-	fDisplacement_target			: LREAL;
+	fDisplacement_target			: LREAL := 1.0;
 	
 	// PID Gains for displacementcontrol
 	fProportionalgain_dis			: LREAL;
@@ -29,12 +29,13 @@ VAR_GLOBAL
 	fAutoStartPos_target			: LREAL := 0.5;
 	
 	// Auto Sine Motion
-	
 	bAutoSineMotionEnable : BOOL; 
+	//Sine wave parameters
+	fAmp 							: LREAL := 0.2;
+	fFreq 							: LREAL := 0.1;
 	
 	
 	// PID MOOG Valve 
-	
 	fProportionalgain_MOOG			: LREAL;
 	bPenable_MOOG					: BOOL := TRUE; //Ønsker P ledd på fra start
 	bPenable_MOOG_write				: BOOL;
