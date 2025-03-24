@@ -40,11 +40,11 @@ ELSE
 	G_IO.bWinchValveEnable := FALSE;
 END_IF
 
-//Manual Controls in use if auto not enabled
+////////////Manual Controls in use if auto not enabled/////////
 IF G_IO.bManualSwitch THEN
 bEnableMotion := G_IO.bWinchEnable;
 fWinchValveInput := G_Sensors.fJoystickNormalizedY;
-//Vurdere å ha en else med fWinchValveInput = 0.0???
+
 END_IF
 
 /////////////////////AutoStartPos/////////////////////
@@ -82,7 +82,7 @@ END_IF
 
 
 
-// Legge inn endstop override her
+//////////End Stop/////////////
 IF G_Sensors.fWinchEncoderPosition > fWinchEndDown_encoder AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
 	G_Engineer_HMI.bEndStopUpActive := FALSE;
 	G_Engineer_HMI.bEndStopDownActive := TRUE;
@@ -97,6 +97,7 @@ ELSE
 	fWinchValveNormalizedInput := fWinchValveInput;
 END_IF
 
+////////PDCV output/////////////
 fbWinchValveOutput(
 	bEnable := bEnableWinch,
 	bDeadBandCompOn := G_Parameters.stParam.bWinchDeadBandCompOn,
@@ -106,9 +107,11 @@ fbWinchValveOutput(
 	nOutput => G_IO.fWinchValveOut
 	);
 	
-	//Gjør output til ventilen global
+	//Gjør input til ventilen global
 	G_Sensors.fWinchValveOutNormalized := fWinchValveNormalizedInput;
 
+
+/////////Displacement Control///////////
 fbDisplacementControl(
 	bEnable := G_Engineer_HMI.bDisplacement_target_active AND eStatus = E_Status.Running,
 	fDisplacementNormalizedInput := G_Engineer_HMI.fDisplacement_target,
@@ -121,11 +124,13 @@ IF bEnableDisplacement THEN
 	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ; //Kobler displacement til Z på joystick
 ELSIF G_Engineer_HMI.bDisplacement_target_active THEN
 	fDisplacementControlSignal := fDisplacementControlSignal_target;
+ELSIF G_Engineer_HMI.bSineDisplacement THEN
+	fDisplacementControlSignal := G_Motion_Control.fDisplacementControlSignal_sine;
 ELSE
 	fDisplacementControlSignal := fDisplacementNormalizedInput;
 END_IF
 
-
+/////////DCV////////
 fbDisplacementValveOutput(
 	bEnable := eStatus = E_Status.Running,
 	bDeadbandCompOn := G_Parameters.stParam.bDisplacementDeadBandCompOn,

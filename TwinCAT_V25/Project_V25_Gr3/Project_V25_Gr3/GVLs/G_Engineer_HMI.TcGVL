@@ -30,6 +30,10 @@ VAR_GLOBAL
 	
 	// Auto Sine Motion
 	bAutoSineMotionEnable : BOOL; 
+	
+	// Displacement Sine Wave control: 
+	bSineDisplacement : BOOL; 
+	
 	//Sine wave parameters
 	fAmp 							: LREAL := 0.2;
 	fFreq 							: LREAL := 0.1;

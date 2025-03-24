@@ -12,7 +12,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fSineSignal := G_Engineer_HMI.fAmp * SIN(2.0 * PI * G_Engineer_HMI.fFreq * fTime) + 0.5;
+      <ST><![CDATA[fSineSignal := G_Engineer_HMI.fAmp * SIN(2.0 * PI * G_Engineer_HMI.fFreq * fTime) + G_Engineer_HMI.fAutoStartPos_target;
 G_Motion_Control.fSineReferenceSignal := fSineSignal;]]></ST>
     </Implementation>
   </POU>

@@ -13,7 +13,10 @@ fSineReferenceSignal				:LREAL;
 
 // Position Errors
 fPosition_error_SineMotion 					: LREAL; 
-fPosition_error_StartPos					: LREAL; 
+fPosition_error_StartPos					: LREAL;
+
+//Displacement Sine
+fDisplacementControlSignal_sine			: LREAL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
