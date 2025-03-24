@@ -13,7 +13,8 @@ VAR
 	fbEncoderScaling 						: FB_EncoderScaling;
 	fbAutoStartPos							: FB_AutoStartPos;
 	fbAutoSineMotion    					: FB_AutoSineMotion; 
-	fbClock									: FB_Clock;
+	fbClock_MOOG							: FB_Clock;
+	fbClock_dis							: FB_Clock;
 	fbDisplacementControl  					: FB_DisplacementControl;
 	bStartPosOK								: BOOL;
 END_VAR
@@ -149,6 +150,25 @@ END_VAR
                             </o>
                             <v n="Id">16L</v>
                           </o>
+                          <o>
+                            <o n="Operand" t="Operand">
+                              <v n="Operand">"G_Engineer_HMI.bPrimary_Control_active"</v>
+                              <v n="Type">"BOOL"</v>
+                              <v n="Comment">""</v>
+                              <v n="SymbolComment">""</v>
+                              <v n="Address">""</v>
+                              <o n="Flags" t="Flags">
+                                <v n="Flags">0</v>
+                                <v n="Fixed">false</v>
+                                <v n="Extensible">false</v>
+                              </o>
+                              <v n="LValue">false</v>
+                              <v n="Boolean">false</v>
+                              <v n="IsInstance">false</v>
+                              <v n="Id">182L</v>
+                            </o>
+                            <v n="Id">181L</v>
+                          </o>
                         </l2>
                         <o n="InputParam" t="ParamList">
                           <l2 n="Names" />
@@ -279,6 +299,25 @@ END_VAR
                               <v n="Id">35L</v>
                             </o>
                             <v n="Id">34L</v>
+                          </o>
+                          <o>
+                            <o n="Operand" t="Operand">
+                              <v n="Operand">"G_Engineer_HMI.bPrimary_Control_active"</v>
+                              <v n="Type">"BOOL"</v>
+                              <v n="Comment">""</v>
+                              <v n="SymbolComment">""</v>
+                              <v n="Address">""</v>
+                              <o n="Flags" t="Flags">
+                                <v n="Flags">0</v>
+                                <v n="Fixed">false</v>
+                                <v n="Extensible">false</v>
+                              </o>
+                              <v n="LValue">false</v>
+                              <v n="Boolean">false</v>
+                              <v n="IsInstance">false</v>
+                              <v n="Id">184L</v>
+                            </o>
+                            <v n="Id">183L</v>
                           </o>
                         </l2>
                         <o n="InputParam" t="ParamList">
@@ -491,6 +530,25 @@ END_VAR
                                   <v n="Id">61L</v>
                                 </o>
                                 <v n="Id">60L</v>
+                              </o>
+                              <o>
+                                <o n="Operand" t="Operand">
+                                  <v n="Operand">"G_Engineer_HMI.bPrimary_Control_active"</v>
+                                  <v n="Type">"BOOL"</v>
+                                  <v n="Comment">""</v>
+                                  <v n="SymbolComment">""</v>
+                                  <v n="Address">""</v>
+                                  <o n="Flags" t="Flags">
+                                    <v n="Flags">0</v>
+                                    <v n="Fixed">false</v>
+                                    <v n="Extensible">false</v>
+                                  </o>
+                                  <v n="LValue">false</v>
+                                  <v n="Boolean">false</v>
+                                  <v n="IsInstance">false</v>
+                                  <v n="Id">186L</v>
+                                </o>
+                                <v n="Id">185L</v>
                               </o>
                             </l2>
                             <o n="InputParam" t="ParamList">
@@ -877,7 +935,7 @@ END_VAR
                               <o>
                                 <v n="BoxType">"FB_Clock"</v>
                                 <o n="Instance" t="Operand">
-                                  <v n="Operand">"fbClock"</v>
+                                  <v n="Operand">"fbClock_MOOG"</v>
                                   <v n="Type">"FB_Clock"</v>
                                   <v n="Comment">""</v>
                                   <v n="SymbolComment">""</v>
@@ -903,11 +961,12 @@ END_VAR
                                   <v n="Extensible">false</v>
                                 </o>
                                 <n n="InputFlags" />
-                                <l2 n="InputItems" cet="BoxTreeOperand">
+                                <l2 n="InputItems" cet="BoxTreeBox">
                                   <o>
-                                    <o n="Operand" t="Operand">
-                                      <v n="Operand">"bAutoEnable AND G_Engineer_HMI.bAutoSineMotionEnable"</v>
-                                      <v n="Type">"BOOL"</v>
+                                    <v n="BoxType">"AND"</v>
+                                    <o n="Instance" t="Operand">
+                                      <n n="Operand" />
+                                      <v n="Type">""</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
                                       <v n="Address">""</v>
@@ -918,10 +977,79 @@ END_VAR
                                       </o>
                                       <v n="LValue">false</v>
                                       <v n="Boolean">false</v>
-                                      <v n="IsInstance">false</v>
-                                      <v n="Id">80L</v>
+                                      <v n="IsInstance">true</v>
+                                      <v n="Id">165L</v>
                                     </o>
-                                    <v n="Id">79L</v>
+                                    <o n="OutputItems" t="OutputItemList">
+                                      <l2 n="OutputItems">
+                                        <n />
+                                      </l2>
+                                    </o>
+                                    <o n="Flags" t="Flags">
+                                      <v n="Flags">0</v>
+                                      <v n="Fixed">false</v>
+                                      <v n="Extensible">false</v>
+                                    </o>
+                                    <n n="InputFlags" />
+                                    <l2 n="InputItems" cet="BoxTreeOperand">
+                                      <o>
+                                        <o n="Operand" t="Operand">
+                                          <v n="Operand">"bAutoEnable"</v>
+                                          <v n="Type">"BOOL"</v>
+                                          <v n="Comment">""</v>
+                                          <v n="SymbolComment">""</v>
+                                          <v n="Address">""</v>
+                                          <o n="Flags" t="Flags">
+                                            <v n="Flags">0</v>
+                                            <v n="Fixed">false</v>
+                                            <v n="Extensible">false</v>
+                                          </o>
+                                          <v n="LValue">false</v>
+                                          <v n="Boolean">false</v>
+                                          <v n="IsInstance">false</v>
+                                          <v n="Id">80L</v>
+                                        </o>
+                                        <v n="Id">79L</v>
+                                      </o>
+                                      <o>
+                                        <o n="Operand" t="Operand">
+                                          <v n="Operand">"G_Engineer_HMI.bAutoSineMotionEnable"</v>
+                                          <v n="Type">"BOOL"</v>
+                                          <v n="Comment">""</v>
+                                          <v n="SymbolComment">""</v>
+                                          <v n="Address">""</v>
+                                          <o n="Flags" t="Flags">
+                                            <v n="Flags">0</v>
+                                            <v n="Fixed">false</v>
+                                            <v n="Extensible">false</v>
+                                          </o>
+                                          <v n="LValue">false</v>
+                                          <v n="Boolean">false</v>
+                                          <v n="IsInstance">false</v>
+                                          <v n="Id">168L</v>
+                                        </o>
+                                        <v n="Id">167L</v>
+                                      </o>
+                                    </l2>
+                                    <o n="InputParam" t="ParamList">
+                                      <l2 n="Names" />
+                                      <l2 n="Types" />
+                                    </o>
+                                    <o n="OutputParam" t="ParamList">
+                                      <l2 n="Names" cet="String">
+                                        <v></v>
+                                      </l2>
+                                      <l2 n="Types" cet="String">
+                                        <v>BOOL</v>
+                                      </l2>
+                                    </o>
+                                    <v n="CallType" t="Operator">And</v>
+                                    <v n="EN">false</v>
+                                    <v n="ENO">false</v>
+                                    <n n="STSnippet" />
+                                    <v n="ContainsExtensibleInputs">false</v>
+                                    <v n="ProvidesSTSnippet">false</v>
+                                    <v n="Id">166L</v>
                                   </o>
                                 </l2>
                                 <o n="InputParam" t="ParamList">
@@ -1076,10 +1204,11 @@ END_VAR
                         </o>
                         <n n="InputFlags" />
                         <l2 n="InputItems">
-                          <o t="BoxTreeOperand">
-                            <o n="Operand" t="Operand">
-                              <v n="Operand">"bAutoEnable AND G_Engineer_HMI.bSineDisplacement"</v>
-                              <v n="Type">"BOOL"</v>
+                          <o t="BoxTreeBox">
+                            <v n="BoxType">"AND"</v>
+                            <o n="Instance" t="Operand">
+                              <n n="Operand" />
+                              <v n="Type">""</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
                               <v n="Address">""</v>
@@ -1090,10 +1219,79 @@ END_VAR
                               </o>
                               <v n="LValue">false</v>
                               <v n="Boolean">false</v>
-                              <v n="IsInstance">false</v>
-                              <v n="Id">140L</v>
+                              <v n="IsInstance">true</v>
+                              <v n="Id">169L</v>
                             </o>
-                            <v n="Id">139L</v>
+                            <o n="OutputItems" t="OutputItemList">
+                              <l2 n="OutputItems">
+                                <n />
+                              </l2>
+                            </o>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">0</v>
+                              <v n="Fixed">false</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <n n="InputFlags" />
+                            <l2 n="InputItems" cet="BoxTreeOperand">
+                              <o>
+                                <o n="Operand" t="Operand">
+                                  <v n="Operand">"bAutoEnable"</v>
+                                  <v n="Type">"BOOL"</v>
+                                  <v n="Comment">""</v>
+                                  <v n="SymbolComment">""</v>
+                                  <v n="Address">""</v>
+                                  <o n="Flags" t="Flags">
+                                    <v n="Flags">0</v>
+                                    <v n="Fixed">false</v>
+                                    <v n="Extensible">false</v>
+                                  </o>
+                                  <v n="LValue">false</v>
+                                  <v n="Boolean">false</v>
+                                  <v n="IsInstance">false</v>
+                                  <v n="Id">140L</v>
+                                </o>
+                                <v n="Id">139L</v>
+                              </o>
+                              <o>
+                                <o n="Operand" t="Operand">
+                                  <v n="Operand">"G_Engineer_HMI.bSineDisplacement"</v>
+                                  <v n="Type">"BOOL"</v>
+                                  <v n="Comment">""</v>
+                                  <v n="SymbolComment">""</v>
+                                  <v n="Address">""</v>
+                                  <o n="Flags" t="Flags">
+                                    <v n="Flags">0</v>
+                                    <v n="Fixed">false</v>
+                                    <v n="Extensible">false</v>
+                                  </o>
+                                  <v n="LValue">false</v>
+                                  <v n="Boolean">false</v>
+                                  <v n="IsInstance">false</v>
+                                  <v n="Id">172L</v>
+                                </o>
+                                <v n="Id">171L</v>
+                              </o>
+                            </l2>
+                            <o n="InputParam" t="ParamList">
+                              <l2 n="Names" />
+                              <l2 n="Types" />
+                            </o>
+                            <o n="OutputParam" t="ParamList">
+                              <l2 n="Names" cet="String">
+                                <v></v>
+                              </l2>
+                              <l2 n="Types" cet="String">
+                                <v>BOOL</v>
+                              </l2>
+                            </o>
+                            <v n="CallType" t="Operator">And</v>
+                            <v n="EN">false</v>
+                            <v n="ENO">false</v>
+                            <n n="STSnippet" />
+                            <v n="ContainsExtensibleInputs">false</v>
+                            <v n="ProvidesSTSnippet">false</v>
+                            <v n="Id">170L</v>
                           </o>
                           <o t="BoxTreeBox">
                             <v n="BoxType">"F_SineFunction"</v>
@@ -1111,7 +1309,7 @@ END_VAR
                               <v n="LValue">false</v>
                               <v n="Boolean">false</v>
                               <v n="IsInstance">true</v>
-                              <v n="Id">150L</v>
+                              <v n="Id">157L</v>
                             </o>
                             <o n="OutputItems" t="OutputItemList">
                               <l2 n="OutputItems">
@@ -1120,7 +1318,7 @@ END_VAR
                             </o>
                             <o n="Flags" t="Flags">
                               <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
+                              <v n="Fixed">true</v>
                               <v n="Extensible">false</v>
                             </o>
                             <n n="InputFlags" />
@@ -1128,7 +1326,7 @@ END_VAR
                               <o>
                                 <v n="BoxType">"FB_Clock"</v>
                                 <o n="Instance" t="Operand">
-                                  <v n="Operand">"fbClock"</v>
+                                  <v n="Operand">"fbClock_dis"</v>
                                   <v n="Type">"FB_Clock"</v>
                                   <v n="Comment">""</v>
                                   <v n="SymbolComment">""</v>
@@ -1154,11 +1352,12 @@ END_VAR
                                   <v n="Extensible">false</v>
                                 </o>
                                 <n n="InputFlags" />
-                                <l2 n="InputItems" cet="BoxTreeOperand">
+                                <l2 n="InputItems" cet="BoxTreeBox">
                                   <o>
-                                    <o n="Operand" t="Operand">
-                                      <v n="Operand">"bAutoEnable"</v>
-                                      <v n="Type">"BOOL"</v>
+                                    <v n="BoxType">"AND"</v>
+                                    <o n="Instance" t="Operand">
+                                      <n n="Operand" />
+                                      <v n="Type">""</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
                                       <v n="Address">""</v>
@@ -1169,10 +1368,79 @@ END_VAR
                                       </o>
                                       <v n="LValue">false</v>
                                       <v n="Boolean">false</v>
-                                      <v n="IsInstance">false</v>
-                                      <v n="Id">142L</v>
+                                      <v n="IsInstance">true</v>
+                                      <v n="Id">173L</v>
                                     </o>
-                                    <v n="Id">141L</v>
+                                    <o n="OutputItems" t="OutputItemList">
+                                      <l2 n="OutputItems">
+                                        <n />
+                                      </l2>
+                                    </o>
+                                    <o n="Flags" t="Flags">
+                                      <v n="Flags">0</v>
+                                      <v n="Fixed">false</v>
+                                      <v n="Extensible">false</v>
+                                    </o>
+                                    <n n="InputFlags" />
+                                    <l2 n="InputItems" cet="BoxTreeOperand">
+                                      <o>
+                                        <o n="Operand" t="Operand">
+                                          <v n="Operand">"bAutoEnable"</v>
+                                          <v n="Type">"BOOL"</v>
+                                          <v n="Comment">""</v>
+                                          <v n="SymbolComment">""</v>
+                                          <v n="Address">""</v>
+                                          <o n="Flags" t="Flags">
+                                            <v n="Flags">0</v>
+                                            <v n="Fixed">false</v>
+                                            <v n="Extensible">false</v>
+                                          </o>
+                                          <v n="LValue">false</v>
+                                          <v n="Boolean">false</v>
+                                          <v n="IsInstance">false</v>
+                                          <v n="Id">142L</v>
+                                        </o>
+                                        <v n="Id">141L</v>
+                                      </o>
+                                      <o>
+                                        <o n="Operand" t="Operand">
+                                          <v n="Operand">"G_Engineer_HMI.bSineDisplacement"</v>
+                                          <v n="Type">"BOOL"</v>
+                                          <v n="Comment">""</v>
+                                          <v n="SymbolComment">""</v>
+                                          <v n="Address">""</v>
+                                          <o n="Flags" t="Flags">
+                                            <v n="Flags">0</v>
+                                            <v n="Fixed">false</v>
+                                            <v n="Extensible">false</v>
+                                          </o>
+                                          <v n="LValue">false</v>
+                                          <v n="Boolean">false</v>
+                                          <v n="IsInstance">false</v>
+                                          <v n="Id">176L</v>
+                                        </o>
+                                        <v n="Id">175L</v>
+                                      </o>
+                                    </l2>
+                                    <o n="InputParam" t="ParamList">
+                                      <l2 n="Names" />
+                                      <l2 n="Types" />
+                                    </o>
+                                    <o n="OutputParam" t="ParamList">
+                                      <l2 n="Names" cet="String">
+                                        <v></v>
+                                      </l2>
+                                      <l2 n="Types" cet="String">
+                                        <v>BOOL</v>
+                                      </l2>
+                                    </o>
+                                    <v n="CallType" t="Operator">And</v>
+                                    <v n="EN">false</v>
+                                    <v n="ENO">false</v>
+                                    <n n="STSnippet" />
+                                    <v n="ContainsExtensibleInputs">false</v>
+                                    <v n="ProvidesSTSnippet">false</v>
+                                    <v n="Id">174L</v>
                                   </o>
                                 </l2>
                                 <o n="InputParam" t="ParamList">
@@ -1210,7 +1478,7 @@ END_VAR
                             </o>
                             <o n="OutputParam" t="ParamList">
                               <l2 n="Names" cet="String">
-                                <v>   </v>
+                                <v>fSineSignal</v>
                               </l2>
                               <l2 n="Types" cet="String">
                                 <v>LREAL</v>
@@ -1222,7 +1490,7 @@ END_VAR
                             <n n="STSnippet" />
                             <v n="ContainsExtensibleInputs">false</v>
                             <v n="ProvidesSTSnippet">false</v>
-                            <v n="Id">151L</v>
+                            <v n="Id">158L</v>
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">

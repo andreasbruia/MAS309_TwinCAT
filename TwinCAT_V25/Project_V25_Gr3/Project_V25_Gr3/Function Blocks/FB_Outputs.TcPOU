@@ -14,7 +14,7 @@ VAR
 	
 	fDisplacementControlSignal			: LREAL;
 	fDisplacementNormalizedInput 		: LREAL := 1.0;
-	fDisplacementControlSignal_target	:LREAL;
+	fDisplacementControl_output	:LREAL;
 
 	bEnableWinch 						: BOOL;
 	bEnableDisplacement					: BOOL;
@@ -40,46 +40,60 @@ ELSE
 	G_IO.bWinchValveEnable := FALSE;
 END_IF
 
+/////Open breaks///
+IF eStatus = E_Status.Running AND G_IO.bWinchEnable AND (G_Engineer_HMI.bPrimary_Control_active OR G_Engineer_HMI.bSecondary_Control_active) THEN
+	G_IO.bOpenBrakes := TRUE;
+	ELSE 
+		G_IO.bOpenBrakes := FALSE;
+END_IF
+
 ////////////Manual Controls in use if auto not enabled/////////
-IF G_IO.bManualSwitch THEN
+IF G_IO.bManualSwitch AND G_Engineer_HMI.bPrimary_Control_active THEN
 bEnableMotion := G_IO.bWinchEnable;
 fWinchValveInput := G_Sensors.fJoystickNormalizedY;
+
+
 
 END_IF
 
 /////////////////////AutoStartPos/////////////////////
-IF G_IO.bAutoSwitch  AND G_Engineer_HMI.bAutoStartPosEnable THEN
+IF G_IO.bAutoSwitch  AND G_Engineer_HMI.bAutoStartPosEnable AND G_Engineer_HMI.bPrimary_Control_active THEN
 	bEnableMotion := G_Motion_Control.bOpenBreak;
 	fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput;
 END_IF
 
 /////////////////////AutoSineMotion/////////////////////
-IF G_IO.bAutoSwitch AND G_Engineer_HMI.bAutoSineMotionEnable THEN
+IF G_IO.bAutoSwitch AND G_Engineer_HMI.bAutoSineMotionEnable AND G_Engineer_HMI.bPrimary_Control_active THEN
 	bEnableMotion := G_Motion_Control.bOpenBreak;
 	fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput_sine;
 END_IF
 
-IF G_IO.bAutoSwitch AND NOT G_Engineer_HMI.bAutoStartPosEnable THEN
+//Slik det er nå: Om Primary control blir koblet ut og Auto Start Poisiton ikke blir skrudd av er det siste verdi fra Autostart
+//Som fortsettes å bli skrevet til valveutgangen 
+//Løsninger: Skrive Auto Starrt Position til FALSE når Primary går av
+//			Bare la det være fordi vi vet hvordan ting må styres
+
+IF G_IO.bAutoSwitch AND NOT (G_Engineer_HMI.bAutoStartPosEnable) THEN /////Se over disse IF setningene///
     fWinchValveInput := 0.0;
 END_IF
 
 ///////////////////// Winch //////////////////////////////
 IF (eStatus = E_Status.Running) AND bEnableMotion THEN 
-	G_IO.bOpenBrakes := TRUE;
+	//G_IO.bOpenBrakes := TRUE;
 	bEnableWinch := TRUE;
 ELSE
-	G_IO.bOpenBrakes := FALSE;
+	//G_IO.bOpenBrakes := FALSE;
 	bEnableWinch := FALSE;
 END_IF
 
+
+
 ///////////////////// Displacement //////////////////////////////
-IF (eStatus = E_Status.Running) AND G_IO.bDisplacementEnable THEN 
+IF (eStatus = E_Status.Running) AND G_IO.bDisplacementEnable AND G_Engineer_HMI.bSecondary_Control_active THEN 
 	bEnableDisplacement := TRUE;
 ELSE
 	bEnableDisplacement := FALSE;
 END_IF
-
-
 
 
 //////////End Stop/////////////
@@ -97,7 +111,7 @@ ELSE
 	fWinchValveNormalizedInput := fWinchValveInput;
 END_IF
 
-////////PDCV output/////////////
+////////PCV output/////////////
 fbWinchValveOutput(
 	bEnable := bEnableWinch,
 	bDeadBandCompOn := G_Parameters.stParam.bWinchDeadBandCompOn,
@@ -111,21 +125,27 @@ fbWinchValveOutput(
 	G_Sensors.fWinchValveOutNormalized := fWinchValveNormalizedInput;
 
 
+
 /////////Displacement Control///////////
+
 fbDisplacementControl(
-	bEnable := G_Engineer_HMI.bDisplacement_target_active AND eStatus = E_Status.Running,
+	bEnable := G_Engineer_HMI.bDisplacement_target_active AND eStatus = E_Status.Running AND G_Engineer_HMI.bSecondary_Control_active,
 	fDisplacementNormalizedInput := G_Engineer_HMI.fDisplacement_target,
 	fYokeNormalizedFeedback := G_Sensors.fYokeNormalizedFeedback,
-	fNormalizedOutput => fDisplacementControlSignal_target
+	fNormalizedOutput => fDisplacementControl_output
 	);
+	
 
 // Når displacement ikke er enabled blir den satt til 1 (helt åpen) definert oppe i variabler
 IF bEnableDisplacement THEN
 	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ; //Kobler displacement til Z på joystick
-ELSIF G_Engineer_HMI.bDisplacement_target_active THEN
-	fDisplacementControlSignal := fDisplacementControlSignal_target;
+	
+ELSIF G_Engineer_HMI.bDisplacement_target_active AND G_Engineer_HMI.bSecondary_Control_active THEN
+	fDisplacementControlSignal := fDisplacementControl_output;
+	
 ELSIF G_Engineer_HMI.bSineDisplacement THEN
 	fDisplacementControlSignal := G_Motion_Control.fDisplacementControlSignal_sine;
+	
 ELSE
 	fDisplacementControlSignal := fDisplacementNormalizedInput;
 END_IF
@@ -140,13 +160,6 @@ fbDisplacementValveOutput(
 	nOutput => G_IO.fWinchPDCVOut
 	);
 	
-
-
-
-
-
-
-
 ]]></ST>
     </Implementation>
   </POU>

@@ -38,9 +38,18 @@ END_VAR
 END_IF
 
 
-
 fb_Motion_Control.eStatus := fb_StateMachine_Mode_Selection.eStatus;
 fb_Outputs.eStatus := fb_StateMachine_Mode_Selection.eStatus;
+
+////////Select Primary eller Secondary control//////////////
+IF G_Engineer_HMI.bPrimary_Control THEN
+	G_Engineer_HMI.bPrimary_Control_active := TRUE;
+	G_Engineer_HMI.bSecondary_Control_active := FALSE;
+ELSIF G_Engineer_HMI.bSecondary_Control THEN
+	G_Engineer_HMI.bPrimary_Control_active := FALSE;
+	G_Engineer_HMI.bSecondary_Control_active := TRUE;
+END_IF
+
 ]]></ST>
     </Implementation>
   </POU>

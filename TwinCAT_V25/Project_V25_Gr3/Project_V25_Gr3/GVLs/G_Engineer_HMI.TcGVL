@@ -3,6 +3,12 @@
   <GVL Name="G_Engineer_HMI" Id="{26f8b220-c366-427c-968e-e98e5cf6b52c}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
+	//Control chooser
+	bPrimary_Control				: BOOL;	
+	bPrimary_Control_active			: BOOL := FALSE;
+	bSecondary_Control				: BOOL;
+	bSecondary_Control_active		: BOOL := FALSE;
+
 	//Endstop
 	bEndStopUpActive 				: BOOL;
 	bEndStopDownActive 				: BOOL;
@@ -37,6 +43,7 @@ VAR_GLOBAL
 	//Sine wave parameters
 	fAmp 							: LREAL := 0.2;
 	fFreq 							: LREAL := 0.1;
+	fSinemidpoint					: LREAL := 0.5;
 	
 	
 	// PID MOOG Valve 

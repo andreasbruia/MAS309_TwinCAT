@@ -33,7 +33,7 @@ fbJoystickRot(
 );
 
 fbYokeInputScaling(
-	bEnable := G_IO.bManualSwitch,
+	bEnable := TRUE, //Vil lese Yokeverdi hele tiden så den settes til TRUE (var G_IO.bManualSwitch før)
 	nRawInput := G_IO.fYoke, 
 	stYokeInputScaling := G_Parameters.stParam.stYokeInputScaling,
 	fNormalizedOutput => G_Sensors.fYokeNormalizedFeedback
