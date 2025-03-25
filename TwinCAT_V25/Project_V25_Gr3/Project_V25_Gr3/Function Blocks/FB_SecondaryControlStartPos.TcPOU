@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_AutoStartPos" Id="{bc9cc522-7b04-40cd-ac55-3a13b0903ef0}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_AutoStartPos
+  <POU Name="FB_SecondaryControlStartPos" Id="{8eba5c06-ee19-44b5-b58c-05e2066444b9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SecondaryControlStartPos
 VAR_INPUT
 	bEnable 						: BOOL; 
 	fPosition						: LREAL;
@@ -11,60 +11,57 @@ VAR_INPUT
 END_VAR
 VAR_OUTPUT
 	bStartPosOK						: BOOL;
-	fWinchValveNormalizedInput 		: LREAL;
+	fDisplacementControlSignal		: LREAL;
 	bOpenBreak						: BOOL;
 END_VAR
-
 VAR PERSISTENT
 	fProportionalGain 				: LREAL;
 	fIntegralGain					: LREAL;
 	fDerivateGain					: LREAL;
 END_VAR
-
 VAR
 	fbPID_controller				: FB_PID_controller;
 	fPosition_error					: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
 	fDerivateGain_output			: LREAL;
-	bEnableValveOutputWinch			: BOOL;	
-	
+    bEnableValveOutputDisp			: BOOL;	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF eStatus AND G_Engineer_HMI.bAutoStartPosEnable THEN
+      <ST><![CDATA[IF eStatus AND G_Engineer_HMI.bSecondaryStartPosEnable THEN
 	bOpenBreak	:= TRUE;
 ELSE
 	bOpenBreak := FALSE;
 END_IF
 
-IF bEnable  THEN
+IF bEnable THEN 
+	
+fPosition_error := fStartPosition - fPosition;
 
-fPosition_error := fStartPosition - fPosition; //fPosition - fStartPosition;
-
-G_Motion_Control.fPosition_error_StartPos := fPosition_error; 
+G_Motion_Control.fPosition_error_StartDisplacement := fPosition_error; 
 
 // Write to HMI
 //PGain:
-IF NOT(G_Engineer_HMI.bPenable_MOOG_write) THEN
-	G_Engineer_HMI.fProportionalgain_MOOG := fProportionalGain; // SKjønner ikke helt det her
+IF NOT(G_Engineer_HMI.bPenable_dis_write) THEN
+	G_Engineer_HMI.fProportionalgain_dis := fProportionalGain; // SKjønner ikke helt det her
 ELSE
-	fProportionalGain := G_Engineer_HMI.fProportionalgain_MOOG;
+	fProportionalGain := G_Engineer_HMI.fProportionalgain_dis;
 END_IF
 
 //IGain: 
-IF NOT(G_Engineer_HMI.bIenable_MOOG_write) THEN
-	G_Engineer_HMI.fIntegrationalgain_MOOG := fIntegralGain;
+IF NOT(G_Engineer_HMI.bIenable_dis_write) THEN
+	G_Engineer_HMI.fIntegralgain_dis := fIntegralGain;
 ELSE
-	fIntegralGain := G_Engineer_HMI.fIntegrationalgain_MOOG;
+	fIntegralGain := G_Engineer_HMI.fIntegralgain_dis;
 END_IF
 
 fbPID_controller(
 		ssMethodType := BOOL_TO_SINT(bEnable),
 		error := fPosition_error,
 		Int_error_threshold := G_PID_Tuning.Int_error_threshold,
-		P_enable := G_Engineer_HMI.bPenable_MOOG,
-		I_enable := G_Engineer_HMI.bIenable_MOOG,
+		P_enable := G_Engineer_HMI.bPenable_dis,
+		I_enable := G_Engineer_HMI.bIenable_dis,
 		D_enable := FALSE,
 		K_p := fProportionalGain,
 		K_i := fIntegralGain,
@@ -76,19 +73,18 @@ fbPID_controller(
 		
 			//Error times PGain
 	fProportinalGain_output := fProportinalGain_output;
-	G_PID_Tuning.fProportinalGain_output_MOOG := fProportinalGain_output;
+	G_PID_Tuning.fProportinalGain_output_dis := fProportinalGain_output;
 	//Error times IGain
 	fIntegralGain_output := fIntegralGain_output;
-	G_PID_Tuning.fIntegralGain_output_MOOG := fIntegralGain_output;
+	G_PID_Tuning.fIntegralGain_output_dis := fIntegralGain_output;
 	//Error times DGain
 	fDerivateGain_output := fDerivateGain_output;
-	G_PID_Tuning.fDerivateGain_output_MOOG := fDerivateGain_output;
+	G_PID_Tuning.fDerivateGain_output_dis := fDerivateGain_output;
 	
 	//Normalized Outputsignal
 		
-		fWinchValveNormalizedInput := LIMIT(-1, 1*(fProportinalGain_output + fIntegralGain_output + fDerivateGain_output), 1);
-		G_PID_Tuning.PID_output_MOOG := fWinchValveNormalizedInput;
-		
+	fDisplacementControlSignal := LIMIT(-1, 1*(fProportinalGain_output + fIntegralGain_output + fDerivateGain_output), 1);
+	G_PID_Tuning.PID_output_dis := fDisplacementControlSignal	;			
 	
 	IF ABS(fPosition_error) < 0.05 THEN
 		bStartPosOK := TRUE;
@@ -96,7 +92,11 @@ fbPID_controller(
 		
 ELSE
 	bStartPosOK := FALSE;
-END_IF]]></ST>
+
+END_IF
+
+
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

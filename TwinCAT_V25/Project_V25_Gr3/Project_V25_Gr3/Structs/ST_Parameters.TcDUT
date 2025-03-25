@@ -11,7 +11,7 @@ STRUCT
 	stDisplacementValveDeadBand 	: ST_ValveDeadBand := (fPosMax := 32767.0, fPosMin := 16383.0, fNegMin := 16383.0, fNegMax := 0);
 	stPressureSensorScaling400bar 	: ST_PressureInputScaling := (fMaxInputValue := 32767.0, fMinInputValue := 0.0, fMaxOutputValue := 400.0, fMinOutputValue := 0.0);
 	stPressureSensorScaling40bar 	: ST_PressureInputScaling := (fMaxInputValue := 32767.0, fMinInputValue := 0.0, fMaxOutputValue := 40.0, fMinOutputValue := 0.0);
-	stJoystickInputScalingX 		: ST_JoystickInputScaling := (fMaxInputValue := 14790.0, fMinInputValue := 1797.0, fNeutralInputValue := 8400, fNeutralDeadband := 50.0, fMaxOutputValue := 1.0, fMinOutputValue := -1.0, fNeutralOutputValue := 0.0);
+	stJoystickInputScalingX 		: ST_JoystickInputScaling := (fMaxInputValue := 14790.0, fMinInputValue := 1797.0, fNeutralInputValue := 8400, fNeutralDeadband := 50.0, fMaxOutputValue := 1.0, fMinOutputValue := 0.0, fNeutralOutputValue := 0.5);
 	stJoystickInputScalingY 		: ST_JoystickInputScaling := (fMaxInputValue := 14770.0, fMinInputValue := 1829.0, fNeutralInputValue := 8340, fNeutralDeadband := 50.0, fMaxOutputValue := 1.0, fMinOutputValue := -1.0, fNeutralOutputValue := 0.0);
 	stJoystickInputScalingZ 		: ST_JoystickInputScaling := (fMaxInputValue := 14830.0, fMinInputValue := 1804.0, fNeutralInputValue := 8380, fNeutralDeadband := 50.0, fMaxOutputValue := 1.0, fMinOutputValue := -1.0, fNeutralOutputValue := 0.0);
 	fWinchEncoderOffset 			: LREAL := 12814.994735637447; // Encoder value at zero (Cylinder out / second layaer)

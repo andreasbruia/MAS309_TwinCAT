@@ -5,6 +5,7 @@
 VAR_INPUT
 	fbJoystickWinch : FB_JoystickInputScaling; 
 	fbJoystickRot : FB_JoystickInputScaling; 
+	fbDisplacementSlider : FB_JoystickInputScaling_01;
 	fbYokeInputScaling : FB_Yoke_Input_Scaling;
 	fbWinchPosition : FB_Encoder;
 	fbPressureSupply : FB_PressureInputScaling; 
@@ -31,6 +32,14 @@ fbJoystickRot(
 	stJoystickInputScaling := G_Parameters.stParam.stJoystickInputScalingZ,
     fNormalizedOutput => G_Sensors.fJoystickNormalizedZ
 );
+
+fbDisplacementSlider(
+	bEnable := G_IO.bAutoSwitch OR G_IO.bManualSwitch,
+	nRawInput := G_IO.fJoyXraw, 
+	stJoystickInputScaling := G_Parameters.stParam.stJoystickInputScalingX, 
+	fNormalizedOutput => G_Sensors.fJoystickNormalizedX
+);
+
 
 fbYokeInputScaling(
 	bEnable := TRUE, //Vil lese Yokeverdi hele tiden så den settes til TRUE (var G_IO.bManualSwitch før)

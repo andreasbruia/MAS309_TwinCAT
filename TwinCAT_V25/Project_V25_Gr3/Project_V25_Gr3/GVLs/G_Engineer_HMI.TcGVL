@@ -17,6 +17,7 @@ VAR_GLOBAL
 	//Displacementcontrol 
 	bDisplacement_target_active		: BOOL;
 	fDisplacement_target			: LREAL := 1.0;
+	bJoystick_slider_active			: BOOL;
 	
 	// PID Gains for displacementcontrol
 	fProportionalgain_dis			: LREAL;
@@ -35,10 +36,10 @@ VAR_GLOBAL
 	fAutoStartPos_target			: LREAL := 0.5;
 	
 	// Auto Sine Motion
-	bAutoSineMotionEnable : BOOL; 
+	bAutoSineMotionEnable			 : BOOL; 
 	
 	// Displacement Sine Wave control: 
-	bSineDisplacement : BOOL; 
+	bSineDisplacement				 : BOOL; 
 	
 	//Sine wave parameters
 	fAmp 							: LREAL := 0.2;
@@ -54,6 +55,11 @@ VAR_GLOBAL
 	fIntegrationalgain_MOOG 		: LREAL; 
 	bIenable_MOOG 					: BOOL;
 	bIenable_MOOG_write				: BOOL; 
+	
+	// Secondary Control: 
+	
+	bSecondaryStartPosEnable 		: BOOL;
+	fSecondaryStartPos_target		: LREAL := 0.3;
 	
 END_VAR]]></Declaration>
   </GVL>

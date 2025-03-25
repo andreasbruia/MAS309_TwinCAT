@@ -17,6 +17,11 @@ fPosition_error_StartPos					: LREAL;
 
 //Displacement Sine
 fDisplacementControlSignal_sine			: LREAL;
+
+// Secondary control
+fPosition_error_StartDisplacement 		: LREAL; 
+fDisplacementControlSignal_Secondary	: LREAL;
+bOpenBreak_Secondary					: BOOL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

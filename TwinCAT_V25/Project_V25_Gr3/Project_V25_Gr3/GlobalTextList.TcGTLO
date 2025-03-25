@@ -86,6 +86,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"39"</v>
+              <v n="TextDefault">"Joystick slider"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"561"</v>
               <v n="TextDefault">"Open Breaks"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -108,6 +113,16 @@
             <o>
               <v n="TextID">"404"</v>
               <v n="TextDefault">"Secondary Control"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"64"</v>
+              <v n="TextDefault">"SecondarySine Motion"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"944"</v>
+              <v n="TextDefault">"SecondaryStart Position"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

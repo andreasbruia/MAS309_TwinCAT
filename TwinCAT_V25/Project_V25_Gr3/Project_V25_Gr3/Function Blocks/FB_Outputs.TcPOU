@@ -43,7 +43,7 @@ END_IF
 /////Open breaks///
 IF eStatus = E_Status.Running AND G_IO.bWinchEnable AND (G_Engineer_HMI.bPrimary_Control_active OR G_Engineer_HMI.bSecondary_Control_active) THEN
 	G_IO.bOpenBrakes := TRUE;
-	ELSE 
+ELSE 
 		G_IO.bOpenBrakes := FALSE;
 END_IF
 
@@ -78,11 +78,11 @@ IF G_IO.bAutoSwitch AND NOT (G_Engineer_HMI.bAutoStartPosEnable) THEN /////Se ov
 END_IF
 
 ///////////////////// Winch //////////////////////////////
-IF (eStatus = E_Status.Running) AND bEnableMotion THEN 
-	//G_IO.bOpenBrakes := TRUE;
+IF (eStatus = E_Status.Running) AND bEnableMotion OR G_Motion_Control.bOpenBreak THEN 
+	G_IO.bOpenBrakes := TRUE;
 	bEnableWinch := TRUE;
 ELSE
-	//G_IO.bOpenBrakes := FALSE;
+	G_IO.bOpenBrakes := FALSE;
 	bEnableWinch := FALSE;
 END_IF
 
@@ -111,9 +111,15 @@ ELSE
 	fWinchValveNormalizedInput := fWinchValveInput;
 END_IF
 
+//Sekundærstyring
+
+IF G_Engineer_HMI.bSecondary_Control_active THEN
+	fWinchValveNormalizedInput := 1.0;
+END_IF
+
 ////////PCV output/////////////
 fbWinchValveOutput(
-	bEnable := bEnableWinch,
+	bEnable := bEnableWinch OR G_Engineer_HMI.bSecondary_Control_active,
 	bDeadBandCompOn := G_Parameters.stParam.bWinchDeadBandCompOn,
 	stValveDeadBand := G_Parameters.stParam.stWinchValveDeadBand,
 	fNormalizedInput := fWinchValveNormalizedInput,
@@ -121,15 +127,20 @@ fbWinchValveOutput(
 	nOutput => G_IO.fWinchValveOut
 	);
 	
+	
 	//Gjør input til ventilen global
 	G_Sensors.fWinchValveOutNormalized := fWinchValveNormalizedInput;
 
 
 
 /////////Displacement Control///////////
+IF G_Engineer_HMI.bJoystick_slider_active THEN
+	G_Engineer_HMI.fDisplacement_target := G_Sensors.fJoystickNormalizedX;
+END_IF
+
 
 fbDisplacementControl(
-	bEnable := G_Engineer_HMI.bDisplacement_target_active AND eStatus = E_Status.Running AND G_Engineer_HMI.bSecondary_Control_active,
+	bEnable := G_Engineer_HMI.bDisplacement_target_active AND eStatus = E_Status.Running,
 	fDisplacementNormalizedInput := G_Engineer_HMI.fDisplacement_target,
 	fYokeNormalizedFeedback := G_Sensors.fYokeNormalizedFeedback,
 	fNormalizedOutput => fDisplacementControl_output
@@ -137,10 +148,11 @@ fbDisplacementControl(
 	
 
 // Når displacement ikke er enabled blir den satt til 1 (helt åpen) definert oppe i variabler
+IF G_Engineer_HMI.bPrimary_Control_active THEN //De mellom her hører til primary control
 IF bEnableDisplacement THEN
 	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ; //Kobler displacement til Z på joystick
 	
-ELSIF G_Engineer_HMI.bDisplacement_target_active AND G_Engineer_HMI.bSecondary_Control_active THEN
+ELSIF G_Engineer_HMI.bDisplacement_target_active THEN
 	fDisplacementControlSignal := fDisplacementControl_output;
 	
 ELSIF G_Engineer_HMI.bSineDisplacement THEN
@@ -149,6 +161,14 @@ ELSIF G_Engineer_HMI.bSineDisplacement THEN
 ELSE
 	fDisplacementControlSignal := fDisplacementNormalizedInput;
 END_IF
+END_IF
+
+IF G_Engineer_HMI.bSecondary_Control_active THEN
+	IF G_Engineer_HMI.bSecondaryStartPosEnable THEN
+		fDisplacementControlSignal := G_Motion_Control.fDisplacementControlSignal_Secondary;
+	END_IF
+END_IF
+
 
 /////////DCV////////
 fbDisplacementValveOutput(

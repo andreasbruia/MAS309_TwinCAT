@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_SecondaryControlSinus" Id="{4e1fc59f-b966-4ece-96fa-c350a8c20e41}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SecondaryControlSinus
+VAR_INPUT
+	ThetaRef 			: LREAL; // Kul
+	fPosition 			: LREAL; 
+	
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

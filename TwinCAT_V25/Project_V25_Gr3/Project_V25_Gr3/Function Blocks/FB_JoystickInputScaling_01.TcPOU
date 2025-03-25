@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_JoystickInputScaling_01" Id="{9046c4f7-d8c4-4b4d-9220-1f5058dafb58}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_JoystickInputScaling_01
+VAR_INPUT
+	bEnable 				: BOOL;
+	nRawInput 				: INT;
+	stJoystickInputScaling  : ST_JoystickInputScaling;
+END_VAR
+VAR_OUTPUT
+	fNormalizedOutput 		: LREAL;
+END_VAR
+VAR
+	fRawInput 				: LREAL;
+	fTempInput 				: LREAL;
+	fTempOutput 			: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fRawInput := INT_TO_LREAL(nRawInput);
+
+fTempInput := fRawInput - stJoystickInputScaling.fNeutralInputValue;
+
+IF fTempInput > stJoystickInputScaling.fNeutralDeadband THEN
+	fTempOutput := fTempInput/(stJoystickInputScaling.fMaxInputValue - stJoystickInputScaling.fNeutralInputValue);
+ELSIF fTempInput < -stJoystickInputScaling.fNeutralDeadband THEN	
+	fTempOutput := fTempInput/(stJoystickInputScaling.fNeutralInputValue - stJoystickInputScaling.fMinInputValue);
+ELSE
+	fTempOutput := 0.0;
+END_IF
+
+IF NOT(bEnable) THEN
+	fNormalizedOutput := 0.0;
+ELSE
+	fTempOutput := (fTempOutput + 1.0)/2.0; //Endrer området fra -1 til 1 til 0 til 1
+	fNormalizedOutput := LIMIT(stJoystickInputScaling.fMinOutputValue, fTempOutput, stJoystickInputScaling.fMaxOutputValue);
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

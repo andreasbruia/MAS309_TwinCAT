@@ -33,7 +33,7 @@ END_VAR
       <ST><![CDATA[IF bStartPosOK AND bAutoEnable THEN
 	bEnable := TRUE; 
 	
-	fPosition_error := fPosition - fSineReferenceSignal;
+	fPosition_error := fSineReferenceSignal - fPosition;  //fPosition - fSineReferenceSignal;
 	
 	G_Motion_Control.fPosition_error_SineMotion := fPosition_error;
 	
@@ -81,7 +81,7 @@ fbPID_controller(
 	
 	//Normalized Outputsignal
 		
-		fWinchValveNormalizedInput := LIMIT(-1, -1*(fProportinalGain_output + fIntegralGain_output + fDerivateGain_output), 1);
+		fWinchValveNormalizedInput := LIMIT(-1, 1*(fProportinalGain_output + fIntegralGain_output + fDerivateGain_output), 1);
 		G_PID_Tuning.PID_output_MOOG := fWinchValveNormalizedInput;
 		
 ELSIF NOT (bAutoEnable) THEN;
