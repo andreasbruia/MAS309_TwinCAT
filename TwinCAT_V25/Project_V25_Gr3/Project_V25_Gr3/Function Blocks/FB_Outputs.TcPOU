@@ -58,8 +58,6 @@ IF G_IO.bManualSwitch AND NOT(G_Engineer_HMI.bManualControl_enable )THEN
 bEnableMotion := G_IO.bWinchEnable;
 fWinchValveInput := G_Sensors.fJoystickNormalizedY;
 
-
-
 END_IF
 
 /////////////////////AutoStartPos/////////////////////

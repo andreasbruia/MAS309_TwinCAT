@@ -46,7 +46,7 @@ CASE ssMethodType OF
         IF P_enable THEN 
             (* Outport: '<Root>/P_output' incorporates:
              *  Product: '<S1>/Product' *)
-            P_output := K_p * error;
+            P_output := LIMIT(-1, K_p * error, 1);
         ELSE 
             (* Outport: '<Root>/P_output' incorporates:
              *  Constant: '<S1>/Constant' *)

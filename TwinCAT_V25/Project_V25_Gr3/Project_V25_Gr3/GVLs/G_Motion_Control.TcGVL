@@ -20,7 +20,7 @@ fDisplacementControlSignal_sine				: LREAL;
 
 //Manual joystick posref
 fWinchPosRefManual							: LREAL; //to make it a global variable for plotting 
-fWinchValveNormalizedInput_joystick_posref	: LREAL;
+fWinchValveInput_joystick_posref	: LREAL;
 
 // Secondary control
 fPosition_error_StartDisplacement 			: LREAL; 

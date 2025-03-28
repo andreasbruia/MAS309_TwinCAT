@@ -59,8 +59,11 @@ VAR_GLOBAL
 	
 	
 	// PID Manual control joystick pos ref
-	fProportionalgain_joy_posref	: LREAL := 1.0;
 	bManualControl_enable			: BOOL;
+	fProportionalgain_joy_posref	: LREAL := 10.0;
+	bPgain_enable_joy_posref		: BOOL := TRUE;
+	fIntegralgain_joy_posref		: LREAL := 10.0;
+	bIgain_enable_joy_posref		: BOOL;
 	
 	// Secondary Control: 
 	

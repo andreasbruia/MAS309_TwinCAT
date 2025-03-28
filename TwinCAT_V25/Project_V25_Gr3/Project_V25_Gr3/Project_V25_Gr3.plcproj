@@ -134,6 +134,12 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\P_MotionControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\P_Outputs.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Structs\ST_PressureInputScaling.TcDUT">
       <SubType>Code</SubType>
     </Compile>

@@ -5,10 +5,9 @@
 VAR
 	bFunction_Blocks_enable				: BOOL := TRUE;
 	fb_StateMachine_Mode_Selection	 	: FB_StateMachine_Mode_Selection;
-	fb_Motion_Control					: FB_Motion_Control;
 	fb_Joystick_input_Scaling			: FB_JoystickInputScaling;
 	fb_Joystick							: FB_Joystick;
-	fb_Outputs							: FB_Outputs;
+	//fb_Outputs							: FB_Outputs;
 	fb_ValveOutput						: FB_ValveOutput;
 	fb_Encoder							: FB_Encoder; 
 	fb_Inputs						    : FB_Inputs;
@@ -18,13 +17,13 @@ VAR
 //	fb_Yoke_Input_Scaling 				: FB_Yoke_Input_Scaling;
 //	fb_EncoderScaling					: FB_EncoderScaling;
 	
+	eStatus								:E_Status;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF bFunction_Blocks_enable THEN
 	fb_Inputs();
 	fb_StateMachine_Mode_Selection();
-	fb_Motion_Control();
 	fb_Joystick_input_Scaling();
 	fb_Joystick();
 	fb_ValveOutput();
@@ -33,13 +32,14 @@ END_VAR
 //	fb_DisplacementControl();
 //	fb_DisplacementValveOutput();
 //	fb_Yoke_Input_Scaling();
-	fb_Outputs();
+//	fb_Outputs();
 //	fb_EncoderScaling();
 END_IF
 
-
-fb_Motion_Control.eStatus := fb_StateMachine_Mode_Selection.eStatus;
-fb_Outputs.eStatus := fb_StateMachine_Mode_Selection.eStatus;
+//Update eStatus
+fb_StateMachine_Mode_Selection(
+	eStatus => eStatus
+	);
 
 ////////Select Primary eller Secondary control//////////////
 IF G_Engineer_HMI.bPrimary_Control THEN
