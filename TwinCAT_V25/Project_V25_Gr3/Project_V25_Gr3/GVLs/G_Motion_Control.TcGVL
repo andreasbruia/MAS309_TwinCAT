@@ -4,24 +4,28 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
 //AutoStartPos
-fWinchValveNormalizedInput 			: LREAL;	
-bOpenBreak							: BOOL;
+fWinchValveNormalizedInput 					: LREAL;	
+bOpenBreak									: BOOL;
 
 //AutoSineMotion
-fWinchValveNormalizedInput_sine 	: LREAL;
-fSineReferenceSignal				:LREAL;
+fWinchValveNormalizedInput_sine 			: LREAL;
+fSineReferenceSignal						: LREAL;
 
 // Position Errors
 fPosition_error_SineMotion 					: LREAL; 
 fPosition_error_StartPos					: LREAL;
 
 //Displacement Sine
-fDisplacementControlSignal_sine			: LREAL;
+fDisplacementControlSignal_sine				: LREAL;
+
+//Manual joystick posref
+fWinchPosRefManual							: LREAL; //to make it a global variable for plotting 
+fWinchValveNormalizedInput_joystick_posref	: LREAL;
 
 // Secondary control
-fPosition_error_StartDisplacement 		: LREAL; 
-fDisplacementControlSignal_Secondary	: LREAL;
-bOpenBreak_Secondary					: BOOL;
+fPosition_error_StartDisplacement 			: LREAL; 
+fDisplacementControlSignal_Secondary		: LREAL;
+bOpenBreak_Secondary						: BOOL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

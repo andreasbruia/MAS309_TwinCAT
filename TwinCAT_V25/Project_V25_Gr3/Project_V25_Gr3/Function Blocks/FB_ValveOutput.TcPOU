@@ -45,6 +45,7 @@ END_IF
 
 //Om den er enabled blir verdien sendt ut
 IF bEnable THEN
+	
 	nOutput := LIMIT(nMinValue, nTempOutput, nMaxValue);
 	bEnableValveOutput := TRUE;
 //Eller så sender den ut nøytral verdi

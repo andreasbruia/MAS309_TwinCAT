@@ -45,6 +45,7 @@ VAR_GLOBAL
 	fAmp 							: LREAL := 0.2;
 	fFreq 							: LREAL := 0.1;
 	fSinemidpoint					: LREAL := 0.5;
+	ft_ENV							: LREAL := 10.0;
 	
 	
 	// PID MOOG Valve 
@@ -55,6 +56,11 @@ VAR_GLOBAL
 	fIntegrationalgain_MOOG 		: LREAL; 
 	bIenable_MOOG 					: BOOL;
 	bIenable_MOOG_write				: BOOL; 
+	
+	
+	// PID Manual control joystick pos ref
+	fProportionalgain_joy_posref	: LREAL := 1.0;
+	bManualControl_enable			: BOOL;
 	
 	// Secondary Control: 
 	

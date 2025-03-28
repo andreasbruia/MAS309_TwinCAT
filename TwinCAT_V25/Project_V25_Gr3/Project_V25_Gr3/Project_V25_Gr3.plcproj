@@ -50,6 +50,9 @@
     <Compile Include="Function Blocks\FB_Inputs.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Function Blocks\FB_Integrator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Function Blocks\FB_Joystick.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -71,6 +74,9 @@
     <Compile Include="Function Blocks\FB_SecondaryControlStartPos.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Function Blocks\FB_StartPos.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Function Blocks\FB_StateMachine_Mode_Selection.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -89,7 +95,10 @@
     <Compile Include="Function Blocks\FB_FeedForward.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\F_SineFunction.TcPOU">
+    <Compile Include="Functions\F_SineFunction_primary.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Functions\F_SineFunction_secondary.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GlobalTextList.TcGTLO">

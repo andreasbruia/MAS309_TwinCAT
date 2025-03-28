@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="F_SineFunction_primary" Id="{36c62ab0-3dfd-4d51-af4c-aadf4d024ecd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_SineFunction_primary : LREAL
+VAR_INPUT
+	fTime 				: LREAL;
+END_VAR
+VAR_OUTPUT
+	fSineSignal 		: LREAL;
+END_VAR
+VAR
+	u					: LREAL;
+	ft_ENV				: LREAL;
+	y					: LREAL;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ft_ENV := G_Engineer_HMI.ft_ENV;
+
+u := fTime/ft_ENV;
+
+IF u > 1.0 THEN
+	u := 1.0;
+END_IF
+
+y := (3*u*u) - (2*u*u*u);
+
+fSineSignal := y * G_Engineer_HMI.fAmp * SIN(2.0 * PI * G_Engineer_HMI.fFreq * fTime) + G_Engineer_HMI.fSinemidpoint;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -61,6 +61,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"106"</v>
+              <v n="TextDefault">"Enable Manual control"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"616"</v>
               <v n="TextDefault">"EndStop Override"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -68,6 +73,11 @@
             <o>
               <v n="TextID">"49"</v>
               <v n="TextDefault">"Endstop Override"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"829"</v>
+              <v n="TextDefault">"Envelope time"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -88,6 +98,16 @@
             <o>
               <v n="TextID">"39"</v>
               <v n="TextDefault">"Joystick slider"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"45"</v>
+              <v n="TextDefault">"Manual control - joystick pos ref"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"509"</v>
+              <v n="TextDefault">"Manuel control - joystick pos ref"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

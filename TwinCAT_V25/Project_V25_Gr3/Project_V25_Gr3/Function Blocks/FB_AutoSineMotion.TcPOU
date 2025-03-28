@@ -33,6 +33,7 @@ END_VAR
       <ST><![CDATA[IF bStartPosOK AND bAutoEnable THEN
 	bEnable := TRUE; 
 	
+	G_Motion_Control.fSineReferenceSignal := fSineReferenceSignal;
 	fPosition_error := fSineReferenceSignal - fPosition;  //fPosition - fSineReferenceSignal;
 	
 	G_Motion_Control.fPosition_error_SineMotion := fPosition_error;

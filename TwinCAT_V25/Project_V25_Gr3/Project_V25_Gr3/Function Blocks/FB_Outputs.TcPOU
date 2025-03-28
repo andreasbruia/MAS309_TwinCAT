@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
   <POU Name="FB_Outputs" Id="{c3b6ff0e-0108-484e-aa5d-46cb83b00d7a}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Outputs
+    <Declaration><![CDATA[
+FUNCTION_BLOCK FB_Outputs
 VAR_INPUT
 	eStatus 							: E_Status;
 END_VAR
@@ -28,6 +29,11 @@ VAR
 	
 	fWinchEndUp_encoder					: LREAL := G_Parameters.stParam.fWinchEndStopPos;
 	fWinchEndDown_encoder				: LREAL := G_Parameters.stParam.fWinchEndStopNeg;
+	fWinchEndStopDown_soft				: LREAL := G_Parameters.stParam.fWinchEndStopNeg_soft;
+	u									: LREAL;
+	y									: LREAL;
+	fTotaldistance_Neg					: LREAL;
+	
 	
 END_VAR
 ]]></Declaration>
@@ -41,14 +47,14 @@ ELSE
 END_IF
 
 /////Open breaks///
-IF eStatus = E_Status.Running AND G_IO.bWinchEnable AND (G_Engineer_HMI.bPrimary_Control_active OR G_Engineer_HMI.bSecondary_Control_active) THEN
+IF eStatus = E_Status.Running AND G_IO.bWinchEnable THEN
 	G_IO.bOpenBrakes := TRUE;
 ELSE 
 		G_IO.bOpenBrakes := FALSE;
 END_IF
 
 ////////////Manual Controls in use if auto not enabled/////////
-IF G_IO.bManualSwitch AND G_Engineer_HMI.bPrimary_Control_active THEN
+IF G_IO.bManualSwitch AND NOT(G_Engineer_HMI.bManualControl_enable )THEN
 bEnableMotion := G_IO.bWinchEnable;
 fWinchValveInput := G_Sensors.fJoystickNormalizedY;
 
@@ -57,13 +63,13 @@ fWinchValveInput := G_Sensors.fJoystickNormalizedY;
 END_IF
 
 /////////////////////AutoStartPos/////////////////////
-IF G_IO.bAutoSwitch  AND G_Engineer_HMI.bAutoStartPosEnable AND G_Engineer_HMI.bPrimary_Control_active THEN
+IF G_IO.bAutoSwitch  AND G_Engineer_HMI.bAutoStartPosEnable  THEN
 	bEnableMotion := G_Motion_Control.bOpenBreak;
 	fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput;
 END_IF
 
 /////////////////////AutoSineMotion/////////////////////
-IF G_IO.bAutoSwitch AND G_Engineer_HMI.bAutoSineMotionEnable AND G_Engineer_HMI.bPrimary_Control_active THEN
+IF G_IO.bAutoSwitch AND G_Engineer_HMI.bAutoSineMotionEnable THEN
 	bEnableMotion := G_Motion_Control.bOpenBreak;
 	fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput_sine;
 END_IF
@@ -77,6 +83,13 @@ IF G_IO.bAutoSwitch AND NOT (G_Engineer_HMI.bAutoStartPosEnable) THEN /////Se ov
     fWinchValveInput := 0.0;
 END_IF
 
+
+////Manual PosRef///
+IF G_Engineer_HMI.bManualControl_enable AND G_IO.bManualSwitch THEN
+	bEnableMotion := G_IO.bWinchEnable;
+	fWinchValveInput := LIMIT(-1,  G_Motion_Control.fWinchValveNormalizedInput_joystick_posref, 1);	
+END_IF
+
 ///////////////////// Winch //////////////////////////////
 IF (eStatus = E_Status.Running) AND bEnableMotion OR G_Motion_Control.bOpenBreak THEN 
 	G_IO.bOpenBrakes := TRUE;
@@ -87,12 +100,20 @@ ELSE
 END_IF
 
 
-
-///////////////////// Displacement //////////////////////////////
-IF (eStatus = E_Status.Running) AND G_IO.bDisplacementEnable AND G_Engineer_HMI.bSecondary_Control_active THEN 
-	bEnableDisplacement := TRUE;
+////////Soft End Stop////////////
+fTotaldistance_Neg := fWinchEndDown_encoder - fWinchEndStopDown_soft;
+u := (G_Sensors.fWinchEncoderPosition - fWinchEndStopDown_soft) / fTotaldistance_Neg;
+y := 1 - ((3*u*u) - (2*u*u*u));
+IF G_Sensors.fWinchEncoderPosition > fWinchEndStopDown_soft AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	fWinchValveNormalizedInput := fWinchValveInput * y;
+(*ELSIF G_Sensors.fWinchEncoderPosition < fWinchEndUp_encoder AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	G_Engineer_HMI.bEndStopUpActive := TRUE;
+	G_Engineer_HMI.bEndStopDownActive := FALSE;
+	fWinchValveNormalizedInput := LIMIT(-1.0, fWinchValveInput, 0.0);*)
 ELSE
-	bEnableDisplacement := FALSE;
+	G_Engineer_HMI.bEndStopUpActive := FALSE;
+	G_Engineer_HMI.bEndStopDownActive := FALSE;
+	fWinchValveNormalizedInput := fWinchValveInput;
 END_IF
 
 
@@ -111,15 +132,10 @@ ELSE
 	fWinchValveNormalizedInput := fWinchValveInput;
 END_IF
 
-//Sekundærstyring
-
-IF G_Engineer_HMI.bSecondary_Control_active THEN
-	fWinchValveNormalizedInput := 1.0;
-END_IF
 
 ////////PCV output/////////////
 fbWinchValveOutput(
-	bEnable := bEnableWinch OR G_Engineer_HMI.bSecondary_Control_active,
+	bEnable := bEnableWinch,
 	bDeadBandCompOn := G_Parameters.stParam.bWinchDeadBandCompOn,
 	stValveDeadBand := G_Parameters.stParam.stWinchValveDeadBand,
 	fNormalizedInput := fWinchValveNormalizedInput,
@@ -127,11 +143,15 @@ fbWinchValveOutput(
 	nOutput => G_IO.fWinchValveOut
 	);
 	
-	
 	//Gjør input til ventilen global
 	G_Sensors.fWinchValveOutNormalized := fWinchValveNormalizedInput;
 
-
+///////////////////// Displacement ////////////////////////////// tidligere sto denne under winch
+IF (eStatus = E_Status.Running) AND G_IO.bDisplacementEnable THEN 
+	bEnableDisplacement := TRUE;
+ELSE
+	bEnableDisplacement := FALSE;
+END_IF
 
 /////////Displacement Control///////////
 IF G_Engineer_HMI.bJoystick_slider_active THEN
@@ -148,7 +168,7 @@ fbDisplacementControl(
 	
 
 // Når displacement ikke er enabled blir den satt til 1 (helt åpen) definert oppe i variabler
-IF G_Engineer_HMI.bPrimary_Control_active THEN //De mellom her hører til primary control
+
 IF bEnableDisplacement THEN
 	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ; //Kobler displacement til Z på joystick
 	
@@ -161,13 +181,11 @@ ELSIF G_Engineer_HMI.bSineDisplacement THEN
 ELSE
 	fDisplacementControlSignal := fDisplacementNormalizedInput;
 END_IF
-END_IF
 
-IF G_Engineer_HMI.bSecondary_Control_active THEN
+
 	IF G_Engineer_HMI.bSecondaryStartPosEnable THEN
 		fDisplacementControlSignal := G_Motion_Control.fDisplacementControlSignal_Secondary;
 	END_IF
-END_IF
 
 
 /////////DCV////////
