@@ -13,7 +13,6 @@ END_VAR
 VAR_OUTPUT
 	bStartPosOK						: BOOL;
 	fWinchValveNormalizedInput 		: LREAL;
-	bOpenBreak						: BOOL;
 END_VAR
 
 VAR PERSISTENT
@@ -38,13 +37,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF eStatus AND G_Engineer_HMI.bAutoStartPosEnable THEN
-	bOpenBreak	:= TRUE;
-ELSE
-	bOpenBreak := FALSE;
-END_IF
-
-IF bEnable  THEN
+      <ST><![CDATA[IF bEnable  THEN
 fPosition_error := fStartPosition - fPosition; //fPosition - fStartPosition;
 G_Motion_Control.fPosition_error_StartPos := fPosition_error;
 

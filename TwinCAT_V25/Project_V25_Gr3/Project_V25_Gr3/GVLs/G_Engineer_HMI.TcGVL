@@ -33,7 +33,7 @@ VAR_GLOBAL
 	
 	// Auto Start Pos
 	bAutoStartPosEnable				: BOOL;
-	fAutoStartPos_target			: LREAL := 0.5;
+	fAutoStartPos_target			: LREAL := 1.4;
 	
 	// Auto Sine Motion
 	bAutoSineMotionEnable			 : BOOL; 
@@ -44,7 +44,7 @@ VAR_GLOBAL
 	//Sine wave parameters
 	fAmp 							: LREAL := 0.2;
 	fFreq 							: LREAL := 0.1;
-	fSinemidpoint					: LREAL := 0.5;
+	fSinemidpoint					: LREAL := 1.4;
 	ft_ENV							: LREAL := 10.0;
 	
 	

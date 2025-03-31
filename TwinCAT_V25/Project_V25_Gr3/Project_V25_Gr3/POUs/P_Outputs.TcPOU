@@ -34,11 +34,9 @@ ELSE
 END_IF
 
 ////////////////Enable Motion logic/////////////////////////
-
 IF P_MotionControl.bAutoEnable OR (P_MotionControl.bManualEnable AND G_IO.bWinchEnable) THEN
 	bEnableMotion := TRUE;
-	
-	ELSE 
+ELSE 
 		bEnableMotion := FALSE; 
 END_IF
 
@@ -52,10 +50,36 @@ IF (MAIN.eStatus = E_Status.Running) AND bEnableMotion THEN
 END_IF
 
 ///Choose type of Manual control
-IF G_Engineer_HMI.bManualControl_enable THEN
+IF G_Engineer_HMI.bManualControl_enable AND P_MotionControl.bManualEnable THEN
 	fWinchValveInput := LIMIT(-1,G_Motion_Control.fWinchValveInput_joystick_posref,1);
-ELSE
+ELSIF P_MotionControl.bManualEnable THEN //vurdere om denne skal være elsif eller bare else
 	fWinchValveInput := G_Sensors.fJoystickNormalizedY;
+END_IF
+
+////////Primary Auto Sine Motion////////
+(*IF P_MotionControl.bAutoEnable  THEN
+	IF G_Engineer_HMI.bAutoStartPosEnable THEN
+		fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput;
+		IF P_MotionControl.bStartPosOK THEN
+			G_Engineer_HMI.bAutoStartPosEnable := FALSE;
+			G_Engineer_HMI.bAutoSineMotionEnable := TRUE;
+		END_IF
+	ELSIF G_Engineer_HMI.bAutoSineMotionEnable THEN
+		fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput_sine;
+	END_IF
+END_IF*)
+
+IF P_MotionControl.bAutoEnable  AND G_Engineer_HMI.bAutoStartPosEnable THEN
+	fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput;
+END_IF
+
+IF P_MotionControl.bAutoEnable  AND G_Engineer_HMI.bAutoSineMotionEnable THEN
+	fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput_sine;
+END_IF
+
+//IF Manual or Auto is not selected valveoutput is set to 0.0 kan fjernes om det aldri blir et problem
+IF NOT (P_MotionControl.bAutoEnable) AND NOT (P_MotionControl.bManualEnable) THEN
+	fWinchValveInput := 0.0;
 END_IF
 
 
@@ -91,6 +115,7 @@ ELSE
 	bEnableDisplacement := FALSE;
 END_IF
 
+//Dette avgjør hvilket pådrag som skal sendes til DCV
 IF NOT(bEnableDisplacement) THEN
 	fDisplacementControlSignal := fDisplacementNormalizedInput; 
 ELSE	

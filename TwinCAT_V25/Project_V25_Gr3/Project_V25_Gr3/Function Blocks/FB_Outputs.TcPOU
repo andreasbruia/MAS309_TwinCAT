@@ -85,7 +85,7 @@ END_IF
 ////Manual PosRef///
 IF G_Engineer_HMI.bManualControl_enable AND G_IO.bManualSwitch THEN
 	bEnableMotion := G_IO.bWinchEnable;
-	fWinchValveInput := LIMIT(-1,  G_Motion_Control.fWinchValveNormalizedInput_joystick_posref, 1);	
+	fWinchValveInput := LIMIT(-1,  G_Motion_Control.fWinchValveInput_joystick_posref, 1);	
 END_IF
 
 ///////////////////// Winch //////////////////////////////

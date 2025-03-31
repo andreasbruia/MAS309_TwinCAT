@@ -24,9 +24,9 @@ IF u > 1.0 THEN
 	u := 1.0;
 END_IF
 
-y := (3*u*u) - (2*u*u*u);
+y := (3.0*u*u) - (2.0*u*u*u);
 
-fSineSignal := y * G_Engineer_HMI.fAmp * SIN(2.0 * PI * G_Engineer_HMI.fFreq * fTime) + G_Engineer_HMI.fSinemidpoint;
+fSineSignal :=  G_Engineer_HMI.fAmp * SIN(2.0 * PI * G_Engineer_HMI.fFreq * fTime) + G_Engineer_HMI.fSinemidpoint;
 ]]></ST>
     </Implementation>
   </POU>
