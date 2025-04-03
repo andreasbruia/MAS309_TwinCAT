@@ -3,6 +3,7 @@
   <GVL Name="G_Motion_Control" Id="{730fe87e-cb38-4f98-b4e9-e8ddae689ecb}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
+	//////////Primary Control/////////
 //AutoStartPos
 fWinchValveNormalizedInput 					: LREAL;	
 bOpenBreak									: BOOL;
@@ -20,9 +21,16 @@ fDisplacementControlSignal_sine				: LREAL;
 
 //Manual joystick posref
 fWinchPosRefManual							: LREAL; //to make it a global variable for plotting 
-fWinchValveInput_joystick_posref	: LREAL;
+fWinchValveInput_joystick_posref			: LREAL;
 
-// Secondary control
+
+
+//////// Secondary control////////
+fWinchPosRefManual_secondary				: LREAL;
+fSCVInput_joystick_posref_secondary			: LREAL;
+
+
+//Ikke i bruk
 fPosition_error_StartDisplacement 			: LREAL; 
 fDisplacementControlSignal_Secondary		: LREAL;
 bOpenBreak_Secondary						: BOOL;

@@ -6,6 +6,11 @@
         <o xml:space="preserve" t="GlobalTextListObject">
           <l n="TextList" t="ArrayList" cet="TextListRow">
             <o>
+              <v n="TextID">"612"</v>
+              <v n="TextDefault">" Manual control - joystick posref - payload pos"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"736"</v>
               <v n="TextDefault">"%2f"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -73,6 +78,16 @@
             <o>
               <v n="TextID">"520"</v>
               <v n="TextDefault">"Enable Secundary manual control"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"88"</v>
+              <v n="TextDefault">"Enable Secundary Manual control"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"922"</v>
+              <v n="TextDefault">"Enable Secundary Manual control - joystick posref"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

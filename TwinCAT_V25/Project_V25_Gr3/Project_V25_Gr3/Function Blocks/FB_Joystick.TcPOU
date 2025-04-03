@@ -16,7 +16,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[IF bEnable THEN
 	
-	fOuput := fNormalizedInput*G_Parameters.stParam.fMaxWinchVelocityLimit;
+	fOuput := fNormalizedInput*G_Parameters.stParam.fMaxWinchVelocityLimit_SC;
 ELSE
 	fOuput := 0.0;
 END_IF

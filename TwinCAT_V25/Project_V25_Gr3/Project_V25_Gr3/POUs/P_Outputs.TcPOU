@@ -44,7 +44,7 @@ ELSE
 END_IF
 
 ////////////////Enable Motion logic/////////////////////////
-IF P_MotionControl.bAutoEnable OR (P_MotionControl.bManualEnable AND G_IO.bWinchEnable) THEN
+IF P_MotionControl.bAutoEnable OR ((P_MotionControl.bManualEnable OR P_MotionControl.bSecondaryManualEnable) AND G_IO.bWinchEnable) THEN
 	bEnableMotion := TRUE;
 ELSE 
 		bEnableMotion := FALSE; 
@@ -64,7 +64,7 @@ IF G_Engineer_HMI.bManualControl_enable AND P_MotionControl.bManualEnable THEN
 	fWinchValveInput := LIMIT(-1,G_Motion_Control.fWinchValveInput_joystick_posref,1);
 ELSIF P_MotionControl.bManualEnable AND G_Engineer_HMI.bPrimary_Control_active THEN //vurdere om denne skal være elsif eller bare else
 	fWinchValveInput := G_Sensors.fJoystickNormalizedY;
-ELSIF  P_MotionControl.bManualEnable AND G_Engineer_HMI.bSecondary_Control_active THEN
+ELSIF  P_MotionControl.bSecondaryManualEnable AND G_Engineer_HMI.bSecondary_Control_active THEN
 	fWinchValveInput := 1.0;
 END_IF
 
@@ -92,7 +92,7 @@ END_IF
 
 
 //IF Manual or Auto is not selected valveoutput is set to 0.0 kan fjernes om det aldri blir et problem
-IF NOT (P_MotionControl.bAutoEnable) AND NOT (P_MotionControl.bManualEnable) THEN
+IF NOT (P_MotionControl.bAutoEnable OR P_MotionControl.bSecondaryAutoEnable) AND NOT (P_MotionControl.bManualEnable OR P_MotionControl.bSecondaryManualEnable) THEN
 	fWinchValveInput := 0.0;
 END_IF
 
@@ -144,6 +144,8 @@ ELSE
 	bEnableDisplacement := FALSE;
 END_IF
 
+
+
 fbDisplacementControl(
 	bEnable := G_Engineer_HMI.bDisplacement_target_active AND MAIN.eStatus = E_Status.Running,
 	fDisplacementNormalizedInput := G_Engineer_HMI.fDisplacement_target,
@@ -157,13 +159,18 @@ IF bEnableDisplacement THEN
 	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ;
 ELSIF G_Engineer_HMI.bDisplacement_target_active THEN
 	fDisplacementControlSignal := fDisplacementControl_output;
+ELSIF G_Engineer_HMI.bManual_Secondary_joyposref_enable THEN
+	fDisplacementControlSignal := LIMIT(-1.0,G_Motion_Control.fSCVInput_joystick_posref_secondary,1.0);
 ELSE	
 	fDisplacementControlSignal := fDisplacementNormalizedInput;
 END_IF
 
 /////////Displacement Control///////////
+
+//For å justere med x akse
 IF G_Engineer_HMI.bJoystick_slider_active THEN
 	G_Engineer_HMI.fDisplacement_target := LIMIT(0.18,G_Sensors.fJoystickNormalizedX,1.0);
+
 END_IF
 
 

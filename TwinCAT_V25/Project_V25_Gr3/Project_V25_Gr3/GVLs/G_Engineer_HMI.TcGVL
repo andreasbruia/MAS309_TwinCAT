@@ -14,22 +14,9 @@ VAR_GLOBAL
 	bEndStopDownActive 				: BOOL;
 	bEndStopOverride 				: BOOL; 
 	
-	//Displacementcontrol 
-	bDisplacement_target_active		: BOOL;
-	fDisplacement_target			: LREAL := 1.0;
-	bJoystick_slider_active			: BOOL;
 	
-	// PID Gains for displacementcontrol
-	fProportionalgain_dis			: LREAL := 3.0;
-	fIntegralgain_dis				: LREAL;
-	fDerivativegain_dis				: LREAL;
-	bPenable_dis					: BOOL := TRUE; //Ønsker P ledd på fra start
-	bIenable_dis					: BOOL;
-	bDenable_dis					: BOOL;
 	
-	bPenable_dis_write				: BOOL ;
-	bIenable_dis_write				: BOOL;
-	bDenable_dis_write				: BOOL;
+	
 	
 	// Auto Start Pos
 	bAutoStartPosEnable				: BOOL;
@@ -66,10 +53,37 @@ VAR_GLOBAL
 	fIntegralgain_joy_posref		: LREAL := 0.1;
 	bIgain_enable_joy_posref		: BOOL;
 	
-	// Secondary Control: 
+////// Secondary Control///////
 	
+//Displacementcontrol 
+	bDisplacement_target_active		: BOOL;
+	fDisplacement_target			: LREAL := 1.0;
+	bJoystick_slider_active			: BOOL;
 	bSecondaryStartPosEnable 		: BOOL;
 	fSecondaryStartPos_target		: LREAL := 0.3;
+
+// PID Gains for displacementcontrol
+	fProportionalgain_dis			: LREAL := 3.0;
+	fIntegralgain_dis				: LREAL;
+	fDerivativegain_dis				: LREAL;
+	bPenable_dis					: BOOL := TRUE; //Ønsker P ledd på fra start
+	bIenable_dis					: BOOL;
+	bDenable_dis					: BOOL;
+	
+	bPenable_dis_write				: BOOL ;
+	bIenable_dis_write				: BOOL;
+	bDenable_dis_write				: BOOL;
+	
+//PID Gains for Manual control joystick posref
+	fPGain_joyposref_secondary		: LREAL := 1.0;
+	fIGain_joyposref_secondary		: LREAL := 0.0;
+	fDGain_joyposref_secondary		: LREAL := 0.0;
+	bIGain_joyposref_secondary_enable	: BOOL;
+	bPID_enable_joyposref				: BOOL := TRUE;
+	
+	bManual_Secondary_joyposref_enable	: BOOL;
+	
+
 	
 END_VAR]]></Declaration>
   </GVL>
