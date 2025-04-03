@@ -62,7 +62,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{7DEF9D13-0B94-4C95-A765-AE6239C77AE2}" Name="Project_V25_Gr3" PrjFilePath="Project_V25_Gr3\Project_V25_Gr3.plcproj" TmcFilePath="Project_V25_Gr3\Project_V25_Gr3.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" CopyTmcToTarget="true" CopyTpyToTarget="false" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{9E2E2DE6-77AC-C422-0B81-E73CB7FDF5CF}" TmcPath="Project_V25_Gr3\Project_V25_Gr3.tmc">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{51ECB747-4FE5-48BF-4DE9-B95FD53ABB6F}" TmcPath="Project_V25_Gr3\Project_V25_Gr3.tmc">
 					<Name>Project_V25_Gr3 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="2" AreaNo="1">

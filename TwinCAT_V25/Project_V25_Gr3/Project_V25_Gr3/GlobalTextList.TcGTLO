@@ -66,6 +66,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"817"</v>
+              <v n="TextDefault">"Enable Manual control - joystick posref"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"520"</v>
+              <v n="TextDefault">"Enable Secundary manual control"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"616"</v>
               <v n="TextDefault">"EndStop Override"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -108,6 +118,11 @@
             <o>
               <v n="TextID">"45"</v>
               <v n="TextDefault">"Manual control - joystick pos ref"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"809"</v>
+              <v n="TextDefault">"Manual secundary"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

@@ -17,6 +17,13 @@ VAR_GLOBAL
 	fDerivateGain_output_MOOG 			: LREAL;
 	PID_output_MOOG						: LREAL;
 	
+	//Manual Control joystick pos ref
+	fProportinalGain_output_joypos 		: LREAL;
+	fIntegralGain_output_joypos			: LREAL;
+	fDerivateGain_output_joypos 		: LREAL;
+	ferror_joypos 						: LREAL;
+	
+	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

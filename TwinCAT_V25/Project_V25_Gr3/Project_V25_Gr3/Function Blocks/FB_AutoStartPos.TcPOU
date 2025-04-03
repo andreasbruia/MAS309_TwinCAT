@@ -16,13 +16,14 @@ VAR_OUTPUT
 END_VAR
 
 VAR PERSISTENT
-	fProportionalGain 				: LREAL;
+	fProportionalGain 				: LREAL := 1.0;
 	fIntegralGain					: LREAL;
 	fDerivateGain					: LREAL;
 END_VAR
 
 VAR
 	fbPID_controller				: FB_PID_controller;
+	fbPID_new						: FB_PID_new;
 	fPosition_error					: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
@@ -38,9 +39,6 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF bEnable  THEN
-fPosition_error := fStartPosition - fPosition; //fPosition - fStartPosition;
-G_Motion_Control.fPosition_error_StartPos := fPosition_error;
-
 
 /////Soft Start//////
 
@@ -80,36 +78,29 @@ ELSE
 	fIntegralGain := G_Engineer_HMI.fIntegrationalgain_MOOG;
 END_IF
 
-fbPID_controller(
-		ssMethodType := BOOL_TO_SINT(bEnable),
-		error := fPosition_error,
-		Int_error_threshold := G_PID_Tuning.Int_error_threshold,
-		P_enable := G_Engineer_HMI.bPenable_MOOG,
-		I_enable := G_Engineer_HMI.bIenable_MOOG,
-		D_enable := FALSE,
-		K_p := fProportionalGain,
-		K_i := fIntegralGain,
-		K_d := fDerivateGain,
-		P_output => fProportinalGain_output,
-		I_output => fIntegralGain_output,
-		D_output => fDerivateGain_output
-		);
+
 		
-			//Error times PGain
-	fProportinalGain_output := fProportinalGain_output;
-	G_PID_Tuning.fProportinalGain_output_MOOG := fProportinalGain_output;
-	//Error times IGain
-	fIntegralGain_output := fIntegralGain_output;
-	G_PID_Tuning.fIntegralGain_output_MOOG := fIntegralGain_output;
-	//Error times DGain
-	fDerivateGain_output := fDerivateGain_output;
-	G_PID_Tuning.fDerivateGain_output_MOOG := fDerivateGain_output;
+fbPID_new(
+	ssMethodType := BOOL_TO_SINT(bEnable),
+	fSignalReference := fStartPosition,
+	fSignalFeedback := fPosition,
+	fProportionalGain := fProportionalGain,
+	fIntegralGain := fIntegralGain,
+	bActivateIntegralControl := G_Engineer_HMI.bIenable_MOOG,
+	bEnable := TRUE,
+	bActivateDerivativeControl := FALSE,
+	fDerivativeGain := fDerivateGain,
+	fClosedLoopSignal => fWinchValveNormalizedInput,
+	fSignalError => G_Motion_Control.fPosition_error_StartPos,
+	P_out => G_PID_Tuning.fProportinalGain_output_MOOG,
+	I_out => G_PID_Tuning.fIntegralGain_output_MOOG,
+	D_out => G_PID_Tuning.fDerivateGain_output_MOOG
+	);
 	
-	//Normalized Outputsignal
-		
-		fWinchValveNormalizedInput := LIMIT(-1, (fProportinalGain_output + fIntegralGain_output + fDerivateGain_output), 1); //Legg in y for å bruke soft start
-		G_PID_Tuning.PID_output_MOOG := fWinchValveNormalizedInput;
-		
+	
+	//Make output global for plot	
+	G_PID_Tuning.PID_output_MOOG := fWinchValveNormalizedInput;
+
 	
 	IF ABS(fPosition_error) < 0.05 THEN
 		bStartPosOK := TRUE;

@@ -20,7 +20,7 @@ VAR_GLOBAL
 	bJoystick_slider_active			: BOOL;
 	
 	// PID Gains for displacementcontrol
-	fProportionalgain_dis			: LREAL;
+	fProportionalgain_dis			: LREAL := 3.0;
 	fIntegralgain_dis				: LREAL;
 	fDerivativegain_dis				: LREAL;
 	bPenable_dis					: BOOL := TRUE; //Ønsker P ledd på fra start
@@ -59,10 +59,11 @@ VAR_GLOBAL
 	
 	
 	// PID Manual control joystick pos ref
+	bPID_enable						: BOOL := TRUE;
 	bManualControl_enable			: BOOL;
 	fProportionalgain_joy_posref	: LREAL := 10.0;
 	bPgain_enable_joy_posref		: BOOL := TRUE;
-	fIntegralgain_joy_posref		: LREAL := 10.0;
+	fIntegralgain_joy_posref		: LREAL := 0.1;
 	bIgain_enable_joy_posref		: BOOL;
 	
 	// Secondary Control: 

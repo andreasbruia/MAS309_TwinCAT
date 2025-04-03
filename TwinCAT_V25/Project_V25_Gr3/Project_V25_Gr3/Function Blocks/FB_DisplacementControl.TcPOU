@@ -13,13 +13,14 @@ VAR_OUTPUT
 END_VAR
 
 VAR PERSISTENT
-	fProportionalGain 				: LREAL;
+	fProportionalGain 				: LREAL := 1.0;
 	fIntegralGain					: LREAL;
 	fDerivateGain					: LREAL;
 END_VAR
 
 VAR
-	fbPID_controller				: FB_PID_controller;	
+	fbPID_controller				: FB_PID_controller;
+	fbPID_new						: FB_PID_new;
 	fYoke_error						: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
@@ -29,9 +30,6 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF bEnable THEN
-	//Closed loop error
-	fYoke_error := fDisplacementNormalizedInput - fYokeNormalizedFeedback;
-	G_PID_Tuning.fYoke_error := fYoke_error; //Make the variable global for OPC UA plotting
 	
 	//Write to PGain
 	IF NOT(G_Engineer_HMI.bPenable_dis_write) THEN
@@ -54,33 +52,28 @@ END_VAR
 	fDerivateGain := G_Engineer_HMI.fDerivativegain_dis; //Connect the gain to the global HMI
 	END_IF
 	
-	fbPID_controller(
-		ssMethodType := BOOL_TO_SINT(bEnable),
-		error := fYoke_error,
-		Int_error_threshold := G_PID_Tuning.Int_error_threshold,
-		P_enable := G_Engineer_HMI.bPenable_dis,
-		I_enable := G_Engineer_HMI.bIenable_dis,
-		D_enable := G_Engineer_HMI.bDenable_dis,
-		K_p := fProportionalGain,
-		K_i := fIntegralGain,
-		K_d := fDerivateGain,
-		P_output => fProportinalGain_output,
-		I_output => fIntegralGain_output,
-		D_output => fDerivateGain_output
-		);
+
+		
+		fbPID_new(
+	ssMethodType := BOOL_TO_SINT(bEnable),
+	fSignalReference := fDisplacementNormalizedInput,
+	fSignalFeedback := fYokeNormalizedFeedback,
+	fProportionalGain := fProportionalGain,
+	fIntegralGain := fIntegralGain,
+	bActivateIntegralControl := G_Engineer_HMI.bIenable_dis,
+	bEnable := bEnable,
+	bIntegralControlReset := FALSE,
+	bActivateDerivativeControl := FALSE,
+	fDerivativeGain := fDerivateGain,
+	fClosedLoopSignal => fNormalizedOutput,
+	fSignalError =>G_PID_Tuning.fYoke_error,
+	P_out => G_PID_Tuning.fProportinalGain_output_dis,
+	I_out => G_PID_Tuning.fIntegralGain_output_dis,
+	D_out => G_PID_Tuning.fDerivateGain_output_dis
+	);	
 	
-	//Error times PGain
-	fProportinalGain_output := fProportinalGain_output;
-	G_PID_Tuning.fProportinalGain_output_dis := fProportinalGain_output;
-	//Error times IGain
-	fIntegralGain_output := fIntegralGain_output;
-	G_PID_Tuning.fIntegralGain_output_dis := fIntegralGain_output;
-	//Error times DGain
-	fDerivateGain_output := fDerivateGain_output;
-	G_PID_Tuning.fDerivateGain_output_dis := fDerivateGain_output;
-	
-	//Normalized Outputsignal
-	fNormalizedOutput := LIMIT(-1,fProportinalGain_output + fIntegralGain_output + fDerivateGain_output,1);
+
+	//Make Output global for plot
 	G_PID_Tuning.PID_output_dis := fNormalizedOutput;
 	
 ELSE 

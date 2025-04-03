@@ -22,6 +22,7 @@ END_VAR
 VAR
 	bEnable : BOOL; // Forblir TRUE bnår og etter bStartPosOk er TRUE?
     fbPID_controller				: FB_PID_controller;
+	fbPID_new						:FB_PID_new;
 	fPosition_error					: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
@@ -30,18 +31,19 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF bStartPosOK AND bAutoEnable THEN
-	bEnable := TRUE; 
+      <ST><![CDATA[IF NOT (bAutoEnable) THEN
+	bEnable := FALSE;
+	G_Engineer_HMI.bAutoSineMotionEnable := FALSE;
+	fWinchValveNormalizedInput := 0.0;
+ELSIF bStartPosOK AND bAutoEnable THEN
+	bEnable := TRUE;
 END_IF
 
 IF bEnable THEN	
 	
-	G_Motion_Control.fSineReferenceSignal := fSineReferenceSignal;
-	fPosition_error := fSineReferenceSignal - fPosition;  //fPosition - fSineReferenceSignal;
+G_Motion_Control.fSineReferenceSignal := fSineReferenceSignal;
 	
-	G_Motion_Control.fPosition_error_SineMotion := fPosition_error;
 	
-
 // Write to HMI
 //PGain:
 IF NOT(G_Engineer_HMI.bPenable_MOOG_write) THEN
@@ -57,41 +59,30 @@ ELSE
 	fIntegralGain := G_Engineer_HMI.fIntegrationalgain_MOOG;
 END_IF
 
-
-fbPID_controller(
-		ssMethodType := BOOL_TO_SINT(bEnable),
-		error := fPosition_error,
-		Int_error_threshold := G_PID_Tuning.Int_error_threshold,
-		P_enable := G_Engineer_HMI.bPenable_MOOG,
-		I_enable := G_Engineer_HMI.bIenable_MOOG,
-		D_enable := FALSE,
-		K_p := fProportionalGain,
-		K_i := fIntegralGain,
-		K_d := fDerivateGain,
-		P_output => fProportinalGain_output,
-		I_output => fIntegralGain_output,
-		D_output => fDerivateGain_output
-		);
 		
-		//Error times PGain
-	fProportinalGain_output := fProportinalGain_output;
-	G_PID_Tuning.fProportinalGain_output_MOOG := fProportinalGain_output;
-	//Error times IGain
-	fIntegralGain_output := fIntegralGain_output;
-	G_PID_Tuning.fIntegralGain_output_MOOG:= fIntegralGain_output;
-	//Error times DGain
-	fDerivateGain_output := fDerivateGain_output;
-	G_PID_Tuning.fDerivateGain_output_MOOG := fDerivateGain_output;
+		fbPID_new(
+	ssMethodType := BOOL_TO_SINT(bEnable),
+	fSignalReference := fSineReferenceSignal,
+	fSignalFeedback := fPosition,
+	fProportionalGain := fProportionalGain,
+	fIntegralGain := fIntegralGain,
+	bActivateIntegralControl := G_Engineer_HMI.bIenable_MOOG,
+	bEnable := TRUE,
+	bActivateDerivativeControl := FALSE,
+	fDerivativeGain := fDerivateGain,
+	fClosedLoopSignal => fWinchValveNormalizedInput,
+	fSignalError =>G_Motion_Control.fPosition_error_SineMotion,
+	P_out => G_PID_Tuning.fProportinalGain_output_MOOG,
+	I_out => G_PID_Tuning.fIntegralGain_output_MOOG,
+	D_out => G_PID_Tuning.fDerivateGain_output_MOOG
+	);
+		
+		
 	
-	//Normalized Outputsignal
-		
-		fWinchValveNormalizedInput := LIMIT(-1, 1*(fProportinalGain_output + fIntegralGain_output + fDerivateGain_output), 1);
+	//Make output global for plot		
 		G_PID_Tuning.PID_output_MOOG := fWinchValveNormalizedInput;
 		
-ELSIF NOT (bAutoEnable) THEN;
-	bEnable := FALSE;
-	G_Engineer_HMI.bAutoSineMotionEnable := FALSE;
-	fWinchValveNormalizedInput := 0.0;
+
 
 END_IF
 

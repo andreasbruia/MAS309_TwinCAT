@@ -86,9 +86,6 @@
     <Compile Include="Function Blocks\FB_Yoke_Input_Scaling.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB_PID_controller.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Function Blocks\FB_SecondaryControlSinus.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -127,6 +124,12 @@
     <Compile Include="GVLs\G_Engineer_HMI.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="PIDs\FB_PID_controller.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PIDs\FB_PID_new.TcPOU">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
@@ -167,6 +170,7 @@
     <Folder Include="Enums" />
     <Folder Include="Function Blocks" />
     <Folder Include="Functions" />
+    <Folder Include="PIDs" />
     <Folder Include="Structs" />
     <Folder Include="POUs" />
   </ItemGroup>
@@ -271,8 +275,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -344,14 +348,14 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Boolean">System.Boolean</Type>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Boolean">System.Boolean</Type>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

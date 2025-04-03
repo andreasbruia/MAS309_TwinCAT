@@ -16,10 +16,20 @@ bEnableDisplacement 			: BOOL;
 fDisplacementNormalizedInput	: LREAL := 1.0; //Dette er en start verdi for primærstyring slik at Yoke står på 1
 fDisplacementControlSignal		: LREAL; //Dette er signalet som endrer displacement
 bEnableValveOutputDisp	 		: BOOL;
+fDisplacementControl_output		: LREAL;
 
 //Function Blocks
 fbWinchValveOutput				: FB_ValveOutput;
 fbDisplacementValveOutput		: FB_DisplacementValveOutput;
+fbDisplacementControl			: FB_DisplacementControl;
+
+
+//Soft End stop legge i FB senere
+u_Neg								: LREAL;
+y_Neg								: LREAL;
+u_Pos								: LREAL;
+y_Pos								: LREAL;
+
 END_VAR
 
 
@@ -52,8 +62,10 @@ END_IF
 ///Choose type of Manual control
 IF G_Engineer_HMI.bManualControl_enable AND P_MotionControl.bManualEnable THEN
 	fWinchValveInput := LIMIT(-1,G_Motion_Control.fWinchValveInput_joystick_posref,1);
-ELSIF P_MotionControl.bManualEnable THEN //vurdere om denne skal være elsif eller bare else
+ELSIF P_MotionControl.bManualEnable AND G_Engineer_HMI.bPrimary_Control_active THEN //vurdere om denne skal være elsif eller bare else
 	fWinchValveInput := G_Sensors.fJoystickNormalizedY;
+ELSIF  P_MotionControl.bManualEnable AND G_Engineer_HMI.bSecondary_Control_active THEN
+	fWinchValveInput := 1.0;
 END_IF
 
 ////////Primary Auto Sine Motion////////
@@ -77,18 +89,35 @@ IF P_MotionControl.bAutoEnable  AND G_Engineer_HMI.bAutoSineMotionEnable THEN
 	fWinchValveInput := G_Motion_Control.fWinchValveNormalizedInput_sine;
 END_IF
 
+
+
 //IF Manual or Auto is not selected valveoutput is set to 0.0 kan fjernes om det aldri blir et problem
 IF NOT (P_MotionControl.bAutoEnable) AND NOT (P_MotionControl.bManualEnable) THEN
 	fWinchValveInput := 0.0;
 END_IF
 
+//////////Soft Stop////////////
+u_Neg := LIMIT(0,((G_Sensors.fPayLoadPosition - G_Parameters.stParam.fWinchEndStopNeg ) / ( G_Parameters.stParam.fWinchEndStopNeg_soft -  G_Parameters.stParam.fWinchEndStopNeg)),1);
+
+y_Neg :=  LIMIT(0.1,((3.0*u_Neg*u_Neg)-(2.0*u_Pos*u_Pos*u_Pos)),1);
+
+u_Pos := LIMIT(0,((G_Sensors.fPayLoadPosition - G_Parameters.stParam.fWinchEndStopPos ) / ( G_Parameters.stParam.fWinchEndStopPos_soft -  G_Parameters.stParam.fWinchEndStopPos)),1);
+
+y_Pos :=  LIMIT(0.1,((3.0*u_Pos*u_Pos)-(2.0*u_Pos*u_Pos*u_Pos)),1);
 
 //////////End Stop///////////// skal lage FB på dette
-IF G_Sensors.fWinchEncoderPosition > G_Parameters.stParam.fWinchEndStopNeg AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+IF G_Sensors.fPayLoadPosition < G_Parameters.stParam.fWinchEndStopNeg_soft AND  G_Sensors.fPayLoadPosition > G_Parameters.stParam.fWinchEndStopNeg AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	fWinchValveNormalizedInput := LIMIT(-1.0, y_Neg*fWinchValveInput, 1.0);
+
+ELSIF G_Sensors.fPayLoadPosition < G_Parameters.stParam.fWinchEndStopNeg AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
 	G_Engineer_HMI.bEndStopUpActive := FALSE;
 	G_Engineer_HMI.bEndStopDownActive := TRUE;
 	fWinchValveNormalizedInput := LIMIT(0.0, fWinchValveInput, 1.0);
-ELSIF G_Sensors.fWinchEncoderPosition < G_Parameters.stParam.fWinchEndStopPos AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	
+ELSIF 	G_Sensors.fPayLoadPosition > G_Parameters.stParam.fWinchEndStopPos_soft AND  G_Sensors.fPayLoadPosition < G_Parameters.stParam.fWinchEndStopPos AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	fWinchValveNormalizedInput := LIMIT(-1.0, y_Pos*fWinchValveInput, 1.0);
+	
+ELSIF G_Sensors.fPayLoadPosition > G_Parameters.stParam.fWinchEndStopPos AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
 	G_Engineer_HMI.bEndStopUpActive := TRUE;
 	G_Engineer_HMI.bEndStopDownActive := FALSE;
 	fWinchValveNormalizedInput := LIMIT(-1.0, fWinchValveInput, 0.0);
@@ -115,12 +144,28 @@ ELSE
 	bEnableDisplacement := FALSE;
 END_IF
 
+fbDisplacementControl(
+	bEnable := G_Engineer_HMI.bDisplacement_target_active AND MAIN.eStatus = E_Status.Running,
+	fDisplacementNormalizedInput := G_Engineer_HMI.fDisplacement_target,
+	fYokeNormalizedFeedback := G_Sensors.fYokeNormalizedFeedback,
+	fNormalizedOutput => fDisplacementControl_output
+	);
+
+
 //Dette avgjør hvilket pådrag som skal sendes til DCV
-IF NOT(bEnableDisplacement) THEN
-	fDisplacementControlSignal := fDisplacementNormalizedInput; 
-ELSE	
+IF bEnableDisplacement THEN
 	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ;
+ELSIF G_Engineer_HMI.bDisplacement_target_active THEN
+	fDisplacementControlSignal := fDisplacementControl_output;
+ELSE	
+	fDisplacementControlSignal := fDisplacementNormalizedInput;
 END_IF
+
+/////////Displacement Control///////////
+IF G_Engineer_HMI.bJoystick_slider_active THEN
+	G_Engineer_HMI.fDisplacement_target := LIMIT(0.18,G_Sensors.fJoystickNormalizedX,1.0);
+END_IF
+
 
 fbDisplacementValveOutput(
 	bEnable := (MAIN.eStatus = E_Status.Running),
