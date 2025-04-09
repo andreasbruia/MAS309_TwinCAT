@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_DisplacementControl" Id="{06b81b3f-2d47-4af7-b8ab-6b28ad67bc37}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_DisplacementControl 
+  <POU Name="FB_DisplacementControl_SC" Id="{bdc1fc63-8ad7-4439-bfe4-2ff7f2a8ff55}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_DisplacementControl_SC 
 VAR_INPUT
 	bEnable 						: BOOL; 
 	
 	fDisplacementNormalizedInput 	: LREAL; 
-	fYokeNormalizedFeedback 		: LREAL; 
+	fYokeNormalizedFeedback 		: LREAL;
+	
+	fWinchVelRefManual_secundary	: LREAL;
+	fupper_deadband					: LREAL;
+	flower_deadband					: LREAL;
 END_VAR
 VAR_OUTPUT
 	fNormalizedOutput 				: LREAL; 
@@ -19,11 +23,8 @@ VAR PERSISTENT
 END_VAR
 
 VAR
-	fbPID_controller				: FB_PID_controller;
+	fbPID_SC						: FB_PID_SC;
 	fbPID_new						: FB_PID_new;
-	fbResetInt						: FB_ResetIntegralController;
-	bResetInt						: BOOL;
-	
 	fYoke_error						: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
@@ -56,8 +57,11 @@ END_VAR
 	END_IF
 	
 
+
+
+
 		
-		fbPID_new(
+		fbPID_SC(
 	ssMethodType := BOOL_TO_SINT(bEnable),
 	fSignalReference := fDisplacementNormalizedInput,
 	fSignalFeedback := fYokeNormalizedFeedback,
@@ -65,23 +69,20 @@ END_VAR
 	fIntegralGain := fIntegralGain,
 	bActivateIntegralControl := G_Engineer_HMI.bIenable_dis,
 	bEnable := bEnable,
-	bIntegralControlReset := NOT(MAIN.eStatus = E_Status.Running),
+	bIntegralControlReset := FALSE,
 	bActivateDerivativeControl := FALSE,
 	fDerivativeGain := fDerivateGain,
+	fUpper_deadband := fupper_deadband,
+	fLower_deadband := flower_deadband,
+	fVelRef := fWinchVelRefManual_secundary,
 	fClosedLoopSignal => fNormalizedOutput,
 	fSignalError =>G_PID_Tuning.fYoke_error,
 	P_out => G_PID_Tuning.fProportinalGain_output_dis,
 	I_out => G_PID_Tuning.fIntegralGain_output_dis,
 	D_out => G_PID_Tuning.fDerivateGain_output_dis
 	);	
-	
-(*fbResetInt(
-	fVRef := 0.0,
-	fErrorMax := G_Engineer_HMI.fMaxerror_dis,
-	fError := G_PID_Tuning.fYoke_error,
-	bReset => bResetInt
-	);*)
-	
+
+
 	//Make Output global for plot
 	G_PID_Tuning.PID_output_dis := fNormalizedOutput;
 	

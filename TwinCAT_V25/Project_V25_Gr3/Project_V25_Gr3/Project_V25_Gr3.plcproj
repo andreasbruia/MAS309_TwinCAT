@@ -38,6 +38,9 @@
     <Compile Include="Function Blocks\FB_DisplacementControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Function Blocks\FB_DisplacementControl_SC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Function Blocks\FB_DisplacementValveOutput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -129,6 +132,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PIDs\FB_PID_new.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PIDs\FB_PID_SC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PIDs\FB_ResetIntegralController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PlcTask.TcTTO">

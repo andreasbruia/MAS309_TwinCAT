@@ -5,11 +5,11 @@
 STRUCT
 	fCyclicTime 					: LREAL := 0.01; // [s]
 	fMaxWinchVelocityLimit 			: LREAL := 0.25; // [m/s] Blueprint: 0.025
-	fMaxWinchVelocityLimit_SC		: LREAL := 0.5;
+	fMaxWinchVelocityLimit_SC		: LREAL := 0.025;
 	bWinchDeadBandCompOn 			: BOOL := FALSE;
 	bDisplacementDeadBandCompOn 	: BOOL := FALSE;
-	stWinchValveDeadBand 			: ST_ValveDeadBand := (fPosMax := 32767.0, fPosMin := 16383.0, fNegMin := 16383.0, fNegMax := 0);
-	stDisplacementValveDeadBand 	: ST_ValveDeadBand := (fPosMax := 32767.0, fPosMin := 16383.0, fNegMin := 16383.0, fNegMax := 0);
+	stWinchValveDeadBand 			: ST_ValveDeadBand := (fPosMax := 32767.0, fPosMin := 16383.0, fNegMin := 16383.0, fNegMax := 0.0);
+	stDisplacementValveDeadBand 	: ST_ValveDeadBand := (fPosMax := 10000.0, fPosMin := 450.0, fNegMin := 450.0, fNegMax := 10000.0);
 	stPressureSensorScaling400bar 	: ST_PressureInputScaling := (fMaxInputValue := 32767.0, fMinInputValue := 0.0, fMaxOutputValue := 400.0, fMinOutputValue := 0.0);
 	stPressureSensorScaling40bar 	: ST_PressureInputScaling := (fMaxInputValue := 32767.0, fMinInputValue := 0.0, fMaxOutputValue := 40.0, fMinOutputValue := 0.0);
 	stJoystickInputScalingX 		: ST_JoystickInputScaling := (fMaxInputValue := 14790.0, fMinInputValue := 1797.0, fNeutralInputValue := 8400, fNeutralDeadband := 50.0, fMaxOutputValue := 1.0, fMinOutputValue := 0.0, fNeutralOutputValue := 0.5);

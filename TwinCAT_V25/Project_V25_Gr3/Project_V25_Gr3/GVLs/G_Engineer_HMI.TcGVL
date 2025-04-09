@@ -74,6 +74,10 @@ VAR_GLOBAL
 	bIenable_dis_write				: BOOL;
 	bDenable_dis_write				: BOOL;
 	
+	//Integral reset (antiwindup)
+	fMaxerror_dis					: LREAL;
+	
+	
 //PID Gains for Manual control joystick posref
 	fPGain_joyposref_secondary		: LREAL := 1.0;
 	fIGain_joyposref_secondary		: LREAL := 0.0;
@@ -83,6 +87,11 @@ VAR_GLOBAL
 	
 	bManual_Secondary_joyposref_enable	: BOOL;
 	
+//StepInput displacement
+bStepInput								: BOOL;
+bStartStepInput							: BOOL;
+fStepInput								: LREAL;
+fDuration								: LREAL;
 
 	
 END_VAR]]></Declaration>

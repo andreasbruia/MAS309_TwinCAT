@@ -24,7 +24,7 @@ END_VAR
 	IF fNormalizedInput > 0.0 THEN
 		nTempOutput := LREAL_TO_INT(fNormalizedInput*(stValveDeadBand.fPosMax - stValveDeadBand.fPosMin) + stValveDeadBand.fPosMin);
 	ELSIF fNormalizedInput < 0.0 THEN
-		nTempOutput := LREAL_TO_INT(fNormalizedInput*(stValveDeadBand.fNegMax - stValveDeadBand.fNegMax) - stValveDeadBand.fNegMin); 
+		nTempOutput := LREAL_TO_INT(fNormalizedInput*(stValveDeadBand.fNegMax - stValveDeadBand.fNegMin) - stValveDeadBand.fNegMin); 
 	ELSE
 		nTempOutput := 0; 
 	END_IF

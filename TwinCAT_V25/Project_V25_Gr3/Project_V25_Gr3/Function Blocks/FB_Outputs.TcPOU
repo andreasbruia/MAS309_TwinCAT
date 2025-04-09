@@ -168,7 +168,7 @@ fbDisplacementControl(
 // Når displacement ikke er enabled blir den satt til 1 (helt åpen) definert oppe i variabler
 
 IF bEnableDisplacement THEN
-	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ; //Kobler displacement til Z på joystick
+	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedY; //Kobler displacement til Z på joystick
 	
 ELSIF G_Engineer_HMI.bDisplacement_target_active THEN
 	fDisplacementControlSignal := fDisplacementControl_output;

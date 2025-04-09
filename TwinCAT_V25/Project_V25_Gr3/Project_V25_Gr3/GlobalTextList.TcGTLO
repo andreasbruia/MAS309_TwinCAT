@@ -66,6 +66,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"535"</v>
+              <v n="TextDefault">"Duration"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"106"</v>
               <v n="TextDefault">"Enable Manual control"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -123,6 +128,11 @@
             <o>
               <v n="TextID">"112"</v>
               <v n="TextDefault">"IGain"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"105"</v>
+              <v n="TextDefault">"IReset"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -208,6 +218,16 @@
             <o>
               <v n="TextID">"421"</v>
               <v n="TextDefault">"Sine wave parameters"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"122"</v>
+              <v n="TextDefault">"Step"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"564"</v>
+              <v n="TextDefault">"StepInput displacement"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

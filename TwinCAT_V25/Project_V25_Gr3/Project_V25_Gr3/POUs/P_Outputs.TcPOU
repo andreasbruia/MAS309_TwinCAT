@@ -30,6 +30,12 @@ y_Neg								: LREAL;
 u_Pos								: LREAL;
 y_Pos								: LREAL;
 
+
+
+//StepInput displacement
+T1s									: TIME := T#1S;
+fbClock								: FB_Clock;
+fStepTime							: LREAL;
 END_VAR
 
 
@@ -154,13 +160,26 @@ fbDisplacementControl(
 	);
 
 
+
 //Dette avgjør hvilket pådrag som skal sendes til DCV
 IF bEnableDisplacement THEN
-	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedZ;
+	fDisplacementControlSignal := G_Sensors.fJoystickNormalizedY;
 ELSIF G_Engineer_HMI.bDisplacement_target_active THEN
 	fDisplacementControlSignal := fDisplacementControl_output;
 ELSIF G_Engineer_HMI.bManual_Secondary_joyposref_enable THEN
 	fDisplacementControlSignal := LIMIT(-1.0,G_Motion_Control.fSCVInput_joystick_posref_secondary,1.0);
+ELSIF G_Engineer_HMI.bStepInput THEN
+		fbClock(
+			bEnable := G_Engineer_HMI.bStartStepInput,
+			fTime => fStepTime
+			);
+		IF fStepTime < G_Engineer_HMI.fDuration AND G_Engineer_HMI.bStartStepInput THEN
+			fDisplacementControlSignal := G_Engineer_HMI.fStepInput / 10000.0;
+			
+		ELSE
+			fDisplacementControlSignal := 0.0;
+			G_Engineer_HMI.bStartStepInput := FALSE;
+		END_IF
 ELSE	
 	fDisplacementControlSignal := fDisplacementNormalizedInput;
 END_IF
@@ -169,8 +188,9 @@ END_IF
 
 //For å justere med x akse
 IF G_Engineer_HMI.bJoystick_slider_active THEN
-	G_Engineer_HMI.fDisplacement_target := LIMIT(0.18,G_Sensors.fJoystickNormalizedX,1.0);
-
+	G_Engineer_HMI.fDisplacement_target := LIMIT(0.08,G_Sensors.fJoystickNormalizedX,1.0);
+	
+	
 END_IF
 
 
