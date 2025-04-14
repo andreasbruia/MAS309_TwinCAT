@@ -5,7 +5,7 @@
       <Data>
         <o xml:space="preserve" t="VisualObject">
           <n n="LastVisuLanguageModelEntry" />
-          <v n="UniqueIdGenerator">"294"</v>
+          <v n="UniqueIdGenerator">"303"</v>
           <o n="VisualElemList" t="VisualElemList">
             <l n="VisualElementList" t="VisualElemCollection" cet="GenericVisualElem">
               <o>
@@ -8703,11 +8703,11 @@
                     </o>
                     <o>
                       <v n="Id">1649127785L</v>
-                      <v n="Value">2059</v>
+                      <v n="Value">2044</v>
                     </o>
                     <o>
                       <v n="Id">357335551L</v>
-                      <v n="Value">557</v>
+                      <v n="Value">549</v>
                     </o>
                     <o>
                       <v n="Id">2422045748L</v>
@@ -10908,7 +10908,7 @@
                     </o>
                     <o>
                       <v n="Id">743958181L</v>
-                      <v n="Value">"G_Engineer_HMI.bAutoSineMotionEnable"</v>
+                      <v n="Value">"G_Engineer_HMI.bSecondarySineMotionEnable"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -11006,7 +11006,7 @@
                     </o>
                     <o>
                       <v n="Id">743958181L</v>
-                      <v n="Value">"G_Engineer_HMI.bAutoSineMotionEnable"</v>
+                      <v n="Value">"G_Engineer_HMI.bSecondarySineMotionEnable"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -19284,17 +19284,17 @@ END_VAR"</v>
             <d2 n="Size" ckt="Int32" cvt="VisualObjectSize">
               <v>0</v>
               <o>
-                <v n="Width">2638</v>
+                <v n="Width">2623</v>
                 <v n="Height">1051</v>
               </o>
               <v>1</v>
               <o>
-                <v n="Width">2639</v>
+                <v n="Width">2624</v>
                 <v n="Height">1052</v>
               </o>
               <v>2</v>
               <o>
-                <v n="Width">2639</v>
+                <v n="Width">2624</v>
                 <v n="Height">1052</v>
               </o>
             </d2>

@@ -22,8 +22,7 @@ VAR PERSISTENT
 END_VAR
 
 VAR
-	fbPID_controller				: FB_PID_controller;
-	fbPID_new						: FB_PID_new;
+	fbPID							: FB_PID_Controller;
 	fPosition_error					: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
@@ -80,7 +79,7 @@ END_IF
 
 
 		
-fbPID_new(
+fbPID(
 	ssMethodType := BOOL_TO_SINT(bEnable),
 	fSignalReference := fStartPosition,
 	fSignalFeedback := fPosition,

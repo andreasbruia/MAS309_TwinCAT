@@ -60,7 +60,8 @@ VAR_GLOBAL
 	fDisplacement_target			: LREAL := 1.0;
 	bJoystick_slider_active			: BOOL;
 	bSecondaryStartPosEnable 		: BOOL;
-	fSecondaryStartPos_target		: LREAL := 0.3;
+	fSecondaryStartPos_target		: LREAL := 1.4;
+	bSecondarySineMotionEnable		: BOOL;
 
 // PID Gains for displacementcontrol
 	fProportionalgain_dis			: LREAL := 3.0;

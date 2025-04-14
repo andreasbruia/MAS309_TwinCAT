@@ -13,57 +13,77 @@
 </span><span><a class="LN" name="2">    2   </a><span class="CT"> *</span>
 </span><span><a class="LN" name="3">    3   </a><span class="CT"> * File: OPC_UA_block_converter.st</span>
 </span><span><a class="LN" name="4">    4   </a><span class="CT"> *</span>
-</span><span><a class="LN" name="5">    5   </a><span class="CT"> * IEC 61131-3 Structured Text (ST) code generated for subsystem "OPC_UA_block_converter/FB_ResetIntegralController"</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> * IEC 61131-3 Structured Text (ST) code generated for subsystem "OPC_UA_block_converter/FB_Derivator"</span>
 </span><span><a class="LN" name="6">    6   </a><span class="CT"> *</span>
 </span><span><a class="LN" name="7">    7   </a><span class="CT"> * Model name                      : OPC_UA_block_converter</span>
-</span><span><a class="LN" name="8">    8   </a><span class="CT"> * Model version                   : 1.24</span>
+</span><span><a class="LN" name="8">    8   </a><span class="CT"> * Model version                   : 1.29</span>
 </span><span><a class="LN" name="9">    9   </a><span class="CT"> * Model creator                   : student</span>
 </span><span><a class="LN" name="10">   10   </a><span class="CT"> * Model last modified by          : student</span>
-</span><span><a class="LN" name="11">   11   </a><span class="CT"> * Model last modified on          : Tue Apr 08 16:34:59 2025</span>
+</span><span><a class="LN" name="11">   11   </a><span class="CT"> * Model last modified on          : Mon Apr 14 13:33:05 2025</span>
 </span><span><a class="LN" name="12">   12   </a><span class="CT"> * Model sample time               : 0.01s</span>
-</span><span><a class="LN" name="13">   13   </a><span class="CT"> * Subsystem name                  : OPC_UA_block_converter/FB_ResetIntegralController</span>
+</span><span><a class="LN" name="13">   13   </a><span class="CT"> * Subsystem name                  : OPC_UA_block_converter/FB_Derivator</span>
 </span><span><a class="LN" name="14">   14   </a><span class="CT"> * Subsystem sample time           : 0.01s</span>
 </span><span><a class="LN" name="15">   15   </a><span class="CT"> * Simulink PLC Coder version      : 24.2 (R2024b) 21-Jun-2024</span>
-</span><span><a class="LN" name="16">   16   </a><span class="CT"> * ST code generated on            : Wed Apr 09 09:05:26 2025</span>
+</span><span><a class="LN" name="16">   16   </a><span class="CT"> * ST code generated on            : Mon Apr 14 13:33:59 2025</span>
 </span><span><a class="LN" name="17">   17   </a><span class="CT"> *</span>
 </span><span><a class="LN" name="18">   18   </a><span class="CT"> * Target IDE selection            : PLCopen XML</span>
 </span><span><a class="LN" name="19">   19   </a><span class="CT"> * Test Bench included             : No</span>
 </span><span><a class="LN" name="20">   20   </a><span class="CT"> *</span>
 </span><span><a class="LN" name="21">   21   </a><span class="CT"> *)</span>
-</span><span><a class="LN" name="22">   22   </a><span class="KW">FUNCTION_BLOCK</span> FB_ResetIntegralController
+</span><span><a class="LN" name="22">   22   </a><span class="KW">FUNCTION_BLOCK</span> FB_Derivator
 </span><span><a class="LN" name="23">   23   </a><span class="KW">VAR_INPUT</span>
-</span><span><a class="LN" name="24">   24   </a>    fVRef: <span class="KW">LREAL</span>;
-</span><span><a class="LN" name="25">   25   </a>    fErrorMax: <span class="KW">LREAL</span>;
-</span><span><a class="LN" name="26">   26   </a>    fError: <span class="KW">LREAL</span>;
-</span><span><a class="LN" name="27">   27   </a><span class="KW">END_VAR</span>
-</span><span><a class="LN" name="28">   28   </a><span class="KW">VAR_OUTPUT</span>
-</span><span><a class="LN" name="29">   29   </a>    bReset: <span class="KW">BOOL</span>;
-</span><span><a class="LN" name="30">   30   </a><span class="KW">END_VAR</span>
-</span><span><a class="LN" name="31">   31   </a><span class="KW">VAR_TEMP</span>
-</span><span><a class="LN" name="32">   32   </a>    rtb_Reset: <span class="KW">DINT</span>;
-</span><span><a class="LN" name="33">   33   </a><span class="KW">END_VAR</span>
-</span><span><a class="LN" name="34">   34   </a><span class="CT">(* Outputs for Atomic SubSystem: '&lt;Root&gt;/FB_ResetIntegralController' *)</span>
-</span><span><a class="LN" name="35">   35   </a><span class="CT">(* MATLAB Function: '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:158')" name="code2model"><font color="#117755"><i>&lt;S1&gt;/MATLAB Function</i></font></a>' *)</span>
-</span><span><a class="LN" name="36">   36   </a><span class="CT">(* MATLAB Function 'FB_ResetIntegralController/MATLAB Function': '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:158:1')" name="code2model"><font color="#117755"><i>&lt;S2&gt;:1</i></font></a>' *)</span>
-</span><span><a class="LN" name="37">   37   </a><span class="CT">(* '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:158:1:3')" name="code2model"><font color="#117755"><i>&lt;S2&gt;:1:3</i></font></a>' if abs(vRef) &gt; 0 || abs(error) &gt; errorMax *)</span>
-</span><span><a class="LN" name="38">   38   </a><span class="KW">IF</span> <span class="KW">ABS</span>(fVRef) &gt; 0.0 <span class="KW">THEN</span> 
-</span><span><a class="LN" name="39">   39   </a>    <span class="CT">(* '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:158:1:4')" name="code2model"><font color="#117755"><i>&lt;S2&gt;:1:4</i></font></a>' Reset = 0; *)</span>
-</span><span><a class="LN" name="40">   40   </a>    rtb_Reset := 0;
-</span><span><a class="LN" name="41">   41   </a><span class="KW">ELSIF</span> <span class="KW">ABS</span>(fError) &gt; fErrorMax <span class="KW">THEN</span> 
-</span><span><a class="LN" name="42">   42   </a>    <span class="CT">(* '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:158:1:4')" name="code2model"><font color="#117755"><i>&lt;S2&gt;:1:4</i></font></a>' Reset = 0; *)</span>
-</span><span><a class="LN" name="43">   43   </a>    rtb_Reset := 0;
-</span><span><a class="LN" name="44">   44   </a><span class="KW">ELSE</span> 
-</span><span><a class="LN" name="45">   45   </a>    <span class="CT">(* '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:158:1:5')" name="code2model"><font color="#117755"><i>&lt;S2&gt;:1:5</i></font></a>' else *)</span>
-</span><span><a class="LN" name="46">   46   </a>    <span class="CT">(* '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:158:1:6')" name="code2model"><font color="#117755"><i>&lt;S2&gt;:1:6</i></font></a>' Reset = 1; *)</span>
-</span><span><a class="LN" name="47">   47   </a>    rtb_Reset := 1;
-</span><span><a class="LN" name="48">   48   </a><span class="KW">END_IF</span>;
-</span><span><a class="LN" name="49">   49   </a><span class="CT">(* End of MATLAB Function: '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:158')" name="code2model"><font color="#117755"><i>&lt;S1&gt;/MATLAB Function</i></font></a>' *)</span>
-</span><span><a class="LN" name="50">   50   </a><span class="CT">(* Outport: '&lt;Root&gt;/bReset' incorporates:</span>
-</span><span><a class="LN" name="51">   51   </a><span class="CT"> *  DataTypeConversion: '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:161')" name="code2model"><font color="#117755"><i>&lt;S1&gt;/Data Type Conversion</i></font></a>' *)</span>
-</span><span><a class="LN" name="52">   52   </a>bReset := rtb_Reset &lt;&gt; 0;
-</span><span><a class="LN" name="53">   53   </a><span class="CT">(* End of Outputs for SubSystem: '&lt;Root&gt;/FB_ResetIntegralController' *)</span>
-</span><span><a class="LN" name="54">   54   </a><span class="KW">END_FUNCTION_BLOCK</span>
-</span><span><a class="LN" name="55">   55   </a>
+</span><span><a class="LN" name="24">   24   </a>    ssMethodType: <span class="KW">SINT</span>;
+</span><span><a class="LN" name="25">   25   </a>    Input: <span class="KW">LREAL</span>;
+</span><span><a class="LN" name="26">   26   </a><span class="KW">END_VAR</span>
+</span><span><a class="LN" name="27">   27   </a><span class="KW">VAR_OUTPUT</span>
+</span><span><a class="LN" name="28">   28   </a>    Derivated_output: <span class="KW">LREAL</span>;
+</span><span><a class="LN" name="29">   29   </a><span class="KW">END_VAR</span>
+</span><span><a class="LN" name="30">   30   </a><span class="KW">VAR</span>
+</span><span><a class="LN" name="31">   31   </a>    UD_DSTATE: <span class="KW">LREAL</span>;
+</span><span><a class="LN" name="32">   32   </a><span class="KW">END_VAR</span>
+</span><span><a class="LN" name="33">   33   </a><span class="KW">VAR_TEMP</span>
+</span><span><a class="LN" name="34">   34   </a>    rtb_TSamp: <span class="KW">LREAL</span>;
+</span><span><a class="LN" name="35">   35   </a><span class="KW">END_VAR</span>
+</span><span><a class="LN" name="36">   36   </a><span class="KW">CASE</span> ssMethodType <span class="KW">OF</span>
+</span><span><a class="LN" name="37">   37   </a>    0: 
+</span><span><a class="LN" name="38">   38   </a>        <span class="CT">(* SystemInitialize for Atomic SubSystem: '&lt;Root&gt;/FB_Derivator' *)</span>
+</span><span><a class="LN" name="39">   39   </a>        <span class="CT">(* InitializeConditions for UnitDelay: '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:213:5')" name="code2model"><font color="#117755"><i>&lt;S2&gt;/UD</i></font></a>'</span>
+</span><span><a class="LN" name="40">   40   </a><span class="CT">         *</span>
+</span><span><a class="LN" name="41">   41   </a><span class="CT">         * Block description for '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:213:5')" name="code2model"><font color="#117755"><i>&lt;S2&gt;/UD</i></font></a>':</span>
+</span><span><a class="LN" name="42">   42   </a><span class="CT">         *  </span>
+</span><span><a class="LN" name="43">   43   </a><span class="CT">         *  Store in Global RAM *)</span>
+</span><span><a class="LN" name="44">   44   </a>        UD_DSTATE := 0.0;
+</span><span><a class="LN" name="45">   45   </a>        <span class="CT">(* End of SystemInitialize for SubSystem: '&lt;Root&gt;/FB_Derivator' *)</span>
+</span><span><a class="LN" name="46">   46   </a>    1: 
+</span><span><a class="LN" name="47">   47   </a>        <span class="CT">(* Outputs for Atomic SubSystem: '&lt;Root&gt;/FB_Derivator' *)</span>
+</span><span><a class="LN" name="48">   48   </a>        <span class="CT">(* SampleTimeMath: '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:213:4')" name="code2model"><font color="#117755"><i>&lt;S2&gt;/TSamp</i></font></a>'</span>
+</span><span><a class="LN" name="49">   49   </a><span class="CT">         *</span>
+</span><span><a class="LN" name="50">   50   </a><span class="CT">         * About '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:213:4')" name="code2model"><font color="#117755"><i>&lt;S2&gt;/TSamp</i></font></a>':</span>
+</span><span><a class="LN" name="51">   51   </a><span class="CT">         *  y = u * K where K = 1 / ( w * Ts )</span>
+</span><span><a class="LN" name="52">   52   </a><span class="CT">         *   *)</span>
+</span><span><a class="LN" name="53">   53   </a>        rtb_TSamp := Input * 100.0;
+</span><span><a class="LN" name="54">   54   </a>        <span class="CT">(* Outport: '&lt;Root&gt;/Derivated_output' incorporates:</span>
+</span><span><a class="LN" name="55">   55   </a><span class="CT">         *  Sum: '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:213:3')" name="code2model"><font color="#117755"><i>&lt;S2&gt;/Diff</i></font></a>'</span>
+</span><span><a class="LN" name="56">   56   </a><span class="CT">         *  UnitDelay: '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:213:5')" name="code2model"><font color="#117755"><i>&lt;S2&gt;/UD</i></font></a>'</span>
+</span><span><a class="LN" name="57">   57   </a><span class="CT">         *</span>
+</span><span><a class="LN" name="58">   58   </a><span class="CT">         * Block description for '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:213:3')" name="code2model"><font color="#117755"><i>&lt;S2&gt;/Diff</i></font></a>':</span>
+</span><span><a class="LN" name="59">   59   </a><span class="CT">         *  </span>
+</span><span><a class="LN" name="60">   60   </a><span class="CT">         *  Add in CPU</span>
+</span><span><a class="LN" name="61">   61   </a><span class="CT">         *</span>
+</span><span><a class="LN" name="62">   62   </a><span class="CT">         * Block description for '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:213:5')" name="code2model"><font color="#117755"><i>&lt;S2&gt;/UD</i></font></a>':</span>
+</span><span><a class="LN" name="63">   63   </a><span class="CT">         *  </span>
+</span><span><a class="LN" name="64">   64   </a><span class="CT">         *  Store in Global RAM *)</span>
+</span><span><a class="LN" name="65">   65   </a>        Derivated_output := rtb_TSamp - UD_DSTATE;
+</span><span><a class="LN" name="66">   66   </a>        <span class="CT">(* Update for UnitDelay: '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:213:5')" name="code2model"><font color="#117755"><i>&lt;S2&gt;/UD</i></font></a>'</span>
+</span><span><a class="LN" name="67">   67   </a><span class="CT">         *</span>
+</span><span><a class="LN" name="68">   68   </a><span class="CT">         * Block description for '<a href="matlab:coder.internal.code2model('OPC_UA_block_converter:213:5')" name="code2model"><font color="#117755"><i>&lt;S2&gt;/UD</i></font></a>':</span>
+</span><span><a class="LN" name="69">   69   </a><span class="CT">         *  </span>
+</span><span><a class="LN" name="70">   70   </a><span class="CT">         *  Store in Global RAM *)</span>
+</span><span><a class="LN" name="71">   71   </a>        UD_DSTATE := rtb_TSamp;
+</span><span><a class="LN" name="72">   72   </a>        <span class="CT">(* End of Outputs for SubSystem: '&lt;Root&gt;/FB_Derivator' *)</span>
+</span><span><a class="LN" name="73">   73   </a><span class="KW">END_CASE</span>;
+</span><span><a class="LN" name="74">   74   </a><span class="KW">END_FUNCTION_BLOCK</span>
+</span><span><a class="LN" name="75">   75   </a>
 </span></pre>
 </td></tr></table>
 </p>

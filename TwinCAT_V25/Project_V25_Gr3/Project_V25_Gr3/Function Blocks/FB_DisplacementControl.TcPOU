@@ -19,8 +19,7 @@ VAR PERSISTENT
 END_VAR
 
 VAR
-	fbPID_controller				: FB_PID_controller;
-	fbPID_new						: FB_PID_new;
+	fbPID_Conroller						: FB_PID_Controller;
 	fbResetInt						: FB_ResetIntegralController;
 	bResetInt						: BOOL;
 	
@@ -57,7 +56,7 @@ END_VAR
 	
 
 		
-		fbPID_new(
+		fbPID_Conroller(
 	ssMethodType := BOOL_TO_SINT(bEnable),
 	fSignalReference := fDisplacementNormalizedInput,
 	fSignalFeedback := fYokeNormalizedFeedback,

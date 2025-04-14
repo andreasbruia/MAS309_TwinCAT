@@ -188,7 +188,7 @@ END_IF
 
 //For å justere med x akse
 IF G_Engineer_HMI.bJoystick_slider_active THEN
-	G_Engineer_HMI.fDisplacement_target := LIMIT(0.08,G_Sensors.fJoystickNormalizedX,1.0);
+	G_Engineer_HMI.fDisplacement_target := LIMIT(0.0,G_Sensors.fJoystickNormalizedX,1.0);
 	
 	
 END_IF

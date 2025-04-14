@@ -20,7 +20,7 @@ VAR PERSISTENT
 	fDerivateGain					: LREAL;
 END_VAR
 VAR
-	fbPID_controller				: FB_PID_controller;
+	fbPID_controller				: FB_PID_controller_old;
 	fPosition_error					: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_PID_SC" Id="{0882c63a-1bc8-448d-b7df-4b99dc4b9acb}" SpecialFunc="None">
+  <POU Name="FB_PID_SC" Id="{56a16990-75b9-407e-913b-b39c4e4b66e4}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_PID_SC
 VAR_INPUT
 	ssMethodType: SINT;
@@ -13,9 +13,6 @@ VAR_INPUT
 	bEnable: BOOL;
 	bActivateDerivativeControl: BOOL;
 	fDerivativeGain: LREAL;
-	fUpper_deadband: LREAL;
-	fLower_deadband: LREAL;
-	fVelRef: LREAL;
 END_VAR
 VAR_OUTPUT
 	fClosedLoopSignal: LREAL;
@@ -25,7 +22,7 @@ VAR_OUTPUT
 	D_out: LREAL;
 END_VAR
 VAR
-	rtb_DiscreteTimeIntegrator1: LREAL;
+	rtb_TSamp: LREAL;
 	rtb_Sum5: LREAL;
 	rtb_Saturation: LREAL;
 	c_DiscreteTimeIntegrator1_D: LREAL;
@@ -49,19 +46,8 @@ CASE ssMethodType OF
         (* End of SystemInitialize for SubSystem: '<Root>/FB_PID_SC' *)
     1: 
         (* Outputs for Atomic SubSystem: '<Root>/FB_PID_SC' *)
-        (* Switch: '<S1>/Switch' *)
-
-        IF fVelRef > 0.0 THEN 
-            rtb_DiscreteTimeIntegrator1 := fUpper_deadband;
-        ELSE 
-            rtb_DiscreteTimeIntegrator1 := fLower_deadband;
-        END_IF;
-
-        (* End of Switch: '<S1>/Switch' *)
-        
-
         (* Sum: '<S1>/Sum' *)
-        fSignalError := (rtb_DiscreteTimeIntegrator1 + fSignalReference) - fSignalFeedback;
+        fSignalError := fSignalReference - fSignalFeedback;
         (* Product: '<S1>/Product' *)
         P_out := fProportionalGain * fSignalError;
         (* DiscreteIntegrator: '<S1>/Discrete-Time Integrator1' *)
@@ -88,7 +74,7 @@ CASE ssMethodType OF
          * About '<S2>/TSamp':
          *  y = u * K where K = 1 / ( w * Ts )
          *   *)
-        rtb_DiscreteTimeIntegrator1 := fDerivativeGain * 100.0;
+        rtb_TSamp := fDerivativeGain * 100.0;
         (* Switch: '<S1>/Switch3' incorporates:
          *  Constant: '<S1>/Constant2'
          *  Sum: '<S2>/Diff'
@@ -103,7 +89,7 @@ CASE ssMethodType OF
          *  Store in Global RAM *)
 
         IF bActivateDerivativeControl THEN 
-            D_out := rtb_DiscreteTimeIntegrator1 - UD_DSTATE;
+            D_out := rtb_TSamp - UD_DSTATE;
         ELSE 
             D_out := 0.0;
         END_IF;
@@ -161,7 +147,7 @@ CASE ssMethodType OF
          * Block description for '<S2>/UD':
          *  
          *  Store in Global RAM *)
-        UD_DSTATE := rtb_DiscreteTimeIntegrator1;
+        UD_DSTATE := rtb_TSamp;
         (* End of Outputs for SubSystem: '<Root>/FB_PID_SC' *)
 END_CASE;
 

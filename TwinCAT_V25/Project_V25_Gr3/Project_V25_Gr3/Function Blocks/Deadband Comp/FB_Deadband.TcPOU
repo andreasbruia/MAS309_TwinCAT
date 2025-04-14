@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Deadband" Id="{200173d6-1190-4325-be30-42b558fdf45d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Deadband
+VAR_INPUT
+	fClosedloopSignal	: LREAL;
+	fVelref				: LREAL;
+	fNeutral			: LREAL;
+	fupperdeadband		: LREAL;
+	flowerdeadband		: LREAL;
+	
+END_VAR
+VAR_OUTPUT
+	fDeadbandComp		: LREAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF fVelref > 0.0 THEN
+	fDeadbandComp := LIMIT(fupperdeadband,fupperdeadband + fClosedloopSignal,1.0);
+ELSIF fVelref < 0.0 THEN
+	fDeadbandComp := LIMIT(-1.0,flowerdeadband + fClosedloopSignal,flowerdeadband); //Kanskje minus her men tror input blir - så da blir det fikset
+ELSE
+	fDeadbandComp := LIMIT(-1.0,fNeutral,1.0);
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

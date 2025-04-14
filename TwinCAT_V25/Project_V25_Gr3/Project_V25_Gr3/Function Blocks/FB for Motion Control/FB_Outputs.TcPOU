@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Outputs" Id="{c3b6ff0e-0108-484e-aa5d-46cb83b00d7a}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION_BLOCK FB_Outputs
+VAR_INPUT
+	fWinchValveNormalizedInput		: LREAL;
+	fDisplacementControlSignal		: LREAL; //Dette er signalet som endrer displacement
+END_VAR
+VAR_OUTPUT
+	fPCV_raw							: INT;
+	fSCV_raw							: INT;
+END_VAR
+VAR
+	bEnableMotion					: BOOL;
+
+//Winch
+bEnableWinch   					: BOOL;  
+bEnableValveOutputWinch			: BOOL;
+
+//Displacement
+fDisplacementNormalizedInput	: LREAL ; //Kan fra Controlsignal til denne på displacement slik det blir likt som på winch
+										  // lar det stå for å unngå forvirring i starteb
+
+bEnableValveOutputDisp	 		: BOOL;
+
+//Function Blocks
+fbWinchValveOutput				: FB_ValveOutput;
+fbDisplacementValveOutput		: FB_DisplacementValveOutput;
+	
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF MAIN.eStatus = E_Status.Running THEN
+	G_IO.bEnablePCDV := TRUE;
+	G_IO.bWinchValveEnable := TRUE;
+ELSE
+	G_IO.bEnablePCDV := FALSE;	
+	G_IO.bWinchValveEnable := FALSE;
+END_IF
+
+////////////////Enable Motion logic/////////////////////////
+IF P_MotionControl.bAutoEnable_SC OR P_MotionControl.bAutoEnable_PC OR ((P_MotionControl.bManualEnable_PC OR P_MotionControl.bManualEnable_SC) AND G_IO.bWinchEnable) THEN
+	bEnableMotion := TRUE;
+ELSE 
+	bEnableMotion := FALSE; 
+END_IF
+
+//////////////Winch////////////////
+IF (MAIN.eStatus = E_Status.Running) AND bEnableMotion THEN
+	G_IO.bOpenBrakes := TRUE; 
+	bEnableWinch := TRUE; 
+ ELSE 
+	 G_IO.bOpenBrakes := FALSE; 
+	 bEnableWinch := FALSE; 
+END_IF
+
+
+
+//////PCV output//////
+fbWinchValveOutput(
+	bEnable := bEnableWinch,
+	bDeadBandCompOn := G_Parameters.stParam.bWinchDeadBandCompOn,
+	stValveDeadBand := G_Parameters.stParam.stWinchValveDeadBand,
+	fNormalizedInput := fWinchValveNormalizedInput,
+	bEnableValveOutput => bEnableValveOutputWinch,
+	nOutput => G_IO.fWinchValveOut
+);
+fPCV_raw := G_IO.fWinchValveOut;
+
+//////////////Displacement/////////
+
+/////////SCV output///////////
+
+fbDisplacementValveOutput(
+	bEnable := (MAIN.eStatus = E_Status.Running),
+	bDeadBandCompOn := G_Parameters.stParam.bDisplacementDeadBandCompOn,
+	stValveDeadBand := G_Parameters.stParam.stDisplacementValveDeadBand,
+	fNormalizedInput := fDisplacementControlSignal,
+	bEnableValveOutput => bEnableValveOutputDisp,
+	nOutput => G_IO.fWinchPDCVOut
+);
+fSCV_raw := G_IO.fWinchPDCVOut;
+
+//IF Manual or Auto is not selected valveoutput is set to 0.0 kan fjernes om det aldri blir et problem
+//Noe slik på kanskje legges i Motion Control
+(*IF NOT (P_MotionControl.bAutoEnable_PC OR P_MotionControl.bManualEnable_SC) AND NOT (P_MotionControl.bManualEnable_PC OR P_MotionControl.bManualEnable_SC) THEN
+	fWinchValveInput := 0.0;
+END_IF*)
+
+//Styring av displacement med pådrag fra joystick er ikke lagt til
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

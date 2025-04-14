@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_PID_new" Id="{b9a02602-a272-47c4-a081-631a4517609d}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_PID_new
+  <POU Name="FB_PID_Controller_posref" Id="{d38ead86-d773-4e8d-b995-fca5a3e1ba77}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PID_Controller_posref
 VAR_INPUT
 	ssMethodType: SINT;
 	fSignalReference: LREAL;

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_MUX_selector" Id="{49ff9a96-267d-4308-97c7-7ca225396585}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MUX_selector
+VAR_INPUT
+	//signal_0								: BOOL; //SLik det er nå blir utgangen 0 om ingen er valgt
+	signal_1		 						: BOOL; 
+	signal_2 								: BOOL;
+	signal_3							    : BOOL;
+	signal_4	 							: BOOL; 
+END_VAR
+VAR_OUTPUT
+nMUX_index								: INT;
+END_VAR
+VAR	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF signal_1 THEN
+	nMUX_index := 1;
+ELSIF signal_2 THEN
+	nMUX_index := 2;
+ELSIF signal_3 THEN
+	nMUX_index := 3;
+ELSIF signal_4 THEN
+	nMUX_index := 4;
+ELSE
+	nMUX_index := 0;	
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

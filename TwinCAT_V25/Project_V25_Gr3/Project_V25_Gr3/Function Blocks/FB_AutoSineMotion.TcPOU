@@ -21,8 +21,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	bEnable : BOOL; // Forblir TRUE bnår og etter bStartPosOk er TRUE?
-    fbPID_controller				: FB_PID_controller;
-	fbPID_new						:FB_PID_new;
+	fbPID						:FB_PID_Controller;
 	fPosition_error					: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
@@ -60,7 +59,7 @@ ELSE
 END_IF
 
 		
-		fbPID_new(
+		fbPID(
 	ssMethodType := BOOL_TO_SINT(bEnable),
 	fSignalReference := fSineReferenceSignal,
 	fSignalFeedback := fPosition,

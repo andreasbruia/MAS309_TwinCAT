@@ -7,39 +7,33 @@ VAR
 	fb_StateMachine_Mode_Selection	 	: FB_StateMachine_Mode_Selection;
 	fb_Joystick_input_Scaling			: FB_JoystickInputScaling;
 	fb_Joystick							: FB_Joystick;
-	//fb_Outputs							: FB_Outputs;
 	fb_ValveOutput						: FB_ValveOutput;
 	fb_Encoder							: FB_Encoder; 
-	fb_Inputs						    : FB_Inputs;
 	fb_PressureInputScaling 			: FB_PressureInputScaling;
-//	fb_DisplacementControl				: FB_DisplacementControl;
-//	fb_DisplacementValveOutput 			: FB_DisplacementValveOutput;
-//	fb_Yoke_Input_Scaling 				: FB_Yoke_Input_Scaling;
-//	fb_EncoderScaling					: FB_EncoderScaling;
-	
+	fb_PayloadPosition					: FB_PayloadPosition;
+	fb_Inputs							: FB_Inputs;
 	eStatus								:E_Status;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF bFunction_Blocks_enable THEN
-	fb_Inputs();
 	fb_StateMachine_Mode_Selection();
 	fb_Joystick_input_Scaling();
 	fb_Joystick();
 	fb_ValveOutput();
 	fb_Encoder();
 	fb_PressureInputScaling();
-//	fb_DisplacementControl();
-//	fb_DisplacementValveOutput();
-//	fb_Yoke_Input_Scaling();
-//	fb_Outputs();
-//	fb_EncoderScaling();
+	fb_PayloadPosition();
+	fb_Inputs();
 END_IF
 
 //Update eStatus
 fb_StateMachine_Mode_Selection(
 	eStatus => eStatus
 	);
+//	eStatus := E_Status.Running;
+	
+	
 
 ////////Select Primary eller Secondary control//////////////
 IF G_Engineer_HMI.bPrimary_Control THEN

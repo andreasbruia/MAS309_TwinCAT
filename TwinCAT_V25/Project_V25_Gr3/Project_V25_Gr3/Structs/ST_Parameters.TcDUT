@@ -5,7 +5,7 @@
 STRUCT
 	fCyclicTime 					: LREAL := 0.01; // [s]
 	fMaxWinchVelocityLimit 			: LREAL := 0.25; // [m/s] Blueprint: 0.025
-	fMaxWinchVelocityLimit_SC		: LREAL := 0.025;
+	fMaxWinchVelocityLimit_SC		: LREAL := 0.5;
 	bWinchDeadBandCompOn 			: BOOL := FALSE;
 	bDisplacementDeadBandCompOn 	: BOOL := FALSE;
 	stWinchValveDeadBand 			: ST_ValveDeadBand := (fPosMax := 32767.0, fPosMin := 16383.0, fNegMin := 16383.0, fNegMax := 0.0);

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_EndStop" Id="{21db6865-7115-4a17-9881-a38da23a5d9e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EndStop
+VAR_INPUT
+	//Trenger denne enable???
+	//Skal de settes til 0 her når de ikke brukes?? må det gjøres en plass??
+	fPCV				: LREAL;
+	fSCV				: LREAL;
+END_VAR
+VAR_OUTPUT
+	fPCV_norm_input		: LREAL;
+	fSCV_norm_input		: LREAL;
+END_VAR
+VAR
+u_Neg					: LREAL;
+y_Neg					: LREAL;
+u_Pos					: LREAL;
+y_Pos					: LREAL;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//////////Soft Stop////////////
+u_Neg := LIMIT(0,((G_Sensors.fPayLoadPosition - G_Parameters.stParam.fWinchEndStopNeg ) / ( G_Parameters.stParam.fWinchEndStopNeg_soft -  G_Parameters.stParam.fWinchEndStopNeg)),1);
+
+y_Neg :=  LIMIT(0.1,((3.0*u_Neg*u_Neg)-(2.0*u_Pos*u_Pos*u_Pos)),1);
+
+u_Pos := LIMIT(0,((G_Sensors.fPayLoadPosition - G_Parameters.stParam.fWinchEndStopPos ) / ( G_Parameters.stParam.fWinchEndStopPos_soft -  G_Parameters.stParam.fWinchEndStopPos)),1);
+
+y_Pos :=  LIMIT(0.1,((3.0*u_Pos*u_Pos)-(2.0*u_Pos*u_Pos*u_Pos)),1);
+
+//////////End Stop///////////// skal lage FB på dette
+IF G_Sensors.fPayLoadPosition < G_Parameters.stParam.fWinchEndStopNeg_soft AND  G_Sensors.fPayLoadPosition > G_Parameters.stParam.fWinchEndStopNeg AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	fPCV_norm_input := LIMIT(-1.0, y_Neg*fPCV, 1.0);
+
+ELSIF G_Sensors.fPayLoadPosition < G_Parameters.stParam.fWinchEndStopNeg AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	G_Engineer_HMI.bEndStopUpActive := FALSE;
+	G_Engineer_HMI.bEndStopDownActive := TRUE;
+	fPCV_norm_input := LIMIT(0.0, fPCV, 1.0);
+	
+ELSIF 	G_Sensors.fPayLoadPosition > G_Parameters.stParam.fWinchEndStopPos_soft AND  G_Sensors.fPayLoadPosition < G_Parameters.stParam.fWinchEndStopPos AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	fPCV_norm_input := LIMIT(-1.0, y_Pos*fPCV, 1.0);
+	
+ELSIF G_Sensors.fPayLoadPosition > G_Parameters.stParam.fWinchEndStopPos AND NOT (G_Engineer_HMI.bEndStopOverride) THEN
+	G_Engineer_HMI.bEndStopUpActive := TRUE;
+	G_Engineer_HMI.bEndStopDownActive := FALSE;
+	fPCV_norm_input := LIMIT(-1.0, fPCV, 0.0);
+ELSE
+	G_Engineer_HMI.bEndStopUpActive := FALSE;
+	G_Engineer_HMI.bEndStopDownActive := FALSE;
+	fPCV_norm_input := LIMIT(-1.0, fPCV, 1.0);
+END_IF
+
+
+fSCV_norm_input := LIMIT(-1, fSCV, 1);
+
+//Ikke lagt inn men forslag til endstop logikk:
+//Sette SCV til en når den når endestoppne (når SCV er 1 og PCV er 0 kan den trygt styres ut av området
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

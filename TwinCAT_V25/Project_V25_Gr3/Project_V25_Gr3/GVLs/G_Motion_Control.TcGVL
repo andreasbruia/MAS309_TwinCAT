@@ -29,6 +29,10 @@ fWinchValveInput_joystick_posref			: LREAL;
 fWinchPosRefManual_secondary				: LREAL;
 fSCVInput_joystick_posref_secondary			: LREAL;
 
+//Auto Sine Motion SC
+fSineRefSignal_SC							: LREAL;
+fVelRef_Sine_SC								: LREAL;
+
 
 //Ikke i bruk
 fPosition_error_StartDisplacement 			: LREAL; 

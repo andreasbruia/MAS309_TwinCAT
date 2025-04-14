@@ -3,14 +3,11 @@
   <POU Name="FB_DisplacementControl_SC" Id="{bdc1fc63-8ad7-4439-bfe4-2ff7f2a8ff55}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_DisplacementControl_SC 
 VAR_INPUT
-	bEnable 						: BOOL; 
 	
-	fDisplacementNormalizedInput 	: LREAL; 
+	fDisplacementNormalizedInput 	: LREAL;
+	bEnable 						: BOOL; 
 	fYokeNormalizedFeedback 		: LREAL;
 	
-	fWinchVelRefManual_secundary	: LREAL;
-	fupper_deadband					: LREAL;
-	flower_deadband					: LREAL;
 END_VAR
 VAR_OUTPUT
 	fNormalizedOutput 				: LREAL; 
@@ -24,7 +21,7 @@ END_VAR
 
 VAR
 	fbPID_SC						: FB_PID_SC;
-	fbPID_new						: FB_PID_new;
+	fbPID_new						: FB_PID_Controller;
 	fYoke_error						: LREAL;
 	fProportinalGain_output			: LREAL;
 	fIntegralGain_output			: LREAL;
@@ -72,9 +69,6 @@ END_VAR
 	bIntegralControlReset := FALSE,
 	bActivateDerivativeControl := FALSE,
 	fDerivativeGain := fDerivateGain,
-	fUpper_deadband := fupper_deadband,
-	fLower_deadband := flower_deadband,
-	fVelRef := fWinchVelRefManual_secundary,
 	fClosedLoopSignal => fNormalizedOutput,
 	fSignalError =>G_PID_Tuning.fYoke_error,
 	P_out => G_PID_Tuning.fProportinalGain_output_dis,

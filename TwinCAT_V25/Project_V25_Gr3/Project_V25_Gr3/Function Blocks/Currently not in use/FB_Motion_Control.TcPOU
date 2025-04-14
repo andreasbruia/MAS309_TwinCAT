@@ -28,12 +28,12 @@ VAR
 	fWinchVelRefAuto                        : LREAL; 
 	fWinchPosRefManual						: LREAL; 
 	fInitialWinchPos						: LREAL; 
-	fbPIDController							: FB_PID_controller; 
+	fbPIDController							: FB_PID_controller_old; 
 	
 	
 	//Secondary control
 	
-	fbPID 									: FB_PID_controller;
+	fbPID 									: FB_PID_controller_old;
 	fbFeedForward							: FB_FeedForward;
 	
 	I_output								: LREAL;
@@ -3158,10 +3158,10 @@ END_VAR
                         <v n="Extensible">false</v>
                       </o>
                       <o n="RValue" t="BoxTreeBox">
-                        <v n="BoxType">"FB_PID_controller"</v>
+                        <v n="BoxType">"FB_PID_controller_old"</v>
                         <o n="Instance" t="Operand">
                           <v n="Operand">"fbPIDController"</v>
-                          <v n="Type">"FB_PID_controller"</v>
+                          <v n="Type">"FB_PID_controller_old"</v>
                           <v n="Comment">""</v>
                           <v n="SymbolComment">""</v>
                           <v n="Address">""</v>

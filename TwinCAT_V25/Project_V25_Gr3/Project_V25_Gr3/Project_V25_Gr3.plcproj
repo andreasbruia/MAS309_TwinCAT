@@ -26,6 +26,54 @@
     <Compile Include="Enums\E_Status.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Function Blocks\Currently not in use\FB_EncoderScaling.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\Currently not in use\FB_FeedForward.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\Currently not in use\FB_Inputs.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\Currently not in use\FB_Motion_Control.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\Deadband Comp\FB_Deadband.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\Deadband Comp\FB_Deadband_Auto.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\Encoder_Payload\FB_Encoder.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\Encoder_Payload\FB_PayloadPosition.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FB for Motion Control\FB_Auto_PC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FB for Motion Control\FB_Auto_SC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FB for Motion Control\FB_Enable_Motion.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FB for Motion Control\FB_EndStop.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FB for Motion Control\FB_Manual_PC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FB for Motion Control\FB_Manual_SC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FB for Motion Control\FB_MUX_selector.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FB for Motion Control\FB_Outputs.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Function Blocks\FB_AutoSineMotion.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -33,6 +81,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Function Blocks\FB_Clock.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FB_Derivator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Function Blocks\FB_DisplacementControl.TcPOU">
@@ -44,12 +95,6 @@
     <Compile Include="Function Blocks\FB_DisplacementValveOutput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB_Encoder.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Function Blocks\FB_EncoderScaling.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Function Blocks\FB_Inputs.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -59,19 +104,7 @@
     <Compile Include="Function Blocks\FB_Joystick.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB_JoystickInputScaling.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Function Blocks\FB_JoystickInputScaling_01.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Function Blocks\FB_Motion_Control.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Function Blocks\FB_Outputs.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Function Blocks\FB_PressureInputScaling.TcPOU">
+    <Compile Include="Function Blocks\FB_SecondaryControlSinus.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Function Blocks\FB_SecondaryControlStartPos.TcPOU">
@@ -86,13 +119,16 @@
     <Compile Include="Function Blocks\FB_ValveOutput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB_Yoke_Input_Scaling.TcPOU">
+    <Compile Include="Function Blocks\Input_Scaling\FB_JoystickInputScaling.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB_SecondaryControlSinus.TcPOU">
+    <Compile Include="Function Blocks\Input_Scaling\FB_JoystickInputScaling_01.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB_FeedForward.TcPOU">
+    <Compile Include="Function Blocks\Input_Scaling\FB_PressureInputScaling.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\Input_Scaling\FB_Yoke_Input_Scaling.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Functions\F_SineFunction_primary.TcPOU">
@@ -128,10 +164,13 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="PIDs\FB_PID_controller.TcPOU">
+    <Compile Include="PIDs\FB_PID_Controller.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PIDs\FB_PID_new.TcPOU">
+    <Compile Include="PIDs\FB_PID_Controller_posref.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PIDs\FB_PID_controller_old.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PIDs\FB_PID_SC.TcPOU">
@@ -175,9 +214,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Function Blocks" />
+    <Folder Include="Function Blocks\Currently not in use" />
+    <Folder Include="Function Blocks\Encoder_Payload" />
+    <Folder Include="Function Blocks\FB for Motion Control" />
+    <Folder Include="Function Blocks\Input_Scaling" />
+    <Folder Include="Function Blocks\Deadband Comp" />
     <Folder Include="GVLs" />
     <Folder Include="Enums" />
-    <Folder Include="Function Blocks" />
     <Folder Include="Functions" />
     <Folder Include="PIDs" />
     <Folder Include="Structs" />
@@ -284,8 +328,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-        <Data>
-          <o xml:space="preserve" t="OptionKey">
+  <Data>
+    <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -357,14 +401,14 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-        </Data>
-        <TypeList>
-          <Type n="Boolean">System.Boolean</Type>
-          <Type n="Hashtable">System.Collections.Hashtable</Type>
-          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-          <Type n="String">System.String</Type>
-        </TypeList>
-      </XmlArchive>
+  </Data>
+  <TypeList>
+    <Type n="Boolean">System.Boolean</Type>
+    <Type n="Hashtable">System.Collections.Hashtable</Type>
+    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+    <Type n="String">System.String</Type>
+  </TypeList>
+</XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

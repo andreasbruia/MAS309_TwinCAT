@@ -24,7 +24,7 @@ END_IF
 
 y := (3.0*u*u) - (2.0*u*u*u);
 
-fSineSignal := y * G_Engineer_HMI.fAmp * SIN(2.0 * PI * G_Engineer_HMI.fFreq * fTime) + G_Engineer_HMI.fSinemidpoint;]]></ST>
+fSineSignal := (*y*) G_Engineer_HMI.fAmp * SIN(2.0 * PI * G_Engineer_HMI.fFreq * fTime) + G_Engineer_HMI.fSinemidpoint; //y gange i starten om soft start skal på]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
