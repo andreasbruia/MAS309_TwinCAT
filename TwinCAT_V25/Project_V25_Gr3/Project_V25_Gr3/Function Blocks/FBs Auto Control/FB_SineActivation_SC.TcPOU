@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_SineActivation_SC" Id="{388698fb-0617-452b-a3fa-1efbe5cd9087}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SineActivation_SC
+VAR_INPUT
+	bSineEnable			: BOOL;
+	fStartPos_error		: LREAL;
+END_VAR
+VAR_OUTPUT
+	bEnable				: BOOL;
+END_VAR
+VAR
+	bStartPosOK			: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF ABS(fStartPos_error) < 0.01 THEN
+	bStartPosOK := TRUE;
+ELSE
+	bStartPosOK := FALSE;
+END_IF
+
+IF NOT(G_IO.bStartButton) THEN
+	bEnable := FALSE;
+	G_Engineer_HMI.bSecondarySineMotionEnable := FALSE;
+	ELSIF bStartPosOK AND bSineEnable THEN
+		bEnable := TRUE;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

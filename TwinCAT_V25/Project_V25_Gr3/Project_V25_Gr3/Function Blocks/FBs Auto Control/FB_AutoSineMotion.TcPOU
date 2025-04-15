@@ -30,7 +30,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF NOT (bAutoEnable) THEN
+      <ST><![CDATA[IF NOT(G_IO.bStartButton) THEN //Tidligere var denne koblet til bAutoEnable
 	bEnable := FALSE;
 	G_Engineer_HMI.bAutoSineMotionEnable := FALSE;
 	fWinchValveNormalizedInput := 0.0;

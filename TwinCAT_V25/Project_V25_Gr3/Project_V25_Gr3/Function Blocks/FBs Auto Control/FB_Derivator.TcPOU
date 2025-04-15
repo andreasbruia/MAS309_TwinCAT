@@ -46,7 +46,7 @@ CASE ssMethodType OF
          * Block description for '<S2>/UD':
          *  
          *  Store in Global RAM *)
-        Derivated_output := rtb_TSamp - UD_DSTATE;
+        Derivated_output := LIMIT(-1.0,rtb_TSamp - UD_DSTATE,1.0);
         (* Update for UnitDelay: '<S2>/UD'
          *
          * Block description for '<S2>/UD':

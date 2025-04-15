@@ -101,9 +101,9 @@ fbPID(
 	G_PID_Tuning.PID_output_MOOG := fWinchValveNormalizedInput;
 
 	
-	IF ABS(fPosition_error) < 0.05 THEN
+IF ABS(G_Motion_Control.fPosition_error_StartPos) < 0.05 THEN //Tidligere denne: fPosition_error i ABS
 		bStartPosOK := TRUE;
-	END_IF
+END_IF
 		
 ELSE
 	bStartPosOK := FALSE;

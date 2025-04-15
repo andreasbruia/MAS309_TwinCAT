@@ -32,10 +32,13 @@
     <Compile Include="Function Blocks\Currently not in use\FB_FeedForward.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\Currently not in use\FB_Inputs.TcPOU">
+    <Compile Include="Function Blocks\Currently not in use\FB_Motion_Control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\Currently not in use\FB_Motion_Control.TcPOU">
+    <Compile Include="Function Blocks\Currently not in use\FB_SecondaryControlSinus.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\Currently not in use\FB_SecondaryControlStartPos.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Function Blocks\Deadband Comp\FB_Deadband.TcPOU">
@@ -44,46 +47,52 @@
     <Compile Include="Function Blocks\Deadband Comp\FB_Deadband_Auto.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Function Blocks\Deadband Comp\FB_Deadband_Auto_sine.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Function Blocks\Encoder_Payload\FB_Encoder.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Function Blocks\Encoder_Payload\FB_PayloadPosition.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB for Motion Control\FB_Auto_PC.TcPOU">
+    <Compile Include="Function Blocks\FBs Auto Control\FB_AutoSineMotion.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB for Motion Control\FB_Auto_SC.TcPOU">
+    <Compile Include="Function Blocks\FBs Auto Control\FB_AutoStartPos.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB for Motion Control\FB_Enable_Motion.TcPOU">
+    <Compile Include="Function Blocks\FBs Auto Control\FB_Derivator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB for Motion Control\FB_EndStop.TcPOU">
+    <Compile Include="Function Blocks\FBs Auto Control\FB_SineActivation_SC.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB for Motion Control\FB_Manual_PC.TcPOU">
+    <Compile Include="Function Blocks\FBs for Motion Control\FB_Auto_PC.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB for Motion Control\FB_Manual_SC.TcPOU">
+    <Compile Include="Function Blocks\FBs for Motion Control\FB_Auto_SC.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB for Motion Control\FB_MUX_selector.TcPOU">
+    <Compile Include="Function Blocks\FBs for Motion Control\FB_Enable_Motion.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB for Motion Control\FB_Outputs.TcPOU">
+    <Compile Include="Function Blocks\FBs for Motion Control\FB_EndStop.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB_AutoSineMotion.TcPOU">
+    <Compile Include="Function Blocks\FBs for Motion Control\FB_Manual_PC.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Function Blocks\FB_AutoStartPos.TcPOU">
+    <Compile Include="Function Blocks\FBs for Motion Control\FB_Manual_SC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FBs for Motion Control\FB_MUX_selector.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Function Blocks\FBs for Motion Control\FB_Outputs.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Function Blocks\FB_Clock.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Function Blocks\FB_Derivator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Function Blocks\FB_DisplacementControl.TcPOU">
@@ -102,12 +111,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Function Blocks\FB_Joystick.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Function Blocks\FB_SecondaryControlSinus.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Function Blocks\FB_SecondaryControlStartPos.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Function Blocks\FB_StartPos.TcPOU">
@@ -217,9 +220,10 @@
     <Folder Include="Function Blocks" />
     <Folder Include="Function Blocks\Currently not in use" />
     <Folder Include="Function Blocks\Encoder_Payload" />
-    <Folder Include="Function Blocks\FB for Motion Control" />
+    <Folder Include="Function Blocks\FBs for Motion Control" />
     <Folder Include="Function Blocks\Input_Scaling" />
     <Folder Include="Function Blocks\Deadband Comp" />
+    <Folder Include="Function Blocks\FBs Auto Control" />
     <Folder Include="GVLs" />
     <Folder Include="Enums" />
     <Folder Include="Functions" />

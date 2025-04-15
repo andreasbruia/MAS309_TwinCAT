@@ -41,7 +41,7 @@ ELSE
 END_IF
 
 ////////////////Enable Motion logic/////////////////////////
-IF P_MotionControl.bAutoEnable_SC OR P_MotionControl.bAutoEnable_PC OR ((P_MotionControl.bManualEnable_PC OR P_MotionControl.bManualEnable_SC) AND G_IO.bWinchEnable) THEN
+IF ((P_MotionControl.bAutoEnable_SC OR P_MotionControl.bAutoEnable_PC) AND G_IO.bStartButton) OR ((P_MotionControl.bManualEnable_PC OR P_MotionControl.bManualEnable_SC) AND G_IO.bWinchEnable) THEN
 	bEnableMotion := TRUE;
 ELSE 
 	bEnableMotion := FALSE; 
