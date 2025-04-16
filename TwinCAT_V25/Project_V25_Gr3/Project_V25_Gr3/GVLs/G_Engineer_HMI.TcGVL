@@ -3,6 +3,75 @@
   <GVL Name="G_Engineer_HMI" Id="{26f8b220-c366-427c-968e-e98e5cf6b52c}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
+	
+//////////PID GAINS//////////
+
+////Primary Control//////
+// PID Manual control joystick pos ref Primary
+	
+	bPID_enable_JoyPosref_PC		: BOOL := TRUE;
+	bPgain_enable_joy_posref		: BOOL := TRUE;
+	bIgain_enable_joy_posref		: BOOL;
+	bPgain_joy_posref_write			: BOOL;
+	bIgain_joy_posref_write			: BOOL;
+	bDgain_joy_posref_write			: BOOL;
+	
+	fPGain_JoyPosref_PC 			: LREAL;
+	fIGain_JoyPosref_PC				: LREAL;
+	fDGain_JoyPosref_PC				: LREAL;
+
+// PID MOOG Valve (Auto PC)
+	fPgain_MOOG						: LREAL;
+	bPenable_MOOG					: BOOL := TRUE; //Ønsker P ledd på fra start
+	bPgain_MOOG_write				: BOOL;
+	
+	fIgain_MOOG 					: LREAL; 
+	bIenable_MOOG 					: BOOL;
+	bIgain_MOOG_write				: BOOL; 
+
+////// Secondary Control ////////
+
+// PID Outer loop 
+bPID_enable_OL					: BOOL := TRUE;
+
+fPGain_OL_Pos					: LREAL;
+fPGain_OL_Neg					: LREAL;
+bPenable_OL						: BOOL := TRUE;
+bPGain_OL_write_pos				: BOOL;
+bPGain_OL_write_neg				: BOOL;
+
+fIGain_OL_Pos					: LREAL;
+fIGain_OL_Neg					: LREAL;
+bIenable_OL						: BOOL;
+bIGain_OL_write_pos				: BOOL;
+bIGain_OL_write_neg				: BOOL;
+
+// PID Inner loop
+bPID_enable_IL					: BOOL := TRUE;
+
+fPGain_IL_Pos					: LREAL;
+fPGain_IL_Neg					: LREAL;
+bPenable_IL						: BOOL := TRUE;
+bPGain_IL_write_pos				: BOOL;
+bPGain_IL_write_neg				: BOOL;
+
+fIGain_IL_Pos					: LREAL;
+fIGain_IL_Neg					: LREAL;
+bIenable_IL						: BOOL;
+bIGain_IL_write_pos				: BOOL;
+bIGain_IL_write_neg				: BOOL;
+
+fDGain_IL_Pos					: LREAL;
+fDGain_IL_Neg					: LREAL;
+bDenable_IL						: BOOL;
+bDGain_IL_write_pos					: BOOL;
+bDGain_IL_write_neg					: BOOL;
+
+
+
+////////// PID GAINS End ///////////////////
+
+
 	//Control chooser
 	bPrimary_Control				: BOOL;	
 	bPrimary_Control_active			: BOOL := FALSE;
@@ -14,7 +83,8 @@ VAR_GLOBAL
 	bEndStopDownActive 				: BOOL;
 	bEndStopOverride 				: BOOL; 
 	
-	
+	/////Primary Control//////
+	bManualControl_enable			: BOOL;
 	
 	
 	
@@ -35,23 +105,10 @@ VAR_GLOBAL
 	ft_ENV							: LREAL := 10.0;
 	
 	
-	// PID MOOG Valve 
-	fProportionalgain_MOOG			: LREAL;
-	bPenable_MOOG					: BOOL := TRUE; //Ønsker P ledd på fra start
-	bPenable_MOOG_write				: BOOL;
-	
-	fIntegrationalgain_MOOG 		: LREAL; 
-	bIenable_MOOG 					: BOOL;
-	bIenable_MOOG_write				: BOOL; 
 	
 	
-	// PID Manual control joystick pos ref
-	bPID_enable						: BOOL := TRUE;
-	bManualControl_enable			: BOOL;
-	fProportionalgain_joy_posref	: LREAL := 10.0;
-	bPgain_enable_joy_posref		: BOOL := TRUE;
-	fIntegralgain_joy_posref		: LREAL := 0.1;
-	bIgain_enable_joy_posref		: BOOL;
+///// Primary Control End///////	
+	
 	
 ////// Secondary Control///////
 	
@@ -63,32 +120,19 @@ VAR_GLOBAL
 	fSecondaryStartPos_target		: LREAL := 1.4;
 	bSecondarySineMotionEnable		: BOOL;
 
-// PID Gains for displacementcontrol
-	fProportionalgain_dis			: LREAL := 3.0;
-	fIntegralgain_dis				: LREAL;
-	fDerivativegain_dis				: LREAL;
-	bPenable_dis					: BOOL := TRUE; //Ønsker P ledd på fra start
-	bIenable_dis					: BOOL;
-	bDenable_dis					: BOOL;
-	
-	bPenable_dis_write				: BOOL ;
-	bIenable_dis_write				: BOOL;
-	bDenable_dis_write				: BOOL;
+
 	
 	//Integral reset (antiwindup)
 	fMaxerror_dis					: LREAL;
 	
 	
 //PID Gains for Manual control joystick posref
-	fPGain_joyposref_secondary		: LREAL := 1.0;
-	fIGain_joyposref_secondary		: LREAL := 0.0;
-	fDGain_joyposref_secondary		: LREAL := 0.0;
-	bIGain_joyposref_secondary_enable	: BOOL;
-	bPID_enable_joyposref				: BOOL := TRUE;
 	
 	bManual_Secondary_joyposref_enable	: BOOL;
 	
-//StepInput displacement
+	
+//StepInput displacement ikke lagt inn etter å ha ryddet, kan legges inn i 
+//Manual SC om det trengs (la tidligere i P_outputs
 bStepInput								: BOOL;
 bStartStepInput							: BOOL;
 fStepInput								: LREAL;

@@ -12,7 +12,9 @@ VAR
 	fb_PressureInputScaling 			: FB_PressureInputScaling;
 	fb_PayloadPosition					: FB_PayloadPosition;
 	fb_Inputs							: FB_Inputs;
-	eStatus								:E_Status;
+	eStatus								: E_Status;
+	
+	fbPIDgains							: FB_PIDgains;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -25,6 +27,8 @@ END_VAR
 	fb_PressureInputScaling();
 	fb_PayloadPosition();
 	fb_Inputs();
+	
+	fbPIDgains();
 END_IF
 
 //Update eStatus

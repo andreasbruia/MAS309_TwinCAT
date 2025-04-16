@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_PIDgains" Id="{86333bdd-153b-457b-9c9e-c3a879e64752}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PIDgains
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+
+VAR PERSISTENT
+	
+	/////Primary Control/////
+	
+	//Joystick Posref
+	fPGain_JoyPosref_PC 				: LREAL;
+	fIGain_JoyPosref_PC					: LREAL;
+	fDGain_JoyPosref_PC					: LREAL;
+	
+	
+	//Auto PC
+	fPGain_MOOG							: LREAL;
+	fIGain_MOOG							: LREAL;
+	
+	/////Secondary Control////
+	
+	//Outer loop
+	fPGain_OL_Pos					: LREAL;
+	fIGain_OL_Pos					: LREAL;
+	fPGain_OL_Neg					: LREAL;
+	fIGain_OL_Neg					: LREAL;
+	
+	//Inner loop
+	fPGain_IL_Pos					: LREAL;
+	fIGain_IL_Pos					: LREAL;
+	fPGain_IL_Neg					: LREAL;
+	fIGain_IL_Neg					: LREAL;
+	fDGain_IL_Pos					: LREAL;
+	fDGain_IL_Neg					: LREAL;
+	
+END_VAR
+
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[	
+	/////Primary Control/////
+	
+	//Joystick Posref
+IF NOT(G_Engineer_HMI.bPgain_joy_posref_write) THEN
+	G_Engineer_HMI.fPGain_JoyPosref_PC := fPGain_JoyPosref_PC; //Update to the persistent variable
+ELSE
+	fPGain_JoyPosref_PC := G_Engineer_HMI.fPGain_JoyPosref_PC; //Connect the gain to the global HMI
+END_IF
+	
+	
+IF NOT(G_Engineer_HMI.bIgain_joy_posref_write) THEN
+	G_Engineer_HMI.fIGain_JoyPosref_PC := fIGain_JoyPosref_PC; //Update to the persistent variable
+ELSE
+	fIGain_JoyPosref_PC := G_Engineer_HMI.fIGain_JoyPosref_PC; //Connect the gain to the global HMI
+END_IF
+	
+	
+IF NOT(G_Engineer_HMI.bDgain_joy_posref_write) THEN
+	G_Engineer_HMI.fDGain_JoyPosref_PC := fDGain_JoyPosref_PC; //Update to the persistent variable
+ELSE
+	fDGain_JoyPosref_PC := G_Engineer_HMI.fDGain_JoyPosref_PC; //Connect the gain to the global HMI
+END_IF
+	
+	//Auto PC
+IF NOT(G_Engineer_HMI.bPgain_MOOG_write) THEN
+	G_Engineer_HMI.fPgain_MOOG := fPGain_MOOG; 
+ELSE
+	fPGain_MOOG := G_Engineer_HMI.fPgain_MOOG;
+END_IF
+
+
+IF NOT(G_Engineer_HMI.bIgain_MOOG_write) THEN
+	G_Engineer_HMI.fIgain_MOOG := fIGain_MOOG;
+ELSE
+	fIGain_MOOG := G_Engineer_HMI.fIgain_MOOG;
+END_IF	
+
+
+//////// Secondary Control /////////
+
+//Outer loop
+//Positive
+IF NOT(G_Engineer_HMI.bPGain_OL_write_pos) THEN
+	G_Engineer_HMI.fPGain_OL_Pos := fPGain_OL_Pos; 
+ELSE
+	fPGain_OL_Pos := G_Engineer_HMI.fPGain_OL_Pos;
+END_IF
+
+
+IF NOT(G_Engineer_HMI.bIGain_OL_write_pos) THEN
+	G_Engineer_HMI.fIGain_OL_Pos := fIGain_OL_Pos;
+ELSE
+	fIGain_OL_Pos := G_Engineer_HMI.fIGain_OL_Pos;
+END_IF	
+
+//Negative
+IF NOT(G_Engineer_HMI.bPGain_OL_write_neg) THEN
+	G_Engineer_HMI.fPGain_OL_Neg := fPGain_OL_Neg; 
+ELSE
+	fPGain_OL_Neg := G_Engineer_HMI.fPGain_OL_Neg;
+END_IF
+
+
+IF NOT(G_Engineer_HMI.bIGain_OL_write_neg) THEN
+	G_Engineer_HMI.fIGain_OL_Neg := fIGain_OL_Neg;
+ELSE
+	fIGain_OL_Neg := G_Engineer_HMI.fIGain_OL_Neg;
+END_IF	
+
+
+//Inner loop
+//Positive
+IF NOT(G_Engineer_HMI.bPGain_IL_write_pos) THEN
+	G_Engineer_HMI.fPGain_IL_Pos := fPGain_IL_Pos; 
+ELSE
+	fPGain_IL_Pos := G_Engineer_HMI.fPGain_IL_Pos;
+END_IF
+
+
+IF NOT(G_Engineer_HMI.bIGain_IL_write_pos) THEN
+	G_Engineer_HMI.fIGain_IL_Pos := fIGain_IL_Pos;
+ELSE
+	fIGain_IL_Pos := G_Engineer_HMI.fIGain_IL_Pos;
+END_IF	
+
+IF NOT(G_Engineer_HMI.bDGain_IL_write_pos) THEN
+	G_Engineer_HMI.fDGain_IL_Pos := fDGain_IL_Pos;
+ELSE
+	fDGain_IL_Pos := G_Engineer_HMI.fDGain_IL_Pos;
+END_IF	
+
+//Negative
+IF NOT(G_Engineer_HMI.bPGain_IL_write_neg) THEN
+	G_Engineer_HMI.fPGain_IL_Neg := fPGain_IL_Neg; 
+ELSE
+	fPGain_IL_Neg := G_Engineer_HMI.fPGain_IL_Neg;
+END_IF
+
+
+IF NOT(G_Engineer_HMI.bIGain_OL_write_neg) THEN
+	G_Engineer_HMI.fIGain_IL_Neg := fIGain_IL_Neg;
+ELSE
+	fIGain_IL_Neg := G_Engineer_HMI.fIGain_IL_Neg;
+END_IF	
+
+IF NOT(G_Engineer_HMI.bDGain_IL_write_neg) THEN
+	G_Engineer_HMI.fDGain_IL_Neg := fDGain_IL_Neg;
+ELSE
+	fDGain_IL_Neg := G_Engineer_HMI.fDGain_IL_Neg;
+END_IF	
+
+
+
+
+
+
+
+
+
+	]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

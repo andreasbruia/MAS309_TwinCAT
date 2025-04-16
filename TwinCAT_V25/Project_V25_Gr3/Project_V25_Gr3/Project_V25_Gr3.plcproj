@@ -113,6 +113,9 @@
     <Compile Include="Function Blocks\FB_Joystick.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Function Blocks\PIDgains\FB_PIDgains.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Function Blocks\FB_StartPos.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -224,6 +227,7 @@
     <Folder Include="Function Blocks\Input_Scaling" />
     <Folder Include="Function Blocks\Deadband Comp" />
     <Folder Include="Function Blocks\FBs Auto Control" />
+    <Folder Include="Function Blocks\PIDgains" />
     <Folder Include="GVLs" />
     <Folder Include="Enums" />
     <Folder Include="Functions" />
@@ -332,8 +336,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -405,14 +409,14 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Boolean">System.Boolean</Type>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Boolean">System.Boolean</Type>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

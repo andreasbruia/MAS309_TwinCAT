@@ -1510,7 +1510,7 @@ VAR
                           </o>
                           <o>
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"G_Engineer_HMI.fProportionalgain_joy_posref"</v>
+                              <v n="Operand">"G_Engineer_HMI.fPGain_JoyPosref_PC"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1529,7 +1529,7 @@ VAR
                           </o>
                           <o>
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"G_Engineer_HMI.fIntegralgain_joy_posref"</v>
+                              <v n="Operand">"G_Engineer_HMI.fPGain_JoyPosref_PC"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1586,7 +1586,7 @@ VAR
                           </o>
                           <o>
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"G_Engineer_HMI.bPID_enable"</v>
+                              <v n="Operand">"G_Engineer_HMI.bPID_enable_JoyPosref_PC"</v>
                               <v n="Type">"BOOL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>

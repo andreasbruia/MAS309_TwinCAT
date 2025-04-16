@@ -15,11 +15,6 @@ VAR_OUTPUT
 	fWinchValveNormalizedInput 		: LREAL;
 END_VAR
 
-VAR PERSISTENT
-	fProportionalGain 				: LREAL := 1.0;
-	fIntegralGain					: LREAL;
-	fDerivateGain					: LREAL;
-END_VAR
 
 VAR
 	fbPID							: FB_PID_Controller;
@@ -62,33 +57,18 @@ IF u < 0.0 THEN
 	u := 0.0;
 END_IF*)
 
-// Write to HMI
-//PGain:
-IF NOT(G_Engineer_HMI.bPenable_MOOG_write) THEN
-	G_Engineer_HMI.fProportionalgain_MOOG := fProportionalGain; // SKjønner ikke helt det her
-ELSE
-	fProportionalGain := G_Engineer_HMI.fProportionalgain_MOOG;
-END_IF
-
-//IGain: 
-IF NOT(G_Engineer_HMI.bIenable_MOOG_write) THEN
-	G_Engineer_HMI.fIntegrationalgain_MOOG := fIntegralGain;
-ELSE
-	fIntegralGain := G_Engineer_HMI.fIntegrationalgain_MOOG;
-END_IF
-
 
 		
 fbPID(
 	ssMethodType := BOOL_TO_SINT(bEnable),
 	fSignalReference := fStartPosition,
 	fSignalFeedback := fPosition,
-	fProportionalGain := fProportionalGain,
-	fIntegralGain := fIntegralGain,
+	fProportionalGain := G_Engineer_HMI.fPgain_MOOG,
+	fIntegralGain := G_Engineer_HMI.fIgain_MOOG,
 	bActivateIntegralControl := G_Engineer_HMI.bIenable_MOOG,
 	bEnable := TRUE,
 	bActivateDerivativeControl := FALSE,
-	fDerivativeGain := fDerivateGain,
+	fDerivativeGain := 0.0,
 	fClosedLoopSignal => fWinchValveNormalizedInput,
 	fSignalError => G_Motion_Control.fPosition_error_StartPos,
 	P_out => G_PID_Tuning.fProportinalGain_output_MOOG,

@@ -7,6 +7,8 @@ VAR_INPUT
 	
 	fDisplacementNormalizedInput 	: LREAL; 
 	fYokeNormalizedFeedback 		: LREAL; 
+	
+	fVelRef							: LREAL;
 END_VAR
 VAR_OUTPUT
 	fNormalizedOutput 				: LREAL; 
@@ -33,26 +35,19 @@ END_VAR
     <Implementation>
       <ST><![CDATA[IF bEnable THEN
 	
-	//Write to PGain
-	IF NOT(G_Engineer_HMI.bPenable_dis_write) THEN
-	G_Engineer_HMI.fProportionalgain_dis := fProportionalGain; //Update to the persistent variable
-	ELSE
-	fProportionalGain := G_Engineer_HMI.fProportionalgain_dis; //Connect the gain to the global HMI
-	END_IF
-	
-	//Write to IGain
-	IF NOT(G_Engineer_HMI.bIenable_dis_write) THEN
-	G_Engineer_HMI.fIntegralgain_dis := fIntegralGain; //Update to the persistent variable
-	ELSE
-	fIntegralGain := G_Engineer_HMI.fIntegralgain_dis; //Connect the gain to the global HMI
-	END_IF
-	
-	//Write to DGain
-	IF NOT(G_Engineer_HMI.bDenable_dis_write) THEN
-	G_Engineer_HMI.fDerivativegain_dis := fDerivateGain; //Update to the persistent variable
-	ELSE
-	fDerivateGain := G_Engineer_HMI.fDerivativegain_dis; //Connect the gain to the global HMI
-	END_IF
+	IF fVelRef > 0.0 THEN
+	fProportionalGain := G_Engineer_HMI.fPGain_IL_Pos;
+	fIntegralGain := G_Engineer_HMI.fIGain_IL_Pos;
+	fDerivateGain := G_Engineer_HMI.fDGain_IL_Pos;
+ELSIF fVelRef < 0.0 THEN
+	fProportionalGain := G_Engineer_HMI.fPGain_IL_Neg;
+	fIntegralGain := G_Engineer_HMI.fIGain_IL_Neg;
+	fDerivateGain := G_Engineer_HMI.fDGain_IL_Neg;
+ELSE
+	fProportionalGain := G_Engineer_HMI.fPGain_IL_Pos;
+	fIntegralGain := G_Engineer_HMI.fIGain_IL_Pos;
+	fDerivateGain := G_Engineer_HMI.fDGain_IL_Pos;
+END_IF
 	
 
 		
@@ -62,9 +57,9 @@ END_VAR
 	fSignalFeedback := fYokeNormalizedFeedback,
 	fProportionalGain := fProportionalGain,
 	fIntegralGain := fIntegralGain,
-	bActivateIntegralControl := G_Engineer_HMI.bIenable_dis,
+	bActivateIntegralControl := G_Engineer_HMI.bIenable_IL,
 	bEnable := bEnable,
-	bIntegralControlReset := NOT(MAIN.eStatus = E_Status.Running),
+	bIntegralControlReset := TRUE,
 	bActivateDerivativeControl := FALSE,
 	fDerivativeGain := fDerivateGain,
 	fClosedLoopSignal => fNormalizedOutput,
