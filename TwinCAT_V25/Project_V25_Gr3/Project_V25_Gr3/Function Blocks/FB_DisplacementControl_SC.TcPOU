@@ -35,7 +35,8 @@ END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF bEnable THEN
+      <ST><![CDATA[
+IF bEnable THEN
 	
 
 
@@ -62,19 +63,19 @@ END_IF
 	fIntegralGain := fIntegralGain,
 	bActivateIntegralControl := G_Engineer_HMI.bIenable_IL,
 	bEnable := bEnable,
-	bIntegralControlReset := FALSE,
+	bIntegralControlReset := TRUE,
 	bActivateDerivativeControl := FALSE,
 	fDerivativeGain := fDerivateGain,
 	fClosedLoopSignal => fNormalizedOutput,
 	fSignalError =>G_PID_Tuning.fYoke_error,
-	P_out => G_PID_Tuning.fProportinalGain_output_dis,
-	I_out => G_PID_Tuning.fIntegralGain_output_dis,
-	D_out => G_PID_Tuning.fDerivateGain_output_dis
+	P_out => G_PID_Tuning.fPout_IL,
+	I_out => G_PID_Tuning.fIout_IL,
+	D_out => G_PID_Tuning.fDout_IL
 	);	
 
 
 	//Make Output global for plot
-	G_PID_Tuning.PID_output_dis := fNormalizedOutput;
+	G_PID_Tuning.PID_output_IL := fNormalizedOutput;
 	
 ELSE 
 	fNormalizedOutput := 0.0; // Ingen output uten aktivering

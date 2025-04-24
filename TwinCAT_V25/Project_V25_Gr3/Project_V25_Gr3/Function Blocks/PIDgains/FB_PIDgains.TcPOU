@@ -143,7 +143,7 @@ ELSE
 END_IF
 
 
-IF NOT(G_Engineer_HMI.bIGain_OL_write_neg) THEN
+IF NOT(G_Engineer_HMI.bIGain_IL_write_neg) THEN
 	G_Engineer_HMI.fIGain_IL_Neg := fIGain_IL_Neg;
 ELSE
 	fIGain_IL_Neg := G_Engineer_HMI.fIGain_IL_Neg;

@@ -28,7 +28,11 @@ fbDeadband					: FB_Deadband;
 fbDisplacementControl_SC	: FB_DisplacementControl_SC;
 
 fbMUX_selector				: FB_MUX_selector;
-	
+
+fbTarget_dis				: FB_Target_displacement;
+fbGain_Chooser_P			: FB_GainChooser;
+fbGain_Chooser_I			: FB_GainChooser;
+
 //Variables
 fWinchVelRefManual			: LREAL;
 fWinchVelRefAuto			: LREAL;
@@ -415,10 +419,11 @@ END_VAR
                             <v n="ProvidesSTSnippet">false</v>
                             <v n="Id">134L</v>
                           </o>
-                          <o t="BoxTreeOperand">
-                            <o n="Operand" t="Operand">
-                              <v n="Operand">"G_Engineer_HMI.fDisplacement_target"</v>
-                              <v n="Type">"LREAL"</v>
+                          <o t="BoxTreeBox">
+                            <v n="BoxType">"FB_Target_displacement"</v>
+                            <o n="Instance" t="Operand">
+                              <v n="Operand">"fbTarget_dis"</v>
+                              <v n="Type">"FB_Target_displacement"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
                               <v n="Address">""</v>
@@ -429,10 +434,40 @@ END_VAR
                               </o>
                               <v n="LValue">false</v>
                               <v n="Boolean">false</v>
-                              <v n="IsInstance">false</v>
-                              <v n="Id">130L</v>
+                              <v n="IsInstance">true</v>
+                              <v n="Id">397L</v>
                             </o>
-                            <v n="Id">129L</v>
+                            <o n="OutputItems" t="OutputItemList">
+                              <l2 n="OutputItems">
+                                <n />
+                              </l2>
+                            </o>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">0</v>
+                              <v n="Fixed">false</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <n n="InputFlags" />
+                            <l2 n="InputItems" />
+                            <o n="InputParam" t="ParamList">
+                              <l2 n="Names" />
+                              <l2 n="Types" />
+                            </o>
+                            <o n="OutputParam" t="ParamList">
+                              <l2 n="Names" cet="String">
+                                <v>fTarget_dis</v>
+                              </l2>
+                              <l2 n="Types" cet="String">
+                                <v>LREAL</v>
+                              </l2>
+                            </o>
+                            <v n="CallType" t="Operator">FunctionBlock</v>
+                            <v n="EN">false</v>
+                            <v n="ENO">false</v>
+                            <n n="STSnippet" />
+                            <v n="ContainsExtensibleInputs">false</v>
+                            <v n="ProvidesSTSnippet">false</v>
+                            <v n="Id">398L</v>
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
@@ -1393,7 +1428,7 @@ END_VAR
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems">
                     <o t="BoxTreeDemux">
-                      <v n="VarId">21</v>
+                      <v n="VarId">7</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"FB_PID_Controller_posref"</v>
                         <o n="Instance" t="Operand">
@@ -1416,7 +1451,7 @@ END_VAR
                           <l2 n="OutputItems" cet="Operand">
                             <n />
                             <o>
-                              <v n="Operand">"G_PID_Tuning.ferror_output_joypos_sec"</v>
+                              <v n="Operand">"G_PID_Tuning.ferror_OL"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1432,7 +1467,7 @@ END_VAR
                               <v n="Id">246L</v>
                             </o>
                             <o>
-                              <v n="Operand">"G_PID_Tuning.fPGain_output_joypos_sec"</v>
+                              <v n="Operand">"G_PID_Tuning.fPout_OL"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1448,7 +1483,7 @@ END_VAR
                               <v n="Id">247L</v>
                             </o>
                             <o>
-                              <v n="Operand">"G_PID_Tuning.fIGain_output_joypos_sec"</v>
+                              <v n="Operand">"G_PID_Tuning.fIout_OL"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1464,7 +1499,7 @@ END_VAR
                               <v n="Id">248L</v>
                             </o>
                             <o>
-                              <v n="Operand">"G_PID_Tuning.fDGain_output_joypos_sec"</v>
+                              <v n="Operand">"G_PID_Tuning.fDout_OL"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1546,10 +1581,10 @@ END_VAR
                             <v n="Id">254L</v>
                           </o>
                           <o t="BoxTreeBox">
-                            <v n="BoxType">"ADD"</v>
+                            <v n="BoxType">"FB_GainChooser"</v>
                             <o n="Instance" t="Operand">
-                              <n n="Operand" />
-                              <v n="Type">""</v>
+                              <v n="Operand">"fbGain_Chooser_P"</v>
+                              <v n="Type">"FB_GainChooser"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
                               <v n="Address">""</v>
@@ -1561,7 +1596,7 @@ END_VAR
                               <v n="LValue">false</v>
                               <v n="Boolean">false</v>
                               <v n="IsInstance">true</v>
-                              <v n="Id">369L</v>
+                              <v n="Id">399L</v>
                             </o>
                             <o n="OutputItems" t="OutputItemList">
                               <l2 n="OutputItems">
@@ -1609,36 +1644,63 @@ END_VAR
                                   <v n="LValue">false</v>
                                   <v n="Boolean">false</v>
                                   <v n="IsInstance">false</v>
-                                  <v n="Id">372L</v>
+                                  <v n="Id">402L</v>
                                 </o>
-                                <v n="Id">371L</v>
+                                <v n="Id">401L</v>
+                              </o>
+                              <o>
+                                <o n="Operand" t="Operand">
+                                  <v n="Operand">"fWinchVelRefManual"</v>
+                                  <v n="Type">"LREAL"</v>
+                                  <v n="Comment">""</v>
+                                  <v n="SymbolComment">""</v>
+                                  <v n="Address">""</v>
+                                  <o n="Flags" t="Flags">
+                                    <v n="Flags">0</v>
+                                    <v n="Fixed">false</v>
+                                    <v n="Extensible">false</v>
+                                  </o>
+                                  <v n="LValue">false</v>
+                                  <v n="Boolean">false</v>
+                                  <v n="IsInstance">false</v>
+                                  <v n="Id">404L</v>
+                                </o>
+                                <v n="Id">403L</v>
                               </o>
                             </l2>
                             <o n="InputParam" t="ParamList">
-                              <l2 n="Names" />
-                              <l2 n="Types" />
+                              <l2 n="Names" cet="String">
+                                <v>fGainPos</v>
+                                <v>fGainNeg</v>
+                                <v>fVelref</v>
+                              </l2>
+                              <l2 n="Types" cet="String">
+                                <v>LREAL</v>
+                                <v>LREAL</v>
+                                <v>LREAL</v>
+                              </l2>
                             </o>
                             <o n="OutputParam" t="ParamList">
                               <l2 n="Names" cet="String">
-                                <v></v>
+                                <v>fGain</v>
                               </l2>
                               <l2 n="Types" cet="String">
-                                <v>INT</v>
+                                <v>LREAL</v>
                               </l2>
                             </o>
-                            <v n="CallType" t="Operator">Add</v>
+                            <v n="CallType" t="Operator">FunctionBlock</v>
                             <v n="EN">false</v>
                             <v n="ENO">false</v>
                             <n n="STSnippet" />
                             <v n="ContainsExtensibleInputs">false</v>
                             <v n="ProvidesSTSnippet">false</v>
-                            <v n="Id">370L</v>
+                            <v n="Id">400L</v>
                           </o>
                           <o t="BoxTreeBox">
-                            <v n="BoxType">"ADD"</v>
+                            <v n="BoxType">"FB_GainChooser"</v>
                             <o n="Instance" t="Operand">
-                              <n n="Operand" />
-                              <v n="Type">""</v>
+                              <v n="Operand">"fbGain_Chooser_I"</v>
+                              <v n="Type">"FB_GainChooser"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
                               <v n="Address">""</v>
@@ -1650,7 +1712,7 @@ END_VAR
                               <v n="LValue">false</v>
                               <v n="Boolean">false</v>
                               <v n="IsInstance">true</v>
-                              <v n="Id">373L</v>
+                              <v n="Id">405L</v>
                             </o>
                             <o n="OutputItems" t="OutputItemList">
                               <l2 n="OutputItems">
@@ -1698,41 +1760,68 @@ END_VAR
                                   <v n="LValue">false</v>
                                   <v n="Boolean">false</v>
                                   <v n="IsInstance">false</v>
-                                  <v n="Id">376L</v>
+                                  <v n="Id">408L</v>
                                 </o>
-                                <v n="Id">375L</v>
+                                <v n="Id">407L</v>
+                              </o>
+                              <o>
+                                <o n="Operand" t="Operand">
+                                  <v n="Operand">"fWinchVelRefManual"</v>
+                                  <v n="Type">"LREAL"</v>
+                                  <v n="Comment">""</v>
+                                  <v n="SymbolComment">""</v>
+                                  <v n="Address">""</v>
+                                  <o n="Flags" t="Flags">
+                                    <v n="Flags">0</v>
+                                    <v n="Fixed">false</v>
+                                    <v n="Extensible">false</v>
+                                  </o>
+                                  <v n="LValue">false</v>
+                                  <v n="Boolean">false</v>
+                                  <v n="IsInstance">false</v>
+                                  <v n="Id">410L</v>
+                                </o>
+                                <v n="Id">409L</v>
                               </o>
                             </l2>
                             <o n="InputParam" t="ParamList">
-                              <l2 n="Names" />
-                              <l2 n="Types" />
+                              <l2 n="Names" cet="String">
+                                <v>fGainPos</v>
+                                <v>fGainNeg</v>
+                                <v>fVelref</v>
+                              </l2>
+                              <l2 n="Types" cet="String">
+                                <v>LREAL</v>
+                                <v>LREAL</v>
+                                <v>LREAL</v>
+                              </l2>
                             </o>
                             <o n="OutputParam" t="ParamList">
                               <l2 n="Names" cet="String">
-                                <v></v>
+                                <v>fGain</v>
                               </l2>
                               <l2 n="Types" cet="String">
-                                <v>INT</v>
+                                <v>LREAL</v>
                               </l2>
                             </o>
-                            <v n="CallType" t="Operator">Add</v>
+                            <v n="CallType" t="Operator">FunctionBlock</v>
                             <v n="EN">false</v>
                             <v n="ENO">false</v>
                             <n n="STSnippet" />
                             <v n="ContainsExtensibleInputs">false</v>
                             <v n="ProvidesSTSnippet">false</v>
-                            <v n="Id">374L</v>
+                            <v n="Id">406L</v>
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"TRUE"</v>
+                              <v n="Operand">"bEnable"</v>
                               <v n="Type">"BOOL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
                               <v n="Address">""</v>
                               <o n="Flags" t="Flags">
-                                <v n="Flags">0</v>
-                                <v n="Fixed">false</v>
+                                <v n="Flags">1</v>
+                                <v n="Fixed">true</v>
                                 <v n="Extensible">false</v>
                               </o>
                               <v n="LValue">false</v>
@@ -1872,7 +1961,7 @@ END_VAR
                       <v n="Id">347L</v>
                     </o>
                     <o t="BoxTreeDemux">
-                      <v n="VarId">22</v>
+                      <v n="VarId">8</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"FB_Deadband"</v>
                         <o n="Instance" t="Operand">
@@ -1904,7 +1993,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">21</v>
+                            <v n="VarId">7</v>
                             <n n="Input" />
                             <v n="Id">348L</v>
                           </o>
@@ -2076,7 +2165,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">22</v>
+                            <v n="VarId">8</v>
                             <n n="Input" />
                             <v n="Id">353L</v>
                           </o>
@@ -2223,7 +2312,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"fDeadbandComp_out"</v>
+                            <v n="Operand">"G_Motion_Control.fDeadbandComp_out"</v>
                             <v n="Type">"LREAL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -2246,7 +2335,7 @@ END_VAR
                         <v n="Extensible">false</v>
                       </o>
                       <o n="RValue" t="BoxTreeDemux">
-                        <v n="VarId">22</v>
+                        <v n="VarId">8</v>
                         <n n="Input" />
                         <v n="Id">354L</v>
                       </o>
@@ -2256,7 +2345,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"fSC_ClosedLoopSingal"</v>
+                            <v n="Operand">"G_Motion_Control.fOutPutSignal_OL"</v>
                             <v n="Type">"LREAL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -2279,7 +2368,7 @@ END_VAR
                         <v n="Extensible">false</v>
                       </o>
                       <o n="RValue" t="BoxTreeDemux">
-                        <v n="VarId">21</v>
+                        <v n="VarId">7</v>
                         <n n="Input" />
                         <v n="Id">349L</v>
                       </o>
@@ -3055,7 +3144,7 @@ END_VAR
                   <v n="Id">9L</v>
                 </o>
               </l2>
-              <v n="BranchCounter">21</v>
+              <v n="BranchCounter">7</v>
               <v n="ValidIds">true</v>
             </o>
           </Data>

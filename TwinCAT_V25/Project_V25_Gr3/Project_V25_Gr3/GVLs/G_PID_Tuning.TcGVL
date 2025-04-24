@@ -21,17 +21,18 @@ VAR_GLOBAL
 	
 	//Displacement control
 	fYoke_error 						: LREAL;
-	fProportinalGain_output_dis 		: LREAL;
-	fIntegralGain_output_dis			: LREAL;
-	fDerivateGain_output_dis 			: LREAL;
-	PID_output_dis						: LREAL;
+	fPout_IL					 		: LREAL;
+	fIout_IL					 		: LREAL;
+	fDout_IL					 		: LREAL;
+	PID_output_IL						: LREAL;
 	Int_error_threshold					: LREAL := 0.0001;
 	
 	//Manual Control joystick posref secondary
-	fPGain_output_joypos_sec			: LREAL;
-	fIGain_output_joypos_sec			: LREAL;
-	fDGain_output_joypos_sec			: LREAL;
-	ferror_output_joypos_sec			: LREAL;
+	fPout_OL							: LREAL;
+	fIout_OL							: LREAL;
+	fDout_OL							: LREAL;
+	ferror_OL							: LREAL; //Skrive manual bak denne
+	ferror_OL_Auto						: LREAL; // Legge inn i OPC UA
 	
 END_VAR]]></Declaration>
   </GVL>

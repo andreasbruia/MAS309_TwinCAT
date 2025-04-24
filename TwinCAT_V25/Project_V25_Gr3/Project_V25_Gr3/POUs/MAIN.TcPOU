@@ -18,7 +18,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF bFunction_Blocks_enable THEN
+      <ST><![CDATA[P_MotionControl();
+
+IF bFunction_Blocks_enable THEN
 	fb_StateMachine_Mode_Selection();
 	fb_Joystick_input_Scaling();
 	fb_Joystick();

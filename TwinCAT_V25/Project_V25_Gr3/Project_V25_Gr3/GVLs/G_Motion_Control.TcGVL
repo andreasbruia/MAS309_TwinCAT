@@ -33,6 +33,13 @@ fSCVInput_joystick_posref_secondary			: LREAL;
 fSineRefSignal_SC							: LREAL;
 fVelRef_Sine_SC								: LREAL;
 
+//Outer and inner loop sequence SC
+fOutPutSignal_OL							: LREAL; //Skrive manual bak disse og oppdatere OPC UA
+fDeadbandComp_out							: LREAL;
+
+//Ikke lagt til i OPC UA
+fOutPutSignal_OL_Auto						: LREAL;
+fDeadbandComp_out_Auto						: LREAL;
 
 //Ikke i bruk
 fPosition_error_StartDisplacement 			: LREAL; 

@@ -7,9 +7,6 @@
     <PouCall>
       <Name>MAIN</Name>
     </PouCall>
-    <PouCall>
-      <Name>P_MotionControl</Name>
-    </PouCall>
     <TaskFBGuid>{805c22ac-d6c4-4c39-9814-23c7d558d439}</TaskFBGuid>
     <Fb_init>{38137b43-44e1-4eb9-ad85-71b0795e9cc5}</Fb_init>
     <Fb_exit>{3b63efec-1de5-4e88-bd93-988f497135e9}</Fb_exit>
