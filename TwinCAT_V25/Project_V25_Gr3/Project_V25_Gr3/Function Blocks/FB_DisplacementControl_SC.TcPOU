@@ -25,7 +25,7 @@ VAR
 	fDerivateGain					: LREAL;	
 
 
-	fbPID_SC						: FB_PID_SC;
+	fbPID_IL						: FB_PID_Controller;
 	fbPID_new						: FB_PID_Controller;
 	fYoke_error						: LREAL;
 	fProportinalGain_output			: LREAL;
@@ -55,7 +55,7 @@ ELSE
 END_IF
 
 		
-		fbPID_SC(
+		fbPID_IL(
 	ssMethodType := BOOL_TO_SINT(bEnable),
 	fSignalReference := fDisplacementNormalizedInput,
 	fSignalFeedback := fYokeNormalizedFeedback,
@@ -63,8 +63,8 @@ END_IF
 	fIntegralGain := fIntegralGain,
 	bActivateIntegralControl := G_Engineer_HMI.bIenable_IL,
 	bEnable := bEnable,
-	bIntegralControlReset := TRUE,
-	bActivateDerivativeControl := FALSE,
+	bIntegralControlReset := NOT(bEnable),
+	bActivateDerivativeControl := G_Engineer_HMI.bDenable_IL,
 	fDerivativeGain := fDerivateGain,
 	fClosedLoopSignal => fNormalizedOutput,
 	fSignalError =>G_PID_Tuning.fYoke_error,

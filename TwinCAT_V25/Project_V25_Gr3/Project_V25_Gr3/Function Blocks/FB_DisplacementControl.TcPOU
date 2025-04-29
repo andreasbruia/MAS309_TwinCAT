@@ -21,7 +21,7 @@ VAR PERSISTENT
 END_VAR
 
 VAR
-	fbPID_Conroller						: FB_PID_Controller;
+	fbPID_Conroller					: FB_PID_Controller;
 	fbResetInt						: FB_ResetIntegralController;
 	bResetInt						: BOOL;
 	
@@ -35,11 +35,11 @@ END_VAR
     <Implementation>
       <ST><![CDATA[IF bEnable THEN
 	
-	IF fVelRef > 0.0 THEN
+	IF G_PID_Tuning.fYoke_error > 0.0 THEN //Kan legge inn en velref  istedet for feilen
 	fProportionalGain := G_Engineer_HMI.fPGain_IL_Pos;
 	fIntegralGain := G_Engineer_HMI.fIGain_IL_Pos;
 	fDerivateGain := G_Engineer_HMI.fDGain_IL_Pos;
-ELSIF fVelRef < 0.0 THEN
+ELSIF G_PID_Tuning.fYoke_error < 0.0 THEN
 	fProportionalGain := G_Engineer_HMI.fPGain_IL_Neg;
 	fIntegralGain := G_Engineer_HMI.fIGain_IL_Neg;
 	fDerivateGain := G_Engineer_HMI.fDGain_IL_Neg;
@@ -59,8 +59,8 @@ END_IF
 	fIntegralGain := fIntegralGain,
 	bActivateIntegralControl := G_Engineer_HMI.bIenable_IL,
 	bEnable := bEnable,
-	bIntegralControlReset := TRUE,
-	bActivateDerivativeControl := FALSE,
+	bIntegralControlReset := NOT(bEnable),
+	bActivateDerivativeControl := G_Engineer_HMI.bDenable_IL,
 	fDerivativeGain := fDerivateGain,
 	fClosedLoopSignal => fNormalizedOutput,
 	fSignalError =>G_PID_Tuning.fYoke_error,

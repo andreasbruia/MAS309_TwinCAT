@@ -2,56 +2,105 @@
  *
  * File: OPC_UA_block_converter.st
  *
- * IEC 61131-3 Structured Text (ST) code generated for subsystem "OPC_UA_block_converter/FB_Derivator"
+ * IEC 61131-3 Structured Text (ST) code generated for subsystem "OPC_UA_block_converter/FB_PID_Controller"
  *
  * Model name                      : OPC_UA_block_converter
- * Model version                   : 1.29
+ * Model version                   : 1.32
  * Model creator                   : student
  * Model last modified by          : student
- * Model last modified on          : Mon Apr 14 13:33:05 2025
+ * Model last modified on          : Fri Apr 25 12:44:34 2025
  * Model sample time               : 0.01s
- * Subsystem name                  : OPC_UA_block_converter/FB_Derivator
+ * Subsystem name                  : OPC_UA_block_converter/FB_PID_Controller
  * Subsystem sample time           : 0.01s
  * Simulink PLC Coder version      : 24.2 (R2024b) 21-Jun-2024
- * ST code generated on            : Mon Apr 14 13:33:59 2025
+ * ST code generated on            : Mon Apr 28 10:45:07 2025
  *
  * Target IDE selection            : PLCopen XML
  * Test Bench included             : No
  *
  *)
-FUNCTION_BLOCK FB_Derivator
+FUNCTION_BLOCK FB_PID_Controller
 VAR_INPUT
     ssMethodType: SINT;
-    Input: LREAL;
+    fSignalReference: LREAL;
+    fSignalFeedback: LREAL;
+    fProportionalGain: LREAL;
+    fIntegralGain: LREAL;
+    bIntegralControlReset: BOOL;
+    bActivateIntegralControl: BOOL;
+    bEnable: BOOL;
+    bActivateDerivativeControl: BOOL;
+    fDerivativeGain: LREAL;
 END_VAR
 VAR_OUTPUT
-    Derivated_output: LREAL;
+    fClosedLoopSignal: LREAL;
+    fSignalError: LREAL;
+    P_out: LREAL;
+    I_out: LREAL;
+    D_out: LREAL;
 END_VAR
 VAR
+    c_DiscreteTimeIntegrator1_D: LREAL;
     UD_DSTATE: LREAL;
 END_VAR
 VAR_TEMP
+    rtb_Uk1: LREAL;
+    rtb_Saturation: LREAL;
     rtb_TSamp: LREAL;
 END_VAR
 CASE ssMethodType OF
     0: 
-        (* SystemInitialize for Atomic SubSystem: '<Root>/FB_Derivator' *)
+        (* SystemInitialize for Atomic SubSystem: '<Root>/FB_PID_Controller' *)
+        (* InitializeConditions for DiscreteIntegrator: '<S1>/Discrete-Time Integrator1' *)
+        c_DiscreteTimeIntegrator1_D := 0.0;
         (* InitializeConditions for UnitDelay: '<S2>/UD'
          *
          * Block description for '<S2>/UD':
          *  
          *  Store in Global RAM *)
         UD_DSTATE := 0.0;
-        (* End of SystemInitialize for SubSystem: '<Root>/FB_Derivator' *)
+        (* End of SystemInitialize for SubSystem: '<Root>/FB_PID_Controller' *)
     1: 
-        (* Outputs for Atomic SubSystem: '<Root>/FB_Derivator' *)
-        (* SampleTimeMath: '<S2>/TSamp'
+        (* Outputs for Atomic SubSystem: '<Root>/FB_PID_Controller' *)
+        (* Sum: '<S1>/Sum' *)
+        fSignalError := fSignalReference - fSignalFeedback;
+        (* Product: '<S1>/Product' *)
+        P_out := fProportionalGain * fSignalError;
+        (* DiscreteIntegrator: '<S1>/Discrete-Time Integrator1' *)
+        IF bIntegralControlReset THEN 
+            c_DiscreteTimeIntegrator1_D := 0.0;
+        END_IF;
+        (* Switch: '<S1>/Switch2' incorporates:
+         *  Constant: '<S1>/Constant'
+         *  DiscreteIntegrator: '<S1>/Discrete-Time Integrator1' *)
+        IF bActivateIntegralControl THEN 
+            I_out := c_DiscreteTimeIntegrator1_D;
+        ELSE 
+            I_out := 0.0;
+        END_IF;
+        (* End of Switch: '<S1>/Switch2' *)
+        
+        (* Sum: '<S1>/Sum5' *)
+        rtb_Uk1 := P_out + I_out;
+        (* Saturate: '<S1>/Saturation' *)
+        IF rtb_Uk1 > 1.0 THEN 
+            rtb_Saturation := 1.0;
+        ELSIF rtb_Uk1 >= -1.0 THEN 
+            rtb_Saturation := rtb_Uk1;
+        ELSE 
+            rtb_Saturation := -1.0;
+        END_IF;
+        (* End of Saturate: '<S1>/Saturation' *)
+        
+        (* SampleTimeMath: '<S2>/TSamp' incorporates:
+         *  Product: '<S1>/Product2'
          *
          * About '<S2>/TSamp':
          *  y = u * K where K = 1 / ( w * Ts )
          *   *)
-        rtb_TSamp := Input * 100.0;
-        (* Outport: '<Root>/Derivated_output' incorporates:
+        rtb_TSamp := (fSignalError * fDerivativeGain) * 100.0;
+        (* Switch: '<S1>/Switch3' incorporates:
+         *  Constant: '<S1>/Constant2'
          *  Sum: '<S2>/Diff'
          *  UnitDelay: '<S2>/UD'
          *
@@ -62,13 +111,52 @@ CASE ssMethodType OF
          * Block description for '<S2>/UD':
          *  
          *  Store in Global RAM *)
-        Derivated_output := rtb_TSamp - UD_DSTATE;
+        IF bActivateDerivativeControl THEN 
+            D_out := rtb_TSamp - UD_DSTATE;
+        ELSE 
+            D_out := 0.0;
+        END_IF;
+        (* End of Switch: '<S1>/Switch3' *)
+        
+        (* Switch: '<S1>/Switch1' *)
+        IF bEnable THEN 
+            (* Sum: '<S1>/Sum2' *)
+            fClosedLoopSignal := rtb_Saturation + D_out;
+            (* Saturate: '<S1>/Saturation1' *)
+            IF fClosedLoopSignal > 1.0 THEN 
+                (* Outport: '<Root>/fClosedLoopSignal' *)
+                fClosedLoopSignal := 1.0;
+            ELSIF fClosedLoopSignal < -1.0 THEN 
+                (* Outport: '<Root>/fClosedLoopSignal' *)
+                fClosedLoopSignal := -1.0;
+            END_IF;
+            (* End of Saturate: '<S1>/Saturation1' *)
+        ELSE 
+            (* Outport: '<Root>/fClosedLoopSignal' incorporates:
+             *  Constant: '<S1>/Constant1' *)
+            fClosedLoopSignal := 0.0;
+        END_IF;
+        (* End of Switch: '<S1>/Switch1' *)
+        
+        (* Update for DiscreteIntegrator: '<S1>/Discrete-Time Integrator1' incorporates:
+         *  Product: '<S1>/Divide'
+         *  Product: '<S1>/Product1'
+         *  Sum: '<S1>/Sum1'
+         *  Sum: '<S1>/Sum3' *)
+        c_DiscreteTimeIntegrator1_D := (((((rtb_Saturation - rtb_Uk1) / fProportionalGain) + fSignalError) * fIntegralGain) * 0.01) + c_DiscreteTimeIntegrator1_D;
+        IF c_DiscreteTimeIntegrator1_D > 1.0 THEN 
+            c_DiscreteTimeIntegrator1_D := 1.0;
+        ELSIF c_DiscreteTimeIntegrator1_D < -1.0 THEN 
+            c_DiscreteTimeIntegrator1_D := -1.0;
+        END_IF;
+        (* End of Update for DiscreteIntegrator: '<S1>/Discrete-Time Integrator1' *)
+        
         (* Update for UnitDelay: '<S2>/UD'
          *
          * Block description for '<S2>/UD':
          *  
          *  Store in Global RAM *)
         UD_DSTATE := rtb_TSamp;
-        (* End of Outputs for SubSystem: '<Root>/FB_Derivator' *)
+        (* End of Outputs for SubSystem: '<Root>/FB_PID_Controller' *)
 END_CASE;
 END_FUNCTION_BLOCK

@@ -37,6 +37,11 @@ VAR PERSISTENT
 	fDGain_IL_Pos					: LREAL;
 	fDGain_IL_Neg					: LREAL;
 	
+	/////Deadband Compensation/////
+	fUpper							: LREAL;
+	fNeutral						: LREAL;
+	fLower							: LREAL;
+	
 END_VAR
 
 VAR
@@ -155,9 +160,24 @@ ELSE
 	fDGain_IL_Neg := G_Engineer_HMI.fDGain_IL_Neg;
 END_IF	
 
+/////////Deadband Compensation////////////
+IF NOT(G_Engineer_HMI.bUpperWrite) THEN
+	G_Engineer_HMI.fUpperdeadband := fUpper;
+ELSE
+	fUpper := G_Engineer_HMI.fUpperdeadband;
+END_IF
 
+IF NOT(G_Engineer_HMI.bNeutralWrite) THEN
+	G_Engineer_HMI.fNeutraldeadband := fNeutral;
+ELSE
+	fNeutral := G_Engineer_HMI.fNeutraldeadband;
+END_IF
 
-
+IF NOT(G_Engineer_HMI.bLowerWrite) THEN
+	G_Engineer_HMI.fLowerdeadband:= fLower;
+ELSE
+	fLower := G_Engineer_HMI.fLowerdeadband;
+END_IF
 
 
 

@@ -21,6 +21,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"544"</v>
+              <v n="TextDefault">"1"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"815"</v>
+              <v n="TextDefault">"3"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"190"</v>
               <v n="TextDefault">"Amplitude    Frequency"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -53,6 +63,11 @@
             <o>
               <v n="TextID">"394"</v>
               <v n="TextDefault">"Breaks Open"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"340"</v>
+              <v n="TextDefault">"Deadband Compensation"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -176,6 +191,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"582"</v>
+              <v n="TextDefault">"Lower"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"45"</v>
               <v n="TextDefault">"Manual control - joystick pos ref"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -188,6 +208,11 @@
             <o>
               <v n="TextID">"509"</v>
               <v n="TextDefault">"Manuel control - joystick pos ref"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"681"</v>
+              <v n="TextDefault">"Neutral"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -291,6 +316,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"446"</v>
+              <v n="TextDefault">"Upper"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"739"</v>
               <v n="TextDefault">"Valve_output -  bDeadBandCompOn"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -298,6 +328,11 @@
             <o>
               <v n="TextID">"820"</v>
               <v n="TextDefault">"Wave parameters"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"929"</v>
+              <v n="TextDefault">"Write"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

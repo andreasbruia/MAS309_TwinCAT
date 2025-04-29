@@ -14,9 +14,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF ABS(fStartPos_error) < 0.1 THEN
+      <ST><![CDATA[IF ABS(fStartPos_error) < 0.2 THEN
 	bStartPosOK := TRUE;
-ELSE
+ELSIF NOT (G_IO.bStartButton) THEN
 	bStartPosOK := FALSE;
 END_IF
 

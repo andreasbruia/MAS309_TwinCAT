@@ -128,7 +128,15 @@ bDGain_IL_write_neg					: BOOL;
 	
 //PID Gains for Manual control joystick posref
 	
-	bManual_Secondary_joyposref_enable	: BOOL;
+	bManual_Secondary_joyposref_enable	: BOOL := TRUE;
+	
+// Deadband compensation (gjort om til var persistants som ligger i FB_PIDgains)
+fUpperdeadband						: LREAL;
+fNeutraldeadband					: LREAL;
+fLowerdeadband						: LREAL;
+bUpperWrite							: BOOL;
+bNeutralWrite						: BOOL;
+bLowerWrite							: BOOL;
 	
 	
 //StepInput displacement ikke lagt inn etter å ha ryddet, kan legges inn i 

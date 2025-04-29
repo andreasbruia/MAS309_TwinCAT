@@ -20,11 +20,11 @@ END_VAR
       <ST><![CDATA[
 
 IF fVelref > 0.0 THEN
-	fDeadbandComp := LIMIT(0.35,fupperdeadband + fClosedloopSignal,1.0);
+	fDeadbandComp := LIMIT(fNeutral,fupperdeadband + fClosedloopSignal,1.0);
 ELSIF fVelref < 0.0 THEN
-	fDeadbandComp := LIMIT(0.0,flowerdeadband + fClosedloopSignal,0.35); //Kanskje minus her men tror input blir - så da blir det fikset
+	fDeadbandComp := LIMIT(0.0,flowerdeadband + fClosedloopSignal,fNeutral); //Kanskje minus her men tror input blir - så da blir det fikset
 ELSE
-	fDeadbandComp := LIMIT(-1.0,fNeutral,1.0);
+	fDeadbandComp := LIMIT(0.1,fNeutral,1.0);
 END_IF]]></ST>
     </Implementation>
   </POU>

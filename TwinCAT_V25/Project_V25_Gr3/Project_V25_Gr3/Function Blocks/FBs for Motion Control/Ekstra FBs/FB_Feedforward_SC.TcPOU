@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Feedforward_SC" Id="{06c0b521-2bba-4c99-b4fc-4cbdf99adc13}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Feedforward_SC
+VAR_INPUT
+	fVelref			: LREAL;
+	fKff			: LREAL;
+	fVelref_dot		: LREAL;
+END_VAR
+VAR_OUTPUT
+	fAlpha			: LREAL;
+END_VAR
+VAR
+	fM_0				: LREAL;
+	fomega_0			: LREAL;
+	x					: LREAL;
+	fMFr				: LREAL;
+	J_eff				: LREAL;
+	fD_Max				: LREAL;
+	fdelta_p_Pa			: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fM_0 := 53.0;
+fomega_0 := 0.005;
+x := (fVelref/fomega_0);
+J_eff := 0.01 + 0.1 + G_Parameters.stParam.fPayloadMass * G_Parameters.stParam.fWinchDrumRadius * G_Parameters.stParam.fWinchDrumRadius;
+fD_Max := 180.0/1000000.0; // cm^3/rev -> *10^-6 m^3/rev
+fdelta_p_Pa := G_Sensors.fDeltaPMotor * 100000;
+
+// For å skrive tanh med EXP: https://www.youtube.com/watch?v=r76jFsDXkHw
+
+fMFr := fM_0 * (EXP(2.0 * x) - 1.0)/(EXP(2.0 * x)+1.0);
+
+//fAlpha := fKff*((G_Parameters.stParam.fPayloadMass * 9.81 * G_Parameters.stParam.fWinchDrumRadius + fMFr + J_eff * fVelref_dot)*2.0 * PI)/(fD_Max * fdelta_p_Pa);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
