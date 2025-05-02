@@ -32,7 +32,7 @@ fdelta_p_Pa := G_Sensors.fDeltaPMotor * 100000;
 
 fMFr := fM_0 * (EXP(2.0 * x) - 1.0)/(EXP(2.0 * x)+1.0);
 
-//fAlpha := fKff*((G_Parameters.stParam.fPayloadMass * 9.81 * G_Parameters.stParam.fWinchDrumRadius + fMFr + J_eff * fVelref_dot)*2.0 * PI)/(fD_Max * fdelta_p_Pa);]]></ST>
+fAlpha := LIMIT(0.0, fKff*((G_Parameters.stParam.fPayloadMass * 9.81 * G_Parameters.stParam.fWinchDrumRadius + fMFr + J_eff * fVelref_dot)*2.0 * PI)/(fD_Max * LIMIT(10.0,fdelta_p_Pa,200.0)), 1.0);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

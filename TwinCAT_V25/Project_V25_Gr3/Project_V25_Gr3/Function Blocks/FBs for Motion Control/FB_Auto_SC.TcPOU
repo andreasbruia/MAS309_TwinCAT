@@ -221,7 +221,7 @@ END_VAR
                           <l2 n="OutputItems" cet="Operand">
                             <n />
                             <o>
-                              <v n="Operand">"G_PID_Tuning.ferror_OL_Auto"</v>
+                              <v n="Operand">"G_PID_Tuning.ferror_OL_Auto_startpos"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -420,7 +420,7 @@ END_VAR
                               </o>
                               <o>
                                 <o n="Operand" t="Operand">
-                                  <v n="Operand">"G_PID_Tuning.ferror_OL_Auto"</v>
+                                  <v n="Operand">"G_PID_Tuning.ferror_OL_Auto_startpos"</v>
                                   <v n="Type">"LREAL"</v>
                                   <v n="Comment">""</v>
                                   <v n="SymbolComment">""</v>
@@ -536,7 +536,7 @@ END_VAR
                               </o>
                               <o>
                                 <o n="Operand" t="Operand">
-                                  <v n="Operand">"G_PID_Tuning.ferror_OL_Auto"</v>
+                                  <v n="Operand">"G_PID_Tuning.ferror_OL_Auto_startpos"</v>
                                   <v n="Type">"LREAL"</v>
                                   <v n="Comment">""</v>
                                   <v n="SymbolComment">""</v>
@@ -769,7 +769,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"G_PID_Tuning.ferror_OL_Auto"</v>
+                              <v n="Operand">"G_PID_Tuning.ferror_OL_Auto_startpos"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1320,7 +1320,7 @@ END_VAR
                                       </o>
                                       <o>
                                         <o n="Operand" t="Operand">
-                                          <v n="Operand">"G_PID_Tuning.ferror_OL_Auto"</v>
+                                          <v n="Operand">"G_PID_Tuning.ferror_OL_Auto_startpos"</v>
                                           <v n="Type">"LREAL"</v>
                                           <v n="Comment">""</v>
                                           <v n="SymbolComment">""</v>
@@ -1461,7 +1461,7 @@ END_VAR
                           <l2 n="OutputItems" cet="Operand">
                             <n />
                             <o>
-                              <v n="Operand">"G_PID_Tuning.ferror_OL_Auto"</v>
+                              <v n="Operand">"G_PID_Tuning.ferror_OL_Auto_sine"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>

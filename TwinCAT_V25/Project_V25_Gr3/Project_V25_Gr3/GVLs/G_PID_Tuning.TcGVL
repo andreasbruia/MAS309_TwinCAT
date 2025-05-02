@@ -32,7 +32,15 @@ VAR_GLOBAL
 	fIout_OL							: LREAL;
 	fDout_OL							: LREAL;
 	ferror_OL							: LREAL; //Skrive manual bak denne
-	ferror_OL_Auto						: LREAL; // Legge inn i OPC UA
+	ferror_OL_Auto_startpos				: LREAL;
+	ferror_OL_Auto_sine					: LREAL;
+	
+	
+	////Combination////
+	fPout_OL_combi							: LREAL;
+	fIout_OL_combi							: LREAL;
+	fDout_OL_combi							: LREAL;
+	ferror_OL_combi							: LREAL;
 	
 END_VAR]]></Declaration>
   </GVL>

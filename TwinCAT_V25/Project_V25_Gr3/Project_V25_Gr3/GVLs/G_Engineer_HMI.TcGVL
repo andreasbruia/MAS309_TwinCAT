@@ -138,6 +138,10 @@ bUpperWrite							: BOOL;
 bNeutralWrite						: BOOL;
 bLowerWrite							: BOOL;
 	
+////////Primary and Secondary combination//////
+bCombinationActive					: BOOL;
+bAutoSineCombi						: BOOL;
+
 	
 //StepInput displacement ikke lagt inn etter å ha ryddet, kan legges inn i 
 //Manual SC om det trengs (la tidligere i P_outputs
