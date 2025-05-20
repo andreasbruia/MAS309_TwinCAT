@@ -24,7 +24,7 @@ IF fVelref > 0.0 THEN
 ELSIF fVelref < 0.0 THEN
 	fDeadbandComp := LIMIT(0.0,flowerdeadband + fClosedloopSignal,fNeutral); //Kanskje minus her men tror input blir - så da blir det fikset
 ELSE
-	fDeadbandComp := LIMIT(0.1,fNeutral,1.0);
+	fDeadbandComp := LIMIT(0.1,fNeutral + fClosedloopSignal,1.0);
 END_IF]]></ST>
     </Implementation>
   </POU>

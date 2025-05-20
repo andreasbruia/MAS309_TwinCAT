@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ControlReset_SC" Id="{8003dd09-0a5a-4824-b0f6-9417fe90b905}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ControlReset_SC
+VAR_INPUT
+	fVelRef			: LREAL;
+	ferror			: LREAL;
+
+END_VAR
+VAR_OUTPUT
+	bReset			: BOOL;
+END_VAR
+VAR
+	ferror_Tolerence	: LREAL := 0.001;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF fVelRef = 0.0 AND ABS(ferror) < ferror_Tolerence THEN
+	bReset := TRUE;
+ELSE
+	bReset := FALSE;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

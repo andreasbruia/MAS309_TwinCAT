@@ -31,6 +31,13 @@ VAR_GLOBAL
 	fPout_OL							: LREAL;
 	fIout_OL							: LREAL;
 	fDout_OL							: LREAL;
+	fPout_OL_Auto							: LREAL;
+	fIout_OL_Auto							: LREAL;
+	fDout_OL_Auto							: LREAL;
+	fPout_OL_Auto_sine							: LREAL;
+	fIout_OL_Auto_sine							: LREAL;
+	fDout_OL_Auto_sine							: LREAL;
+	
 	ferror_OL							: LREAL; //Skrive manual bak denne
 	ferror_OL_Auto_startpos				: LREAL;
 	ferror_OL_Auto_sine					: LREAL;

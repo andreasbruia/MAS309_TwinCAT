@@ -30,9 +30,12 @@ fbMUX_selector				: FB_MUX_selector;
 
 fbGain_Chooser_P			: FB_GainChooser;
 fbGain_Chooser_I			: FB_GainChooser;
+fb_ControlReset_startpos	: FB_ControlReset_SC;
+fb_ControlReset_sine		:FB_ControlReset_SC;
 
 //Deadband
 fDeadbandComp_out			: LREAL;
+fDeadbandComp_out_startpos			: LREAL;
 
 //Outer Loop output
 fSC_ClosedLoopSingal		: LREAL;
@@ -198,7 +201,7 @@ END_VAR
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems">
                     <o t="BoxTreeDemux">
-                      <v n="VarId">102</v>
+                      <v n="VarId">109</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"FB_PID_Controller"</v>
                         <o n="Instance" t="Operand">
@@ -237,7 +240,7 @@ END_VAR
                               <v n="Id">138L</v>
                             </o>
                             <o>
-                              <v n="Operand">"G_PID_Tuning.fPout_OL"</v>
+                              <v n="Operand">"G_PID_Tuning.fPout_OL_Auto"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -253,7 +256,7 @@ END_VAR
                               <v n="Id">139L</v>
                             </o>
                             <o>
-                              <v n="Operand">"G_PID_Tuning.fIout_OL"</v>
+                              <v n="Operand">"G_PID_Tuning.fIout_OL_Auto"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -269,7 +272,7 @@ END_VAR
                               <v n="Id">140L</v>
                             </o>
                             <o>
-                              <v n="Operand">"G_PID_Tuning.fDout_OL"</v>
+                              <v n="Operand">"G_PID_Tuning.fDout_OL_Auto"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -582,24 +585,100 @@ END_VAR
                             <v n="ProvidesSTSnippet">false</v>
                             <v n="Id">288L</v>
                           </o>
-                          <o t="BoxTreeOperand">
-                            <o n="Operand" t="Operand">
-                              <v n="Operand">"bEnable"</v>
-                              <v n="Type">"BOOL"</v>
+                          <o t="BoxTreeBox">
+                            <v n="BoxType">"FB_ControlReset_SC"</v>
+                            <o n="Instance" t="Operand">
+                              <v n="Operand">"fb_ControlReset_startpos"</v>
+                              <v n="Type">"FB_ControlReset_SC"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
                               <v n="Address">""</v>
                               <o n="Flags" t="Flags">
-                                <v n="Flags">1</v>
-                                <v n="Fixed">true</v>
+                                <v n="Flags">0</v>
+                                <v n="Fixed">false</v>
                                 <v n="Extensible">false</v>
                               </o>
                               <v n="LValue">false</v>
                               <v n="Boolean">false</v>
-                              <v n="IsInstance">false</v>
-                              <v n="Id">153L</v>
+                              <v n="IsInstance">true</v>
+                              <v n="Id">309L</v>
                             </o>
-                            <v n="Id">152L</v>
+                            <o n="OutputItems" t="OutputItemList">
+                              <l2 n="OutputItems">
+                                <n />
+                              </l2>
+                            </o>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">0</v>
+                              <v n="Fixed">false</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <n n="InputFlags" />
+                            <l2 n="InputItems" cet="BoxTreeOperand">
+                              <o>
+                                <o n="Operand" t="Operand">
+                                  <v n="Operand">"G_PID_Tuning.ferror_OL_Auto_startpos"</v>
+                                  <v n="Type">"LREAL"</v>
+                                  <v n="Comment">""</v>
+                                  <v n="SymbolComment">""</v>
+                                  <v n="Address">""</v>
+                                  <o n="Flags" t="Flags">
+                                    <v n="Flags">0</v>
+                                    <v n="Fixed">true</v>
+                                    <v n="Extensible">false</v>
+                                  </o>
+                                  <v n="LValue">false</v>
+                                  <v n="Boolean">false</v>
+                                  <v n="IsInstance">false</v>
+                                  <v n="Id">312L</v>
+                                </o>
+                                <v n="Id">311L</v>
+                              </o>
+                              <o>
+                                <o n="Operand" t="Operand">
+                                  <v n="Operand">"G_PID_Tuning.ferror_OL_Auto_startpos"</v>
+                                  <v n="Type">"LREAL"</v>
+                                  <v n="Comment">""</v>
+                                  <v n="SymbolComment">""</v>
+                                  <v n="Address">""</v>
+                                  <o n="Flags" t="Flags">
+                                    <v n="Flags">0</v>
+                                    <v n="Fixed">false</v>
+                                    <v n="Extensible">false</v>
+                                  </o>
+                                  <v n="LValue">false</v>
+                                  <v n="Boolean">false</v>
+                                  <v n="IsInstance">false</v>
+                                  <v n="Id">314L</v>
+                                </o>
+                                <v n="Id">313L</v>
+                              </o>
+                            </l2>
+                            <o n="InputParam" t="ParamList">
+                              <l2 n="Names" cet="String">
+                                <v>fVelRef</v>
+                                <v>ferror</v>
+                              </l2>
+                              <l2 n="Types" cet="String">
+                                <v>LREAL</v>
+                                <v>LREAL</v>
+                              </l2>
+                            </o>
+                            <o n="OutputParam" t="ParamList">
+                              <l2 n="Names" cet="String">
+                                <v>bReset</v>
+                              </l2>
+                              <l2 n="Types" cet="String">
+                                <v>BOOL</v>
+                              </l2>
+                            </o>
+                            <v n="CallType" t="Operator">FunctionBlock</v>
+                            <v n="EN">false</v>
+                            <v n="ENO">false</v>
+                            <n n="STSnippet" />
+                            <v n="ContainsExtensibleInputs">false</v>
+                            <v n="ProvidesSTSnippet">false</v>
+                            <v n="Id">310L</v>
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
@@ -731,7 +810,7 @@ END_VAR
                       <v n="Id">135L</v>
                     </o>
                     <o t="BoxTreeDemux">
-                      <v n="VarId">103</v>
+                      <v n="VarId">110</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"FB_Deadband_Auto"</v>
                         <o n="Instance" t="Operand">
@@ -763,7 +842,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">102</v>
+                            <v n="VarId">109</v>
                             <n n="Input" />
                             <v n="Id">165L</v>
                           </o>
@@ -935,7 +1014,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">103</v>
+                            <v n="VarId">110</v>
                             <n n="Input" />
                             <v n="Id">176L</v>
                           </o>
@@ -1082,7 +1161,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"fDeadbandComp_out"</v>
+                            <v n="Operand">"fDeadbandComp_out_startpos"</v>
                             <v n="Type">"LREAL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -1105,7 +1184,7 @@ END_VAR
                         <v n="Extensible">false</v>
                       </o>
                       <o n="RValue" t="BoxTreeDemux">
-                        <v n="VarId">103</v>
+                        <v n="VarId">110</v>
                         <n n="Input" />
                         <v n="Id">187L</v>
                       </o>
@@ -1138,7 +1217,7 @@ END_VAR
                         <v n="Extensible">false</v>
                       </o>
                       <o n="RValue" t="BoxTreeDemux">
-                        <v n="VarId">102</v>
+                        <v n="VarId">109</v>
                         <n n="Input" />
                         <v n="Id">190L</v>
                       </o>
@@ -1159,7 +1238,7 @@ END_VAR
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems">
                     <o t="BoxTreeDemux">
-                      <v n="VarId">104</v>
+                      <v n="VarId">111</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"F_SineFunction_secondary"</v>
                         <o n="Instance" t="Operand">
@@ -1438,7 +1517,7 @@ END_VAR
                       <v n="Id">122L</v>
                     </o>
                     <o t="BoxTreeDemux">
-                      <v n="VarId">105</v>
+                      <v n="VarId">112</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"FB_PID_Controller"</v>
                         <o n="Instance" t="Operand">
@@ -1477,7 +1556,7 @@ END_VAR
                               <v n="Id">42L</v>
                             </o>
                             <o>
-                              <v n="Operand">"G_PID_Tuning.fPout_OL"</v>
+                              <v n="Operand">"G_PID_Tuning.fPout_OL_Auto_sine"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1493,7 +1572,7 @@ END_VAR
                               <v n="Id">43L</v>
                             </o>
                             <o>
-                              <v n="Operand">"G_PID_Tuning.fIout_OL"</v>
+                              <v n="Operand">"G_PID_Tuning.fIout_OL_Auto_sine"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1509,7 +1588,7 @@ END_VAR
                               <v n="Id">44L</v>
                             </o>
                             <o>
-                              <v n="Operand">"G_PID_Tuning.fDout_OL"</v>
+                              <v n="Operand">"G_PID_Tuning.fDout_OL_Auto_sine"</v>
                               <v n="Type">"LREAL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1553,7 +1632,7 @@ END_VAR
                             <v n="Id">46L</v>
                           </o>
                           <o t="BoxTreeDemux">
-                            <v n="VarId">104</v>
+                            <v n="VarId">111</v>
                             <n n="Input" />
                             <v n="Id">123L</v>
                           </o>
@@ -1808,10 +1887,11 @@ END_VAR
                             <v n="ProvidesSTSnippet">false</v>
                             <v n="Id">300L</v>
                           </o>
-                          <o t="BoxTreeOperand">
-                            <o n="Operand" t="Operand">
-                              <v n="Operand">"TRUE"</v>
-                              <v n="Type">"BOOL"</v>
+                          <o t="BoxTreeBox">
+                            <v n="BoxType">"FB_ControlReset_SC"</v>
+                            <o n="Instance" t="Operand">
+                              <v n="Operand">"fb_ControlReset_sine"</v>
+                              <v n="Type">"FB_ControlReset_SC"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
                               <v n="Address">""</v>
@@ -1822,10 +1902,85 @@ END_VAR
                               </o>
                               <v n="LValue">false</v>
                               <v n="Boolean">false</v>
-                              <v n="IsInstance">false</v>
-                              <v n="Id">57L</v>
+                              <v n="IsInstance">true</v>
+                              <v n="Id">315L</v>
                             </o>
-                            <v n="Id">56L</v>
+                            <o n="OutputItems" t="OutputItemList">
+                              <l2 n="OutputItems">
+                                <n />
+                              </l2>
+                            </o>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">0</v>
+                              <v n="Fixed">false</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <n n="InputFlags" />
+                            <l2 n="InputItems" cet="BoxTreeOperand">
+                              <o>
+                                <o n="Operand" t="Operand">
+                                  <v n="Operand">"G_Motion_Control.fVelRef_Sine_SC"</v>
+                                  <v n="Type">"LREAL"</v>
+                                  <v n="Comment">""</v>
+                                  <v n="SymbolComment">""</v>
+                                  <v n="Address">""</v>
+                                  <o n="Flags" t="Flags">
+                                    <v n="Flags">0</v>
+                                    <v n="Fixed">true</v>
+                                    <v n="Extensible">false</v>
+                                  </o>
+                                  <v n="LValue">false</v>
+                                  <v n="Boolean">false</v>
+                                  <v n="IsInstance">false</v>
+                                  <v n="Id">318L</v>
+                                </o>
+                                <v n="Id">317L</v>
+                              </o>
+                              <o>
+                                <o n="Operand" t="Operand">
+                                  <v n="Operand">"G_PID_Tuning.ferror_OL_Auto_sine"</v>
+                                  <v n="Type">"LREAL"</v>
+                                  <v n="Comment">""</v>
+                                  <v n="SymbolComment">""</v>
+                                  <v n="Address">""</v>
+                                  <o n="Flags" t="Flags">
+                                    <v n="Flags">0</v>
+                                    <v n="Fixed">false</v>
+                                    <v n="Extensible">false</v>
+                                  </o>
+                                  <v n="LValue">false</v>
+                                  <v n="Boolean">false</v>
+                                  <v n="IsInstance">false</v>
+                                  <v n="Id">320L</v>
+                                </o>
+                                <v n="Id">319L</v>
+                              </o>
+                            </l2>
+                            <o n="InputParam" t="ParamList">
+                              <l2 n="Names" cet="String">
+                                <v>fVelRef</v>
+                                <v>ferror</v>
+                              </l2>
+                              <l2 n="Types" cet="String">
+                                <v>LREAL</v>
+                                <v>LREAL</v>
+                              </l2>
+                            </o>
+                            <o n="OutputParam" t="ParamList">
+                              <l2 n="Names" cet="String">
+                                <v>bReset</v>
+                              </l2>
+                              <l2 n="Types" cet="String">
+                                <v>BOOL</v>
+                              </l2>
+                            </o>
+                            <v n="CallType" t="Operator">FunctionBlock</v>
+                            <v n="EN">false</v>
+                            <v n="ENO">false</v>
+                            <n n="STSnippet" />
+                            <v n="ContainsExtensibleInputs">false</v>
+                            <v n="ProvidesSTSnippet">false</v>
+                            <v n="Id">316L</v>
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
@@ -1957,7 +2112,7 @@ END_VAR
                       <v n="Id">39L</v>
                     </o>
                     <o t="BoxTreeDemux">
-                      <v n="VarId">106</v>
+                      <v n="VarId">113</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"FB_Deadband_Auto_sine"</v>
                         <o n="Instance" t="Operand">
@@ -1989,7 +2144,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">105</v>
+                            <v n="VarId">112</v>
                             <n n="Input" />
                             <v n="Id">69L</v>
                           </o>
@@ -2161,7 +2316,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">106</v>
+                            <v n="VarId">113</v>
                             <n n="Input" />
                             <v n="Id">80L</v>
                           </o>
@@ -2331,7 +2486,7 @@ END_VAR
                         <v n="Extensible">false</v>
                       </o>
                       <o n="RValue" t="BoxTreeDemux">
-                        <v n="VarId">106</v>
+                        <v n="VarId">113</v>
                         <n n="Input" />
                         <v n="Id">91L</v>
                       </o>
@@ -2364,7 +2519,7 @@ END_VAR
                         <v n="Extensible">false</v>
                       </o>
                       <o n="RValue" t="BoxTreeDemux">
-                        <v n="VarId">105</v>
+                        <v n="VarId">112</v>
                         <n n="Input" />
                         <v n="Id">94L</v>
                       </o>
@@ -2397,7 +2552,7 @@ END_VAR
                         <v n="Extensible">false</v>
                       </o>
                       <o n="RValue" t="BoxTreeDemux">
-                        <v n="VarId">104</v>
+                        <v n="VarId">111</v>
                         <n n="Input" />
                         <v n="Id">254L</v>
                       </o>
@@ -2460,7 +2615,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">104</v>
+                            <v n="VarId">111</v>
                             <n n="Input" />
                             <v n="Id">124L</v>
                           </o>
@@ -3301,7 +3456,7 @@ END_VAR
                   <v n="Id">9L</v>
                 </o>
               </l2>
-              <v n="BranchCounter">104</v>
+              <v n="BranchCounter">111</v>
               <v n="ValidIds">true</v>
             </o>
           </Data>
